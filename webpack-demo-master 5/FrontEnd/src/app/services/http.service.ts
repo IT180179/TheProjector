@@ -23,8 +23,6 @@ export class HttpService {
     return this.http.get<any[]>(this.API_URL + 'personen/search/'+ text);
   }
 
-
-
   getResource(id: number): Observable<any> {
 
     const url: string = this.API_URL + "arbeitszeiten/getArbeitszeitenPerPerson/"+ id;
@@ -85,7 +83,6 @@ export class HttpService {
 
     const url: string = this.API_URL + "rollen/getByID/" + id;
 
-    //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);
   }
 
@@ -93,7 +90,6 @@ export class HttpService {
 
     const url = this.API_URL + "projekte/all";
 
-    //console.log( this.httpClient.get<any>(url));
     return this.http.get<Projekte>(url);
 
   }
