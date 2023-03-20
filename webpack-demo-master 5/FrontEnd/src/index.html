@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <script>
+    document.write(`<base href="${location.pathname}${location.pathname.endsWith('/') ? '' : '/'}"/>`);
+</script>
   <meta charset="utf-8">
   <title>FrontendProjector</title>
   <base href="/">
