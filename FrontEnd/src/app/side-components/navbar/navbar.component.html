@@ -1,0 +1,35 @@
+<section class="hero">
+<nav aria-label="main navigation" class="navbar" role="navigation"
+     style="background-color: #005281; padding-left: 10%;padding-right: 30%;">
+  <div class="navbar-brand">
+    <a aria-expanded="false" aria-label="menu" class="navbar-burger" data-target="navbarBasicExample" role="button">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu is-link" id="navbarBasicExample">
+    <div class="navbar-start">
+      <a class="navbar-item" routerLink="/start_menu" style="padding:3%;"><i id="icon_house" class="fa-solid fa-house"></i></a>
+      <a class="navbar-item" routerLink="/create_project" style="padding:3%;">Projekt anlegen</a>
+      <a class="navbar-item" routerLink="/create_ppk" style="padding:3%;">Nächstes PPK anlegen</a>
+      <a class="navbar-item" routerLink="/ppk_liste" style="padding:3%;">PPK Liste</a>
+      <a class="navbar-item" routerLink="/project_overview" style="padding:3%;">Projekt Übersicht</a>
+      <a class="navbar-item" routerLink="/pp_menu" style="padding:3%;">Präsentation generieren</a>
+      <a class="navbar-item" routerLink="/employee_list" style="padding:3%;">Mitarbeiter-Liste</a>
+    </div>
+  </div>
+</nav>
+</section>
+  <div id="icons">
+    <span id ="icon_arrow"class="icon-text">
+      <span class="icon">
+        <a backButton class="is-large is-pulled-left" matTooltipPosition="left" ng-click="back()">  <i class="fa-solid fa-arrow-left fa-2x"></i></a>
+      </span>
+    </span>
+<span id="icon_profil" class="icon-text">
+  <span class="icon">
+        <a class="is-large is-pulled-right"  matTooltipPosition="right" routerLink="/user_profil"><i class="fa-regular fa-user fa-2x"></i></a>
+      </span>
+    </span>
+  </div>

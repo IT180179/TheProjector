@@ -1,0 +1,62 @@
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" />
+  <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+</head>
+<body>
+<div id="main">
+  <div class="box" id="form">
+  <h1 class="subtitle is-3 title" style="color: #005281;">PPK - Präsentation generieren</h1>
+    <div class="field">
+      <a class="button  full-width-field is-responsive" routerLink="/milestone_list"
+         style="background-color: #005281;color: white;"> Meilenstein-Liste </a>
+    </div>
+    <div class="field">
+      <a class="button  full-width-field is-responsive" (click)="openDialog()"
+         style="background-color: #005281;color: white;"> Projekt-Detail Ansicht</a>
+      <br/>
+    </div>
+    <br>
+    <form #userPost="ngForm" (ngSubmit)="onSubmit(userPost.value)" novalidate>
+      <mat-form-field appearance="outline" class="full-width-field">
+        <mat-label style="color: #005281;">Projektname</mat-label>
+        <mat-select (selectionChange)="setProjektID()" formControlName="projekt_id" [(value)]="selected">
+          <mat-option *ngFor="let testobject of projects"
+                      value="{{testobject.projekt_id}}">{{testobject.titel}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="field">
+        <div *ngFor="let folien of folienTypen">
+          <h2 style="color: #005281; font-size: 90%;">✓ {{ folien.name }} Folie</h2>
+        </div></div>
+      <br>
+      <div class="field">
+        <button class="button  full-width-field  is-dark"
+                style="background-color: #005281;" (click)="openEntscheidung()" [disabled]="!selected "  id="button5">Entscheindungs-Folie erstellen </button>
+      </div>
+      <div class="field">
+        <button class="button  full-width-field  is-dark"
+                style="background-color: #005281;" (click)="openFreieFolie()"[disabled]="!selected " id="button6">Freie-Folie erstellen</button>
+      </div>
+      <div class="field">
+        <button class="button  full-width-field  is-dark"
+                style="background-color: #005281;" (click)="openSR()" [disabled]="!selected "  id="button2">Software-Anforderungen erstellen</button>
+      </div>
+      <br>
+      <br>
+      <div>
+        <div class="field">
+          <button (click)="postData()" [disabled]="!selected" class="button is-medium full-width-field is-responsive" type="submit" style="background-color: #005281;color: white;" routerLink="/pp_menu">Präsentation freigeben </button>
+          <br/>
+          <br />
+          <a class="button full-width-field is-responsive" style="background-color: white; color: #005281; border-color: #005281">Generieren</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

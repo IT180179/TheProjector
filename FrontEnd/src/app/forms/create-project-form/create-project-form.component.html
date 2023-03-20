@@ -1,0 +1,72 @@
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+<body>
+<div id="main">
+  <h1 class="subtitle is-2" style="color: #005281;">Projekt anlegen</h1>
+  <div class="box" id="form">
+    <form #userPost="ngForm" (ngSubmit)="onSubmit(userPost.value)" [formGroup]="addressForm" novalidate>
+      <mat-form-field appearance="outline" class="full-width-field" style=" font-size: 85%;">
+        <mat-label>Projektname</mat-label>
+        <input formControlName="titel" matInput name="titel">
+        <mat-error *ngIf="addressForm.controls['titel'].hasError('required')">
+          Projekt-Name muss ausgefüllt werden!
+        </mat-error>
+      </mat-form-field>
+      <mat-radio-group aria-label="Status" class="full-width-field" color="primary" formControlName="kategorie_id">
+        <mat-radio-button style="font-size: 85%;" *ngFor="let testobject of categorie" name="kategorie_id"
+                          value="{{testobject.kategorien_id}}">{{testobject.name}}</mat-radio-button>
+      </mat-radio-group>
+      <mat-form-field appearance="outline" class="example-full-width" class="full-width-field">
+        <mat-label>Inhalt des Projekts</mat-label>
+        <textarea formControlName="inhalt" matInput name="inhalt"></textarea>
+        <mat-error *ngIf="addressForm.controls['inhalt'].hasError('required')">
+          Inhalt muss ausgewählt werden!
+        </mat-error>
+       <mat-error *ngIf="addressForm.controls['inhalt'].hasError('maxlength')">
+          Die Zeichenlänge wurde überschritten!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="example-full-width" class="full-width-field">
+        <mat-label>Ziel des Projekts</mat-label>
+        <textarea formControlName="ziel" matInput name="ziel" placeholder=""></textarea>
+        <mat-error *ngIf="addressForm.controls['ziel'].hasError('required')">
+          Ziel muss ausgewählt werden!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width-field">
+        <mat-label>Budget</mat-label>
+        <input formControlName="budget" matInput name="budget" placeholder="" type="number">
+        <mat-error *ngIf="addressForm.controls['budget'].hasError('required')">
+          Budget muss ausgefüllt werden!
+        </mat-error>
+        <mat-error *ngIf="addressForm.controls['budget'].hasError('maxlength')">
+          Die Zeichenlänge wurde überschritten!
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <div class="date">
+        <mat-label for="end_datum">Start-Termin:*</mat-label>
+        <br>
+        <input [min]="todayDate" class="full-width-field datepicker" formControlName="start_datum" id="start_datum"
+               name="start_datum" style="font-size: 85%;margin-bottom: 2%;" type="date">
+      </div>
+      <div class="date">
+        <mat-label for="end_datum">Abnahme-Termin:*</mat-label>
+        <br>
+        <input [min]="todayDate" style="font-size: 85%;" class="full-width-field datepicker" formControlName="end_datum" id="end_datum" name="start_datum"
+               type="date">
+      </div>
+      <div class=" has-text-centered ">
+        <button [disabled]="!addressForm.valid" class="button full-width-field is-medium" style=" background-color: #005281; color: white;"
+                type="submit"> Anlegen
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+</body>

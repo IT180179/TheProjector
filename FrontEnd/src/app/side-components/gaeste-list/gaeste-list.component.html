@@ -1,0 +1,24 @@
+<form [formGroup]="addressForm" novalidate>
+<mat-form-field appearance="outline" #gaeste class="full-width-field">
+  <mat-label>Gäste (optional)</mat-label>
+  <input [disabled]="disable" #gast [value]="" formControlName="gast" matInput placeholder="" >
+</mat-form-field>
+<button [disabled]="!addressForm.valid" (click)="newGast(gast.value)" class="button is-medium is-dark" id="anlegen"
+   style="background-color: #e5f6ff; color: #005281; border-color: #005281; margin-left: 40%;"> + Gast
+  hinzufügen</button>
+</form>
+<table class="table is-fullwidth" id="project_table">
+  <thead>
+  <tr>
+    <th>Nummer</th>
+    <th>Gast</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let testobject of gaeste_list">
+    <td>{{testobject.id}}</td>
+    <td>{{testobject.name}}</td>
+
+  </tr>
+  </tbody>
+</table>

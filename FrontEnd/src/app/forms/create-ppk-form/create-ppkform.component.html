@@ -1,0 +1,41 @@
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="utf-8"/>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+</head>
+<body>
+<div id="main">
+  <h1 class="subtitle is-2" style="color: #005281;">Neues PPK anlegen</h1>
+  <div class="box" id="form">
+    <form #userPost="ngForm" (ngSubmit)="onSubmit(addressForm.value)" [formGroup]="addressForm" novalidate>
+      <mat-label for="datum">Datum des PPK-Meetings</mat-label>
+      <br>
+      <input [min]="todayDate" class="full-width-field datepicker" value="" type="date" id="datum" formControlName="datum">
+      <br>
+      <label style="color: #005281; ">Projekte hinzufügen:</label>
+      <section *ngFor="let testobject of projects" class="example-section" color="primary" style="margin: 2%;">
+        <input type="checkbox" id="checkbox{{testobject.projekt_id}}"
+                      value="{{testobject.projekt_id}}">{{testobject.titel}}
+      </section>
+      <div class="field">
+
+      <br><br>
+      <button [disabled]="!addressForm.valid"  class="button is-dark" (click)="toDisableGast()" style="background-color: #005281;"
+              type="submit" > Anlegen</button>
+      <br><br>
+
+        <button mat-raised-button [disabled]="disable" (click)="openDialog()" class="button is-dark"
+                style="background-color: #e5f6ff; color: #005281; border-color: #005281;"> + Gast
+          hinzufügen</button>
+      </div>
+      <br><br>
+      <button class="button  full-width-field is-dark" [disabled]="disable" style="background-color: #005281;" (click)="openSummary()"  routerLink="/start_menu"> Fertig</button>
+      <br/>
+    </form>
+  </div>
+</div>
+</body>
+</html>

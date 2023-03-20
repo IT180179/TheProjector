@@ -1,0 +1,29 @@
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="utf-8"/>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+  <div class="box" id="form">
+    <table class="table is-bordered is-fullwidth" style="background-color: #e5f6ff; border-color: #005281;">
+      <tr>
+        <th style="border-color: #005281; color: #005281">Ändernungs-Datum</th>
+        <th style="border-color: #005281; color: #005281">Status</th>
+        <th style="border-color: #005281; color: #005281">Änderungsgrund</th>
+        <th style="border-color: #005281; color: #005281">Start-Datum</th>
+        <th style="border-color: #005281; color: #005281">Fertigstellung</th>
+      </tr>
+      <tr *ngFor="let testobject of milestonesHistorie">
+        <td class="has-text-weight-bold" style="border-color: #005281">{{testobject.datum | date: 'dd.MM.yyyy'}} </td>
+        <td style="border-color: #005281">{{displayStatus(testobject.meilenstein_id.status)}}</td>
+        <td style="border-color: #005281">{{testobject.aenderung}}</td>
+        <td style="border-color: #005281">{{testobject.meilenstein_id.start_datum | date: 'dd.MM.yyyy'}}</td>
+        <td style="border-color: #005281">{{testobject.end_datum | date: 'dd.MM.yyyy'}}</td>
+      </tr>
+    </table>
+  </div>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title></title>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+<body>
+<div class="is-responsive" id="main">
+  <button routerLink="../ppk_presentation" class="button is-medium is-fullwidth is-large is-responsive" style="padding: 4%; background-color: #e5f6ff; color: #005281; border-color: #005281;">    PPK-Präsentation
+  </button>
+  <br/>
+
+  <button routerLink="../detail_presentation" class="button is-medium is-fullwidth is-large is-responsive" style="padding: 4%; background-color: #e5f6ff; color: #005281; border-color: #005281;">   Detail-Präsentation
+  </button>
+  <br/>
+
+  <button routerLink="../pp_menu"
+          class="button is-medium is-fullwidth is-large is-responsive"
+          style="padding: 4%; background-color: #005281; color: white; border-color: #005281;" (click)="getPresentation()" >  PPK-Präsentation
+    generieren</button>
+  <br/>
+</div>
+</body>
+</html>

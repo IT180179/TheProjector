@@ -1,0 +1,33 @@
+<div id="main">
+  <div class="box" id="profil">
+    <div id="profil_icon">
+    <i class="fa-solid fa-user fa-6x"></i>
+      <br>
+      <p>{{employees.vorname}} {{employees.nachname}}</p>
+    </div>
+    <br>
+    <div class="small_icons">
+    <i class="fa-solid fa-diagram-project fa-2x"></i>
+      <p>Laufende Projekte</p>
+      <p>{{project}}</p>
+    </div>
+    <div class="small_icons">
+    <i class="fa-solid fa-user-tie fa-2x"></i>
+      <p>Projektmanager</p>
+      <p>{{projectmanager}}</p>
+    </div>
+    <div class="small_icons">
+    <i class="fa-solid fa-person-military-to-person fa-2x"></i>
+      <p>Fachkoordinator</p>
+      <p>{{fachkoordinator}}</p>
+    </div>
+    <br><br>
+    <br><br>
+    <button class="button full-width-field btn btn-primary" routerLink="/my_projects" style="background-color: #005281; color:white;"
+            type="submit">Meine Projekte</button>
+
+    <button class="profil button btn btn-primary" routerLink="/login" style="margin: 2%">Login</button>
+
+    <button class="profil button btn btn-primary" (click)="lougout()" style="margin: 2%">Logout</button>
+  </div>
+</div>

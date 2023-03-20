@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title></title>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<div id="main">
+  <h1 class="subtitle is-2" style="color: #005281; margin-bottom: 2%;">Nächste PPK - Meeting ist am: {{ppkInfos.datum | date: 'dd.MM.yyyy'}}</h1>#
+
+  <div class="card">
+    <div class="card-content">
+      <div class="content">
+        <h1 style="  color: #005281;" class="subtitle is-4" >Die beteiligten Projekte:</h1>
+        <li *ngFor="let x of ppkInfos.projekteList">{{x.inhalt}}</li>
+      </div>
+    </div>
+  </div>
+
+
+  <br>
+  <br>
+
+  <div class="card">
+    <div class="card-content">
+      <div class="content">
+        <h1 style="  color: #005281;" class="subtitle is-4" >Gäste:</h1>
+        <li *ngFor="let x of ppkInfos.gaesteList">{{x.name}}</li>
+      </div>
+    </div>
+  </div>
+
+</div>
+</html>

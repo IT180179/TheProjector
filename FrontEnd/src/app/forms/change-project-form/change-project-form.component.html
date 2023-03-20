@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title></title>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+
+<div id="main">
+  <h1 class="subtitle is-2" style="color: #005281;">Projekt: {{project.titel}}</h1>
+  <div class="box" id="form">
+    <form (ngSubmit)="onSubmit(addressForm.value)" [formGroup]="addressForm" id="change_project_form" novalidate>
+      <mat-form-field appearance="outline" class="full-width-field">
+        <mat-label style="color: #005281;">Projektname</mat-label>
+        <input formControlName="titel" matInput value="{{project.titel}}">
+        <mat-error *ngIf="addressForm.controls['titel'].hasError('required')">
+          Projektname muss ausgefüllt werden!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-label>Status</mat-label>
+      <br>
+      <mat-radio-group aria-label="Status" color="primary" formControlName="status">
+        <mat-radio-button value="1">planmäßig</mat-radio-button>
+        <mat-radio-button value="2">anstehend</mat-radio-button>
+        <mat-radio-button value="3">in Verzug</mat-radio-button>
+        <mat-radio-button value="4">fehlgeschlagen</mat-radio-button>
+        <mat-error *ngIf="addressForm.controls['status'].hasError('required')">
+          Status muss ausgefüllt werden!
+        </mat-error>
+      </mat-radio-group>
+
+      <mat-form-field appearance="outline" class="full-width-field">
+        <mat-label>Inhalt des Projekts</mat-label>
+        <textarea formControlName="inhalt" matInput value="{{project.inhalt}}"></textarea>
+        <mat-error *ngIf="addressForm.controls['inhalt'].hasError('required')">
+          Inhalt muss ausgefüllt werden!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width-field">
+        <mat-label>Ziel des Projekts</mat-label>
+        <textarea formControlName="ziel" matInput value="{{project.ziel}}"></textarea>
+        <mat-error *ngIf="addressForm.controls['ziel'].hasError('required')">
+          Ziel muss ausgefüllt werden!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width-field">
+        <mat-label style="color: #005281;">Budget</mat-label>
+        <input type="number" formControlName="budget" matInput value="{{project.budget}}">
+        <mat-error *ngIf="addressForm.controls['budget'].hasError('required')">
+          Budget muss ausgefüllt werden!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-label for="end_datum">End-Termin:</mat-label><br>
+      <input [min]="todayDate"  class="full-width-field datepicker" value="{{project.end_datum}}" type="date" id="end_datum" formControlName="end_datum">
+
+      <div class=" has-text-centered " style=" background-color: #e5f6ff;">
+        <input [disabled]="!addressForm.valid"  class="button  full-width-field is-dark" style="background-color: #005281;"
+               type="submit" value="Projekt ändern">
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="utf-8"/>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+<body>
+<div id="main">
+  <h1 class="subtitle is-2 title" style="color: #005281;">Detail-Präsentation generieren</h1>
+  <div class="box" id="form">
+    <table class="table is-fullwidth" *ngIf="projects">
+      <thead>
+      <tr>
+        <th>Projekt</th>
+        <th>Beschreibung</th>
+        <th class="center">Status</th>
+        <th class="center">Meilensteine</th>
+        <th class="center">Projekt ändern</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let p of projects">
+        <td>{{p.titel}}</td>
+        <td>{{p.inhalt}}</td>
+        <td class="center">{{displayStatus(p.status)}}</td>
+        <td class="center"><button (click)="setProjektId(p.projekt_id)" routerLink="/milestone_list" class="mat-button"><mat-icon>assistant_photo</mat-icon>{{p.end_datum | date: 'dd.MM.yyyy'}}</button></td>
+        <td class="center"><button (click)="setProjektId(p.projekt_id)" routerLink="/change_project" mat-raised-button >Ändern</button></td>
+      </tr>
+      </tbody>
+    </table>
+      <br>
+      <div class="field">
+        <a class="button is-medium full-width-field is-responsive button_background" (click)="getDetailPresentation()" routerLink="../detail_presentation"
+           style="padding: 4%; ">Detail-Präsentation
+          generieren</a>
+        <br/>
+      </div>
+  </div>
+</div>
+</body>
+</html>

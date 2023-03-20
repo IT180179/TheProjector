@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title></title>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+<div id="main">
+  <h1 class="subtitle is-2" style="color: #005281;">Mitarbeiter anlegen</h1>
+  <div class="box" id="form">
+    <form #userPost="ngForm" (ngSubmit)="onSubmit(userPost.value)" [formGroup]="addressForm" novalidate>
+      <mat-form-field appearance="outline" class="full-width-field">
+        <mat-label>Vorname</mat-label>
+        <input formControlName="vorname" matInput name="vorname" ngModel>
+        <mat-error *ngIf="addressForm.controls['vorname'].hasError('required')">
+          Vorname muss ausgefüllt werden!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width-field">
+        <mat-label>Nachname</mat-label>
+        <input formControlName="nachname" matInput name="nachname" ngModel>
+        <mat-error *ngIf="addressForm.controls['nachname'].hasError('required')">
+          Nachname muss ausgefüllt werden!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width-field">
+        <mat-label>Passwort</mat-label>
+        <input type="password" formControlName="passwort" matInput name="passwort" ngModel>
+        <mat-error *ngIf="addressForm.controls['passwort'].hasError('minLength')">
+          Passwort muss mehr als 5 Zeichen enthalten!
+        </mat-error>
+        <mat-error *ngIf="addressForm.controls['passwort'].hasError('required')">
+          Passwort-Feld muss ausgefüllt sein!
+        </mat-error>
+        <mat-error *ngIf="addressForm.controls['passwort'].hasError('pattern')">
+          Passwort muss Groß- Kleinbuchstaben und Zahlen enthalten!
+        </mat-error>
+      </mat-form-field>
+      <div class="field">
+        <p class="control">
+          <input class="button is-medium full-width-field is-dark"  style="background-color: #005281;"
+                 type="submit" value="Hinzufügen">
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

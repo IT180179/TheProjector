@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title></title>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet"/>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <link href="https://www.ionos.at/digitalguidepath/to/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css" rel="stylesheet">
+</head>
+<body>
+<div id="main" style="background-color: #e5f6ff; border-radius: 20px">
+  <form [formGroup]="loginForm" (submit)="login()">
+      <h2 class="subtitle is-3 title" >Login</h2>
+      <div class="row">
+        <div class="col">
+          <mat-form-field style="width: 20%" appearance="outline">
+            <input matInput placeholder="Username" formControlName="username">
+            <mat-error>
+              Bitte gültige Username angeben!
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field style="width: 20%"  appearance="outline">
+            <input matInput type="password" placeholder="Passwort" formControlName="password">
+            <mat-error>
+              Bitte gültiges Passwort angeben!
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button [disabled]="!loginForm.valid"  mat-raised-button style="width: 20%; background-color: #005281;" class="button is-dark">Anmelden</button>
+        </div>
+      </div>
+  </form>
+</div>

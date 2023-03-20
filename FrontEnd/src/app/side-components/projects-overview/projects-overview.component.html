@@ -1,0 +1,91 @@
+
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title></title>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<div id="main">
+  <h1 class="subtitle is-2" style="color: #005281; margin-bottom: 2%;">Laufende Projekte</h1>
+  <div class="box" id="form" style="background-color: #e5f6ff; border-color: #005281; border-radius: 20px;">
+
+    <div>
+      <mat-form-field appearance="outline" class="full-width-field">
+        <mat-label> Suche nach Projekt:</mat-label>
+        <input style="width: 30%" matInput [(ngModel)]="text" (input)="doSearch()">
+        <button style="float: right" mat-button (click)="doSearch()">Suchen</button>
+      </mat-form-field>
+  </div>
+
+   <!-- <table *ngIf="foundprojects.length == 1 " class="table is-fullwidth" id="project_table">
+      <thead>
+      <tr>
+        <th>Projekt</th>
+        <th>Status</th>
+        <th>Ziel</th>
+        <th>Start-Datum</th>
+        <th>End-Datum</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><button class="btn_project" mat-raised-button (click)="openDialog(foundprojects.projekt_id)">{{foundprojects.titel}}</button></td>
+        <td>{{foundprojects.status}}</td>
+        <td>{{foundprojects.ziel}}</td>
+        <td>{{foundprojects.start_datum}}</td>
+        <td>{{foundprojects.end_datum}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <table *ngIf="foundprojects.length > 1" class="table is-fullwidth" id="project_table" >
+      <thead>
+      <tr>
+        <th>Projekt</th>
+        <th>Status</th>
+        <th>Ziel</th>
+        <th>Start-Datum</th>
+        <th>End-Datum</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let p of foundprojects">
+        <td><button class="btn_project" mat-raised-button (click)="openDialog(p.projekt_id)">{{p.titel}}</button></td>
+        <td>{{p.status}}</td>
+        <td>{{p.ziel}}</td>
+        <td>{{p.start_datum}}</td>
+        <td>{{p.end_datum}}</td>
+      </tr>
+      </tbody>
+    </table> -->
+
+   <table class="table is-fullwidth" *ngIf="foundprojects" >
+      <thead>
+      <tr>
+        <th>Projekt</th>
+        <th>Status</th>
+        <th>Ziel</th>
+        <th>Start-Datum</th>
+        <th>End-Datum</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let p of foundprojects">
+        <td><button class="btn_project" mat-raised-button (click)="openDialog(p.projekt_id)">{{p.titel}}</button></td>
+        <td>{{displayStatus(p.status)}}</td>
+        <td>{{p.ziel}}</td>
+        <td>{{p.start_datum | date: 'dd.MM.yyyy'}}</td>
+        <td>{{p.end_datum | date: 'dd.MM.yyyy'}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</html>
