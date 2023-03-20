@@ -73,11 +73,17 @@ export class ResourceFormComponent implements OnInit {
   }
   onSubmit(data: any) {
     this.newdata = {
-      personen_id: {personen_id: this.user_id},
-      projekte_id: {projekt_id: data.projekt_id},
+      einsaetze_id:{
+        einsaetze_id:{
+          personen_id:{personen_id: this.user_id},
+          projekte_id: {projekt_id: data.projekt_id},
+         // rollen_id:{rollen_id:  Number(data.rollen_id)}
+        }
+      },
       arbeitszeit: Number(data.arbeitsstunden),
       date: this.myDate
     };
+
     console.log(this.newdata)
     this.http.post<any>('http://localhost:8080/arbeitszeiten/add', this.newdata)
       .subscribe({

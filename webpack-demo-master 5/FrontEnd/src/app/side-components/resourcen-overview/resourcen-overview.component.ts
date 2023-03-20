@@ -15,7 +15,7 @@ export class ResourcenOverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.dataService.user_id
-    this.resourcen = this.http.getResource(this.id).subscribe({
+    this.resourcen = this.http.getArbeitszeiten(this.id).subscribe({
       next: value => {
         console.log(value)
         this.resourcen = value

@@ -28,16 +28,13 @@ export class PPMenuComponent implements OnInit {
       this.disableButton = false
     }
 
-
   }
   getPresentation(){
-    console.log("PPK-Präsentation wird generiert")
-    //this.http.getPPKPowerpoint().subscribe(
-    //       {
-    //         next: value => {
-    //           //  console.log(value)
-    //           this.ppkInfos = value
-    //         }, error: err => {}
-    //         });
+    this.http.getPPKPowerpoint().subscribe(blob => {
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'PPK-Meeting.pptx';
+      link.click();
+    });
   }
 }

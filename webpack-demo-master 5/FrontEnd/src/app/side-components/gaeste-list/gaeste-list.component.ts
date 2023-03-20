@@ -27,30 +27,30 @@ export class GaesteListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(!this.dataService.isloggedIn){
+    if (!this.dataService.isloggedIn) {
       this._router.navigate(['**']);
     }
 
     this.ppk_id = this.dataService.getppk_id()
     console.log(this.ppk_id)
-    this.gaeste_list = this.service.getPPKGaeste(this.ppk_id).subscribe({
-      next: value => {
-        // console.log(value)
-        this.gaeste_list = value
-      }, error: err => {}
-    });
-  }
 
+    this.refresh()
+
+
+  }
+gast:any
   newGast(value: string) {
-    this.ngOnInit();
     if (value != null) {
-      var gast = {
+
+      this.gast = {
         ppk_id: {
           ppk_id: this.data
         },
         name: value
       }
-      this.http.post('http://localhost:8080/gaeste/add', gast)
+      console.log(this.gast)
+
+      this.http.post('http://localhost:8080/gaeste/add', this.gast)
         .subscribe({
           next: value => {
             // console.log(value)
@@ -58,6 +58,7 @@ export class GaesteListComponent implements OnInit {
               duration: 3000,
               panelClass: 'snackbar-dark'
             });
+            this.refresh()
           }, error: err => {
             this.snackBar.open(`Daten konnten nicht hinzugefügt werden ${err.message}`, undefined, {
               duration: 3000,
@@ -65,8 +66,18 @@ export class GaesteListComponent implements OnInit {
             });
           }
         });
+
     }
-    this.ngOnInit();
+  }
+
+  refresh() {
+
+    this.gaeste_list = this.service.getPPKGaeste(this.gast.ppk_id.ppk_id).subscribe({
+      next: value => {
+        // console.log(value)
+        this.gaeste_list = value
+      }, error: err => {
+      }});
   }
   onNoClick(): void {
     this.dialogRef.close();

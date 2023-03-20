@@ -124,7 +124,6 @@ public class PersonenResource {
 
     @GET
     @Path("/getPersonAndArbeitsaufwandPerProjekt/{projekt_id}")
-    @RolesAllowed("admin")
     public Response getPersonAndArbeitsaufwandPerProjekt(@PathParam("projekt_id") Long projekt_id) {
         var allPersonenAndArbeitsaufwandPerProjekt = this.personenRepo.getPersonAndArbeitsaufwandPerProjekt(projekt_id);
         return Response.ok(allPersonenAndArbeitsaufwandPerProjekt).build();

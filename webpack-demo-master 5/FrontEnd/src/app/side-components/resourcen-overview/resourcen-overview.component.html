@@ -24,8 +24,8 @@
       </thead>
       <tbody>
       <tr *ngFor="let testobject of resourcen">
-        <td>{{testobject.projekte_id.titel}}</td>
-        <td>{{translateRoles(testobject.personen_id.rechte)}}</td>
+        <td>{{testobject.einsaetze_id.einsaetze_id.projekte_id.titel}}</td>
+        <td>{{testobject.einsaetze_id.einsaetze_id.rollen_id.name}}</td>
         <td>{{testobject.arbeitszeit}}</td>
         <td>{{testobject.date | date: 'dd.MM.yyyy'}}</td>
       </tr>

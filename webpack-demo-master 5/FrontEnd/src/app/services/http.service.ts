@@ -39,6 +39,14 @@ export class HttpService {
 
   }
 
+  getArbeitszeiten(id: number): Observable<any> {
+
+    const url: string = this.API_URL + "arbeitszeiten/getArbeitszeitenPerPerson/"+ id;
+
+    return this.http.get<any>(url);
+
+  }
+
   getPhasenPerID(id: number): Observable<any> {
 
     const url: string = this.API_URL + "phasen/getByID/"+ id;
@@ -60,7 +68,7 @@ export class HttpService {
 
     const url: string = this.API_URL + "ppt/ppk";
 
-    return this.http.get<any>(url);
+    return this.http.get(url, { responseType: 'blob' });
 
   }
 

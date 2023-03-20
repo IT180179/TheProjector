@@ -83,7 +83,7 @@ export class PpkUpdateComponent implements OnInit {
     this.ppk = {
       datum: data.datum
     }
-    this.http.post<Ppk>('http://localhost:8080/ppk/add', this.ppk)
+    this.http.put<Ppk>('http://localhost:8080/ppk/update', this.ppk)
         .subscribe({
           next: (value: any) => {
             // console.log(value)
