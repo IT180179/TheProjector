@@ -4,27 +4,30 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Projekte} from "../model/Projekte";
 import {DialogData} from "../side-components/projects-overview/projects-overview.component";
 import {Person} from "../model/Person";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
+  private API_URL = environment.API_URL;
+
   constructor(public http: HttpClient) { }
 
   search(text:string): Observable<any[]>{
-    return this.http.get<any[]>('http://localhost:8080/projekte/search/'+ text);
+    return this.http.get<any[]>(this.API_URL +'projekte/search/'+ text);
   }
 
   searchUser(text:string): Observable<any[]>{
-    return this.http.get<any[]>('http://localhost:8080/personen/search/'+ text);
+    return this.http.get<any[]>(this.API_URL + 'personen/search/'+ text);
   }
 
 
 
   getResource(id: number): Observable<any> {
 
-    const url: string = "http://localhost:8080/arbeitszeiten/getArbeitszeitenPerPerson/"+ id;
+    const url: string = this.API_URL + "arbeitszeiten/getArbeitszeitenPerPerson/"+ id;
 
     return this.http.get<any>(url);
 
@@ -32,7 +35,7 @@ export class HttpService {
 
   getPPKperID(id: number): Observable<any> {
 
-    const url: string = "http://localhost:8080/ppk/getByID/"+ id;
+    const url: string = this.API_URL + "ppk/getByID/"+ id;
 
     return this.http.get<any>(url);
 
@@ -40,7 +43,7 @@ export class HttpService {
 
   getPhasenPerID(id: number): Observable<any> {
 
-    const url: string = "http://localhost:8080/phasen/getByID/"+ id;
+    const url: string = this.API_URL + "phasen/getByID/"+ id;
 
     return this.http.get<any>(url);
 
@@ -48,7 +51,7 @@ export class HttpService {
 
   getPPKGaeste(id: number): Observable<any> {
 
-    const url: string = "http://localhost:8080/ppk/getGaesteOfPPK/"+ id;
+    const url: string = this.API_URL + "ppk/getGaesteOfPPK/"+ id;
 
     return this.http.get<any>(url);
 
@@ -57,7 +60,7 @@ export class HttpService {
 
   getPPKPowerpoint(): Observable<any> {
 
-    const url: string = "http://localhost:8080/ppt/ppk";
+    const url: string = this.API_URL + "ppt/ppk";
 
     return this.http.get<any>(url);
 
@@ -65,7 +68,7 @@ export class HttpService {
 
   getDetailPowerpoint(): Observable<any> {
 
-    const url: string = "http://localhost:8080/ppt/detail";
+    const url: string = this.API_URL + "ppt/detail";
 
     return this.http.get<any>(url);
 
@@ -80,7 +83,7 @@ export class HttpService {
 
   getRolesByID(id: number): Observable<any> {
 
-    const url: string = "http://localhost:8080/rollen/getByID/" + id;
+    const url: string = this.API_URL + "rollen/getByID/" + id;
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);
@@ -88,7 +91,7 @@ export class HttpService {
 
   getProjects(): Observable<Projekte> {
 
-    const url = "http://localhost:8080/projekte/all";
+    const url = this.API_URL + "projekte/all";
 
     //console.log( this.httpClient.get<any>(url));
     return this.http.get<Projekte>(url);
@@ -97,7 +100,7 @@ export class HttpService {
 
   getProjectById(id: DialogData): Observable<Projekte> {
 
-    const url: string = "http://localhost:8080/projekte/getByID/"+ id;
+    const url: string = this.API_URL + "projekte/getByID/"+ id;
 
     //console.log( this.httpClient.get<any>(url));
     return this.http.get<Projekte>(url);
@@ -106,7 +109,7 @@ export class HttpService {
 
   getProjectByIdNr(id: number): Observable<Projekte> {
 
-    const url: string = "http://localhost:8080/projekte/getByID/"+ id;
+    const url: string = this.API_URL + "projekte/getByID/"+ id;
 
     //console.log( this.httpClient.get<any>(url));
     return this.http.get<Projekte>(url);
@@ -115,7 +118,7 @@ export class HttpService {
 
   getEinsaetze(): Observable<Projekte> {
 
-    const url: string = "http://localhost:8080/einsaetze/all";
+    const url: string = this.API_URL + "einsaetze/all";
 
     //console.log( this.httpClient.get<any>(url));
     return this.http.get<Projekte>(url);
@@ -124,7 +127,7 @@ export class HttpService {
 
   getProjectsByPerson(id: number): Observable<Projekte> {
 
-    const url: string = "http://localhost:8080/projekte/getProjectsOfPerson/"+id;
+    const url: string = this.API_URL + "projekte/getProjectsOfPerson/"+id;
 
     //console.log( this.httpClient.get<any>(url));
     return this.http.get<Projekte>(url);
@@ -134,7 +137,7 @@ export class HttpService {
   getPersonsOfProjects(id: DialogData): Observable<Projekte> {
     //console.log(id);
 
-    const url: string = "http://localhost:8080/projekte/getPersonenOfProject/" + id;
+    const url: string = this.API_URL + "projekte/getPersonenOfProject/" + id;
     //console.log(url)
 
     //console.log( this.httpClient.get<any>(url));
@@ -145,7 +148,7 @@ export class HttpService {
   getPersonsOfProjectsNumber(id: number): Observable<Projekte> {
     //console.log(id);
 
-    const url: string = "http://localhost:8080/projekte/getPersonenOfProject/" + id;
+    const url: string = this.API_URL + "projekte/getPersonenOfProject/" + id;
     //console.log(url)
 
     //console.log( this.httpClient.get<any>(url));
@@ -156,7 +159,7 @@ export class HttpService {
   getMilestonesOfProjects(id: DialogData): Observable<Projekte> {
     //console.log(id);
 
-    const url: string = "http://localhost:8080/projekte/getMeilensteineOfProject/" + id;
+    const url: string = this.API_URL + "projekte/getMeilensteineOfProject/" + id;
     //console.log(url)
 
     //console.log( this.httpClient.get<any>(url));
@@ -165,7 +168,7 @@ export class HttpService {
   }
 
   getAnzahlProjekt(): any {
-    const url: string = "http://localhost:8080/projekte/getProjekteAnzahl";
+    const url: string = this.API_URL + "projekte/getProjekteAnzahl";
     return this.http.get(url);
 
   }
@@ -173,12 +176,12 @@ export class HttpService {
   UpdateProject(id: any, updatedData: any): Observable<Projekte> {
     const headers = new HttpHeaders().append('header', 'value');
     const params = new HttpParams().append('projekt_id', id);
-    return this.http.put<Projekte>("http://localhost:8080/projekte/update", updatedData, { headers, params });
+    return this.http.put<Projekte>(this.API_URL + "projekte/update", updatedData, { headers, params });
   }
 
   getPPK(): Observable<any> {
 
-    const url = "http://localhost:8080/ppk/all";
+    const url = this.API_URL + "ppk/all";
 
     return this.http.get<any>(url);
 
@@ -186,7 +189,7 @@ export class HttpService {
 
   getNextPPK(): Observable<any> {
 
-    const url = "http://localhost:8080/ppk/getNextPPK";
+    const url = this.API_URL + "ppk/getNextPPK";
 
     return this.http.get<any>(url);
 
@@ -194,7 +197,7 @@ export class HttpService {
 
   getPhasen(): Observable<any> {
 
-    const url = "http://localhost:8080/phasen/all";
+    const url = this.API_URL + "phasen/all";
 
     return this.http.get<any>(url);
 
@@ -203,7 +206,7 @@ export class HttpService {
 
   getMilestones(): Observable<any> {
 
-    const url = "http://localhost:8080/meilensteine/all";
+    const url = this.API_URL + "meilensteine/all";
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);
@@ -211,7 +214,7 @@ export class HttpService {
 
   getMilestonesByID(id: number): Observable<any> {
 
-    const url: string = "http://localhost:8080/meilensteine/getByID/" + id;
+    const url: string = this.API_URL + "meilensteine/getByID/" + id;
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);
@@ -219,7 +222,7 @@ export class HttpService {
 
   getMilestoneHistorie(): Observable<any> {
 
-    const url: string = "http://localhost:8080/meilenstein_histories/all";
+    const url: string = this.API_URL + "meilenstein_histories/all";
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);
@@ -227,7 +230,7 @@ export class HttpService {
 
   getHistorieByMilestones(id:any): Observable<any> {
 
-    const url: string = "http://localhost:8080/meilenstein_histories/getHistory/"+ id;
+    const url: string = this.API_URL + "meilenstein_histories/getHistory/"+ id;
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);
@@ -236,7 +239,7 @@ export class HttpService {
 
   getEmployees(): Observable<Person> {
 
-    const url = "http://localhost:8080/personen/all";
+    const url = this.API_URL + "personen/all";
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<Person>(url);
@@ -245,7 +248,7 @@ export class HttpService {
 
   getGaestePerPPK(): Observable<any> {
 
-    const url = "http://localhost:8080/gaeste/all";
+    const url = this.API_URL + "gaeste/all";
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);
@@ -254,7 +257,7 @@ export class HttpService {
 
   getEmployeeById(id: number): Observable<Person> {
 
-    const url: string = "http://localhost:8080/personen/getByID/" + id;
+    const url: string = this.API_URL + "personen/getByID/" + id;
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<Person>(url);
@@ -263,7 +266,7 @@ export class HttpService {
 
   getResourcesByID(id: number): Observable<Person> {
 
-    const url: string = "http://localhost:8080/ressourcen/getArbeitsaufwand/" + id;
+    const url: string = this.API_URL + "ressourcen/getArbeitsaufwand/" + id;
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<Person>(url);
@@ -273,13 +276,13 @@ export class HttpService {
   public addEmployee(person: Person): Observable<any> {
     const headers = new Headers({ "Content-Type": "application/json" });
 
-    const url = 'http://localhost:8080/personen/add';
+    const url = this.API_URL + 'personen/add';
     return this.http.post<Person>(url, person);
   }
 
   countFachkoordinator(id: Person): Observable<any> {
 
-    const url: string = "http://localhost:8080/einsaetze/countFachkoordinator/" + id;
+    const url: string = this.API_URL + "einsaetze/countFachkoordinator/" + id;
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<Person>(url);
@@ -288,7 +291,7 @@ export class HttpService {
 
   countProjects(id: number): Observable<Person> {
 
-    const url: string = "http://localhost:8080/einsaetze/countProjects/" + id;
+    const url: string = this.API_URL + "einsaetze/countProjects/" + id;
 
     // console.log(this.http.get<Person>(url));
     return this.http.get<Person>(url);
@@ -297,7 +300,7 @@ export class HttpService {
 
   countProjectmanager(id: number): Observable<Person> {
 
-    const url: string = "http://localhost:8080/einsaetze/countProjektmanager/" + id;
+    const url: string = this.API_URL + "einsaetze/countProjektmanager/" + id;
 
     // console.log(this.http.get<Person>(url));
     return this.http.get<Person>(url);
@@ -306,7 +309,7 @@ export class HttpService {
 
   getEmployeesAndRessources():  Observable<any> {
 
-    const url = "http://localhost:8080/personen/getPersonAndArbeitsaufwand";
+    const url = this.API_URL + "personen/getPersonAndArbeitsaufwand";
 
     // console.log(this.http.get<any>(url));
     return this.http.get(url);
@@ -314,7 +317,7 @@ export class HttpService {
   }
   getEmployeesAndRessourcesPerProjekt(id: any):  Observable<any> {
 
-    const url = "http://localhost:8080/personen/getPersonAndArbeitsaufwandPerProjekt/"+ id;
+    const url = this.API_URL + "personen/getPersonAndArbeitsaufwandPerProjekt/"+ id;
 
     // console.log(this.http.get<any>(url));
     return this.http.get(url);
@@ -323,7 +326,7 @@ export class HttpService {
 
   getLogin(username: string, password: string):  Observable<Object> {
 
-    const url = "http://localhost:8080/personen/login/" + username + "/" + password;
+    const url = this.API_URL + "personen/login/" + username + "/" + password;
 
     // console.log(this.http.get<any>(url));
     return this.http.get(url);
@@ -331,7 +334,7 @@ export class HttpService {
   }
   getDepartments(): Observable<any> {
 
-    const url = "http://localhost:8080/abteilungen/all";
+    const url = this.API_URL + "abteilungen/all";
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);
@@ -340,7 +343,7 @@ export class HttpService {
 
   getDepartmentById(id: number): Observable<any> {
 
-    const url: string = "http://localhost:8080/abteilungen/getByID/" + id;
+    const url: string = this.API_URL + "abteilungen/getByID/" + id;
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);
@@ -349,7 +352,7 @@ export class HttpService {
 
   getCategorie(): Observable<any> {
 
-    const url = "http://localhost:8080/kategorien/all";
+    const url = this.API_URL + "kategorien/all";
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);
@@ -358,7 +361,7 @@ export class HttpService {
 
   getCategorieByID(id: number): Observable<any> {
 
-    const url: string = "http://localhost:8080/kategorien/getByID/" + id;
+    const url: string = this.API_URL + "kategorien/getByID/" + id;
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);

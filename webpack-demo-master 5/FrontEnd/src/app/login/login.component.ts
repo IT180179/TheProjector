@@ -56,8 +56,6 @@ export class LoginComponent implements OnInit {
             });
           }
         });
-        // this.dataService.user_id = this.userdata[0].personen_id;
-        //console.log(this.userdata[0].personen_id)
 
         this.dataService.isloggedIn = true
         if(this.role == 'admin'){
