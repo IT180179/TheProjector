@@ -16,10 +16,11 @@ public class FreieFolien extends PanacheEntityBase {
     private String beschreibung;
     private String freitext;
 
-    //private String upload;
-    @Lob
+    @Column(length = 60000)
+    private String upload;
+    /*@Lob
     @Column(name = "upload")
-    private byte[] upload;
+    private byte[] upload;*/
 
     @ManyToOne
     @JoinColumns({
@@ -28,21 +29,21 @@ public class FreieFolien extends PanacheEntityBase {
     })
     private PPK_Projekte ppk_projekte_id;
 
-    public byte[] getUpload() {
+    /*public byte[] getUpload() {
         return upload;
     }
 
     public void setUpload(byte[] upload) {
         this.upload = upload;
-    }
+    }*/
 
-    /*public String getUpload() {
+    public String getUpload() {
         return upload;
     }
 
     public void setUpload(String upload) {
         this.upload = upload;
-    }*/
+    }
 
     public PPK_Projekte getPpk_projekte_id() {
         return ppk_projekte_id;

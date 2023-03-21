@@ -38,7 +38,7 @@ public class FreieFolienResource {
         return Response.ok(found).build();
     }
 
-    @POST
+    /*@POST
     @Path("/add")
     @Transactional
     public Response add(FreieFolienDTO freieFolienDTO) {
@@ -56,6 +56,14 @@ public class FreieFolienResource {
         } catch (Exception exception) {
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(exception.getMessage()).build();
         }
+        return Response.ok(freieFolien).build();
+    }*/
+
+    @POST
+    @Path("/add")
+    @Transactional
+    public Response add(FreieFolien freieFolien) {
+        this.freieFolienRepo.persist(freieFolien);
         return Response.ok(freieFolien).build();
     }
 
