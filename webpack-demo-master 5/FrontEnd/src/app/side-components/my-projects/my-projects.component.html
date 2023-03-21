@@ -3,7 +3,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
   <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
   <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 
 <div id="main" >
@@ -21,7 +20,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let testobject of projects">
-        <td><button mat-raised-button (click)="openDialog(testobject.projekt_id)">{{testobject.inhalt}}</button></td>
+        <td><button mat-raised-button (click)="openDialog(testobject.projekt_id)">{{testobject.titel}}</button></td>
         <td>{{displayStatus(testobject.status)}}</td>
         <td>{{testobject.ziel}}</td>
         <td>{{testobject.start_datum | date: 'dd.MM.yyyy'}}</td>

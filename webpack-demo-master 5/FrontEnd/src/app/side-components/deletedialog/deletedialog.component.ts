@@ -55,10 +55,9 @@ export class DeletedialogComponent implements OnInit {
           duration: 3000,
           panelClass: 'snackbar-dark'
         });
+
       }
     });
-    // Fenster neuladen um gelöschte nicht mehr zu zeigen
-    window.location.reload();
   }
   onNoClick(): void {
     this.dialogRef.close();

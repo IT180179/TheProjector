@@ -23,7 +23,7 @@ export class StartMenuComponent implements OnInit {
     if(!this.data.isloggedIn){
       this.router.navigate(['**']);
     }
-    console.log(this.data.role)
+    // console.log(this.data.role)
     this.recht = this.data.recht;
     this.isLoggedIn = this.data.isloggedIn
     this.ppk = this.service.getPPK().subscribe({

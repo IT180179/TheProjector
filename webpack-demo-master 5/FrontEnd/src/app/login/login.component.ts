@@ -34,21 +34,21 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('expires_at', value.expires_at);
         // console.log(value)
         const decodedToken = jwt_decode(value.token)
-        console.log(decodedToken);
+        // console.log(decodedToken);
         // @ts-ignore
         this.role = decodedToken.groups[0];
         // @ts-ignore
         this.username = decodedToken.upn;
-        console.log(this.username)
-        console.log(this.role)
+        // console.log(this.username)
+        // console.log(this.role)
         this.dataService.role = this.role
 
         this.userdata = this.http.searchUser(this.username).subscribe({
           next: value => {
-            console.log(value)
+            // console.log(value)
             this.userdata = value
             this.dataService.user_id = value[0].personen_id;
-            console.log(value[0].personen_id)
+             // console.log(value[0].personen_id)
           }, error: err => {
             this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
               duration: 3000,

@@ -5,7 +5,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
     <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
     <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 <body style="background-color: #e5f6ff">
 <div id="main">
@@ -35,70 +34,18 @@
                 </mat-error>
             </mat-form-field>
 
-            <!--    <mat-form-field appearance="outline" class="full-width-field">
-                    <mat-label>Beschreibung</mat-label>
-                    <input matInput class="form-control" formControlName="beschreibung"
-                           id="beschreibung"  type="text">
-                    <mat-error *ngIf="myForm.controls['beschreibung'].hasError('required')">
-                        Überschrift muss ausgefüllt werden!
-                    </mat-error>
-                    <mat-error *ngIf="myForm.controls['beschreibung'].hasError('maxlength')">
-                        Zeichenanzahl wurde überschritten!
-                    </mat-error>
-                </mat-form-field>-->
-
-
-  <!--          <div class=" full-width-field form-group">
-                <div class="file full-width-field">
-                    <label class="file-label full-width-field">
-
-                        <<div class="file">
-                            <label class="file-label">
-                                <input style="background-color: #e5f6ff" (change)="onSelectNewFile($event.target)" #fileUpload class="file-input" id="file" name="resume" type="file">
-                                <span class="file-cta">
-                                  <span class="file-icon">
-                                    <i class="fas fa-upload"></i>
-                                  </span>
-                                  <span class="file-label">
-                                    Wähle ein Bild ...
-                                  </span>
-                                </span>
-                            </label>
-                            <button (click)="fileUpload.click()"></button>
-                        </div>
-                        <br>
-                        <img [hidden]="hidden" [src]="imageUrl" alt="Image Review">
-                   <input type="file" id="file" (change)="onSelectNewFile($event.target)">
-                        <br>
-                        <textarea rows="10" disabled [innerHTML]="base64"></textarea>
-                         <button (click)="convertFileToBase64()">Convert Image To Base64</button>
-                    </label>
-                </div>
-                <br>
-            </div>
-            <img *ngIf="imageSrc" [src]="imageSrc"
-                 style="height: 300px; width:500px; margin-left:15%; margin-right:15%;">
-            <button (click)="submit(myForm.value)" [disabled]="!myForm.valid"
-                    class="button full-width-field btn btn-primary" style="background-color: #005281; color:white;"
-                    type="submit">Freigeben
-            </button>-->
-
             <div class=" full-width-field form-group">
                 <div class="file full-width-field">
                     <label class="file-label full-width-field">
+                        <img id ="imageView" [src]="imageUrl" alt="Bild auswählen">
 
-                        <label for="file">Wähle ein Bild
-                            <img [src]="imageUrl" alt="Image Review">
-                        </label>
-                        <input type="file" id="file" (change)="onSelectNewFile($event.target)">
+                        <input type="file" id="file" name="file" (change)="onFileSelectedNew($event)" accept="image/png, image/jpeg">
                         <br>
-                        <!-- <textarea rows="10" disabled [innerHTML]="base64"></textarea>
-                         <button (click)="convertFileToBase64()">Convert Image To Base64</button> -->
                     </label>
                 </div>
                 <br>
             </div>
-            <img *ngIf="imageSrc" [src]="imageSrc" style="height: 300px; width:500px; margin-left:15%; margin-right:15%;">
+            <img *ngIf="imageSrc" [src]="imageSrc" id="img" style="height: 300px; width:500px; margin-left:15%; margin-right:15%;">
             <button [disabled]="!myForm.valid" (click)="submit(myForm.value)" class="button full-width-field btn btn-primary" style="background-color: #005281; color:white;"
                     type="submit">Freigeben</button>
         </form>

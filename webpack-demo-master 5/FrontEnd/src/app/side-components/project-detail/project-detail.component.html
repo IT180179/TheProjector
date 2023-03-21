@@ -9,10 +9,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
   <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
   <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 <body style="background-color: #e5f6ff">
-<h1 class="subtitle is-2" style="color: #005281; margin-bottom: 2%;">{{project.inhalt}} <button class="btn_change" routerLink="/change_project" (click)="onNoClick()"><mat-icon>create</mat-icon></button></h1>
+<h1 class="subtitle is-2" style="color: #005281; margin-bottom: 2%;">{{project.titel}} <button class="btn_change" routerLink="/change_project" (click)="onNoClick()"><mat-icon>create</mat-icon></button></h1>
     <br>
     <table class="table is-fullwidth is-hoverable is-centered is-bordered" id="project_table">
       <thead>

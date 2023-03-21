@@ -16,7 +16,7 @@ export class AuthService {
     // console.log("Passwort: " + password)
     // console.log("Username: " + username)
 
-    console.log("Return: " + JSON.stringify(this.http.post(this.SERVER_URL, {username: username, passwort: password})))
+   // console.log("Return: " + JSON.stringify(this.http.post(this.SERVER_URL, {username: username, passwort: password})))
     return this.http.post(this.SERVER_URL, {username: username, passwort: password});
   }
 

@@ -284,6 +284,13 @@ export class HttpService {
     return this.http.post<Person>(url, person);
   }
 
+
+  public postFreieFolie(newdata: any): Observable<any> {
+
+    const url = this.API_URL + 'freiefolien/add';
+    return this.http.post(url, newdata);
+  }
+
   countFachkoordinator(id: Person): Observable<any> {
 
     const url: string = this.API_URL + "einsaetze/countFachkoordinator/" + id;
@@ -322,6 +329,24 @@ export class HttpService {
   getEmployeesAndRessourcesPerProjekt(id: any):  Observable<any> {
 
     const url = this.API_URL + "personen/getPersonAndArbeitsaufwandPerProjekt/"+ id;
+
+    // console.log(this.http.get<any>(url));
+    return this.http.get(url);
+
+  }
+
+  getAbteilung():  Observable<any> {
+
+    const url = this.API_URL + "abteilungen/all" ;
+
+    // console.log(this.http.get<any>(url));
+    return this.http.get(url);
+
+  }
+
+  getBereiche():  Observable<any> {
+
+    const url = this.API_URL + "bereiche/all" ;
 
     // console.log(this.http.get<any>(url));
     return this.http.get(url);

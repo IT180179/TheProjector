@@ -13,18 +13,18 @@
     <form #userPost="ngForm" (ngSubmit)="onSubmit(addressForm.value)" [formGroup]="addressForm" novalidate>
       <mat-label for="datum">Datum des PPK-Meetings</mat-label>
       <br>
-      <input [min]="todayDate" class="full-width-field datepicker" value="" type="date" id="datum" formControlName="datum">
+      <input [min]="todayDate"  (change)="toDisableGast()" class="full-width-field datepicker" value="" type="date" id="datum" formControlName="datum">
       <br>
       <label style="color: #005281; ">Projekte hinzufügen:</label>
-      <section *ngFor="let testobject of projects" class="example-section" color="primary" style="margin: 2%;">
+      <section *ngFor="let testobject of projects" class="example-section"  color="primary" style="margin: 2%;">
         <input type="checkbox" id="checkbox{{testobject.projekt_id}}"
                       value="{{testobject.projekt_id}}">{{testobject.titel}}
       </section>
       <div class="field">
 
       <br><br>
-      <button [disabled]="!addressForm.valid"  class="button is-dark" (click)="toDisableGast()" style="background-color: #005281;"
-              type="submit" > Anlegen</button>
+     <!-- <a [disabled]="!addressForm.valid"  class="button is-dark" (click)="toDisableGast()" style="background-color: #005281;"
+              type="submit" > Anlegen</a>-->
       <br><br>
 
         <button mat-raised-button [disabled]="disable" (click)="openDialog()" class="button is-dark"
@@ -32,7 +32,7 @@
           hinzufügen</button>
       </div>
       <br><br>
-      <button class="button  full-width-field is-dark" [disabled]="disable" style="background-color: #005281;" (click)="openSummary()"  routerLink="/start_menu"> Fertig</button>
+      <a class="button  full-width-field is-dark"  style="background-color: #005281;" (click)="openSummary()"  routerLink="/start_menu"> Fertig</a>
       <br/>
     </form>
   </div>

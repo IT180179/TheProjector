@@ -19,43 +19,60 @@ export class CreateEmployeeFormComponent implements OnInit {
               public service: HttpService, private fb: FormBuilder, private snackBar: MatSnackBar) {
   }
 
-  addressForm = this.fb.group({
-    vorname: [null, Validators.required],
-    nachname: [null, Validators.required],
-    passwort: [null, Validators.compose([Validators.minLength(4), Validators.required])]
-  });
-
   data: any;
   newdata: any;
   employees: any;
-  roles: any;
+  abteilung: any;
+  bereich: any;
+
+  addressForm = this.fb.group({
+    vorname: [null, Validators.required],
+    nachname: [null, Validators.required],
+    passwort: [null, Validators.compose([Validators.minLength(4), Validators.required])],
+    abteilungs_id: [null, Validators.required],
+    bereich_id: [null, Validators.required]
+  });
 
   ngOnInit(): void {
-    if(!this.data.isloggedIn){
-      this._router.navigate(['**']);
-    }
+
     this.employees = this.service.getEmployees().subscribe({
       next: value => {
         // console.log(value)
         this.employees = value
       }, error: err => {}
     });
-    this.roles = this.service.getRoles().subscribe({
+    this.abteilung = this.service.getAbteilung().subscribe({
       next: value => {
-        // console.log(value)
-        this.roles = value
+        console.log(value)
+        this.abteilung = value
       }, error: err => {}
     });
+    this.bereich = this.service.getBereiche().subscribe({
+      next: value => {
+        console.log(value)
+        this.bereich = value
+      }, error: err => {}
+    });
+    if(!this.data.isloggedIn){
+      this._router.navigate(['**']);
+    }
   }
 
-  onSubmit(data: Person) {
+  onSubmit(data: any) {
     //JSON für POST
     this.newdata = {
       vorname: data.vorname,
       nachname: data.nachname,
       rechte: 2,
-      passwort: data.passwort
+      passwort: data.passwort,
+      abteilungs_id:{
+        abteilungs_id: data.abteilungs_id,
+        bereichs_id:{
+          bereich_id: data.bereich_id
+        }
+      }
     };
+
     //POST-Person
     this.http.post<Person>('http://localhost:8080/personen/add', this.newdata)
       .subscribe({
@@ -70,13 +87,13 @@ export class CreateEmployeeFormComponent implements OnInit {
       });
     this.openSummary();
   }
+
   openSummary() {
     const dialogRef = this.dialog.open(SummaryComponent, {
       width: '400px',
       height: '250px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      // console.log('The dialog was closed');
       this._router.navigate(['/add-employee']);
     });
   }

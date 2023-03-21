@@ -8,7 +8,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" rel="stylesheet"/>
   <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet"/>
   <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 
 <body>
@@ -41,6 +40,26 @@
         </mat-error>
         <mat-error *ngIf="addressForm.controls['passwort'].hasError('pattern')">
           Passwort muss Groß- Kleinbuchstaben und Zahlen enthalten!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width-field field">
+        <mat-label style="color: #005281;">Abteilung</mat-label>
+        <mat-select   matNativeControl required formControlName="abteilungs_id">
+          <mat-option *ngFor="let testobject of abteilung"
+                      [value]="testobject.abteilungs_id">{{testobject.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="addressForm.hasError('required')">
+          Projekt muss ausgewählt werden!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width-field field">
+        <mat-label style="color: #005281;">Bereich</mat-label>
+        <mat-select  matNativeControl required formControlName="bereich_id">
+          <mat-option *ngFor="let testobject of bereich"
+                      [value]="testobject.bereich_id">{{testobject.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="addressForm.hasError('required')">
+          Projekt muss ausgewählt werden!
         </mat-error>
       </mat-form-field>
       <div class="field">

@@ -90,11 +90,11 @@ export class ChangeMilestoneFormComponent implements OnInit {
 
     //JSON für das UPDATE
     this.newdata = {
-      meilensteine_id: this.meilenstein_id,
-      titel: data.titel,
-      beschreibung: data.beschreibung,
+      meilensteine_id: this.meilenstein_id ||this.milestone.meilenstein_id,
+      titel: data.titel || this.milestone.titel,
+      beschreibung: data.beschreibung || this.milestone.beschreibung,
       status: data.status,
-      end_datum: data.end_datum,
+      end_datum: data.end_datum || this.milestone.end_datum,
       projekt_id: {
         projekt_id: this.projekt_id
       }
@@ -104,7 +104,7 @@ export class ChangeMilestoneFormComponent implements OnInit {
       .subscribe({
         next: value => {
           // console.log(value)
-          this.snackBar.open(`Daten konnten nicht geändert werden`, undefined, {
+          this.snackBar.open(`Änderungen konnten gespeichert werden`, undefined, {
             duration: 3000,
             panelClass: 'snackbar-light'
           });

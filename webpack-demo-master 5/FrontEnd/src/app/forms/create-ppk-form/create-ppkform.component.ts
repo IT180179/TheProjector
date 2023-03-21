@@ -34,14 +34,10 @@ export class CreatePPKFormComponent implements OnInit {
   projektAnzahl: any;
 
   ngOnInit() {
-    console.log("hi")
-    //if(!this.data.isloggedIn){
-     // this.router.navigate(['**']);
-    //}
 
     this.projects = this.service.getProjects().subscribe({
         next: value => {
-         console.log(value)
+         // console.log(value)
           this.projects = value
         }, error: err => {
         console.log("Fehler")
@@ -49,12 +45,10 @@ export class CreatePPKFormComponent implements OnInit {
     });
     this.projektAnzahl = this.service.getAnzahlProjekt().subscribe({
       next: (value: any) => {
-         console.log(value)
+        // console.log(value)
         this.projektAnzahl = value
       }, error: (err: { message: any; }) => {}
     });
-
-
   }
 
   onSubmit(data: any) {
@@ -130,6 +124,7 @@ export class CreatePPKFormComponent implements OnInit {
   }
 
   openDialog() {
+    try {
     if (this.ppk_id != null && this.ppk_date != null) {
       const dialogRef = this.dialog.open(GaesteListComponent, {
         width: '500px',
@@ -138,6 +133,9 @@ export class CreatePPKFormComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         // console.log('The dialog was closed');
       });
+    }
+    } catch (error) {
+      // Code to handle the error
     }
   }
 

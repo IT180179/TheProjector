@@ -47,9 +47,15 @@ insert into Kategorien (name)
 values ('Softwareprojekt'),
        ('Organisationsprojekt');
 insert into Projekte (titel, inhalt, ziel, status, budget, start_datum, end_datum, kategorie_id_kategorien_id)
-values ('The Projector', 'The Projector', 'The Projector', 1, 0, '2022-07-04', '2023-03-29', 1),
-       ('Aurora', 'Aurora', 'Aurora', 1, 0, '2023-07-27', '2023-01-01', 1),
-       ('Einkaufssoftware', 'Einkaufssoftware', 'Einkaufssoftware', 1, 0, '2023-07-27', '2023-01-01', 1);
+values ('The Projector', 'The Projector ist ein Tool für die Projektverwaltung und Generierung einer Powerpoint', 'Einfach und Übersichtliche Projektverwaltung', 1, 0, '2022-07-04', '2023-03-29', 1),
+       ('Aurora', 'Aurora ein Projekt der Sparkasse OÖ ', 'Aurora ein Projekt der Sparkasse OÖ', 1, 848750, '2023-07-27', '2023-01-01', 1),
+       ('Digitaler Tresor', 'Digitaler Tresor ein Projekt der Sparkasse OÖ ', 'Digitaler Tresor ein Projekt der Sparkasse OÖ ', 1, 75000, '2023-07-27', '2023-01-01', 1),
+       ('Einkaufssoftware', 'Einkaufssoftware ein Projekt der Sparkasse OÖ', 'Einkaufssoftware ein Projekt der Sparkasse OÖ', 1, 2000, '2023-07-27', '2023-01-01', 1),
+       ('LeoGreen', 'Quiz über die Natur', 'Menschen über das Klima und die Natur zu infomieren', 1, 10000, '2022-07-04', '2023-03-29', 1),
+       ('PicknGo', 'Eine Anwendung zum Essenbestellen', 'Leichtes Essen bestellen ermöglichen', 1, 100, '2023-07-27', '2023-01-01', 1),
+       ('Der Cagitzer', 'Reservierungssystem für Gasthäuser', 'Leichtes Verwalten und Reservieren der Reservierungen', 1, 10000, '2023-07-27', '2023-01-01', 1),
+       ('Desking', 'Zeiterfassungs-Tool', 'Ein Tool zur Zeiterfassung', 1, 200, '2022-07-04', '2023-03-29', 1),
+       ('LeoTools', 'Online Equimentverleih', 'Leichtes und fehlerfreier Verleih von Geräte', 1, 10, '2023-07-27', '2023-01-01', 1);
 insert into Einsaetze (personen_id_personen_id, projekte_id_projekt_id, rollen_id_rollen_id, arbeitsstunden)
 values (3, 1, 3, 38.5),
        (4, 1, 3, 38.5),
@@ -75,7 +81,25 @@ values ('Projektstart erfolgt', 'Projektstart erfolgt', 1, '2022-07-04', '2022-0
        ('Projektstart erfolgt', 'Projektstart erfolgt', 1, '2022-07-04', '2022-07-04', 2),
        ('Projektende', 'Projektende', 1, '2022-07-04', '2022-08-04', 2),
        ('Projektstart erfolgt', 'Projektstart erfolgt', 1, '2022-07-04', '2022-07-04', 3),
-       ('Projektende', 'Projektende', 1, '2022-07-04', '2022-08-04', 3);
+       ('Projektende', 'Projektende', 1, '2022-07-04', '2022-08-04', 3),
+       ('Projektstart erfolgt', 'Projektstart erfolgt', 1, '2022-07-04', '2022-07-04', 4),
+       ('Pflichtenheft fertig', 'Pflichtenheft fertig', 2, '2022-07-04', '2022-07-15', 4),
+       ('Backend mit DB', 'Backend mit DB', 1, '2022-07-15', '2022-07-04', 4),
+       ('Deployment in Testumgebung', 'Deployment in Testumgebung', 1, '2022-07-04', '2022-12-23', 4),
+       ('Testen und Qualitätssicherung abgeschlossen', 'Testen und Qualitätssicherung abgeschlossen', 1, '2022-07-04', '2023-02-24', 5),
+       ('Projektstart erfolgt', 'Projektstart erfolgt', 1, '2022-07-04', '2022-07-04', 5),
+       ('Projektende', 'Projektende', 1, '2022-07-04', '2022-08-04', 5),
+       ('Projektstart erfolgt', 'Projektstart erfolgt', 1, '2022-07-04', '2022-07-04', 6),
+       ('Projektende', 'Projektende', 1, '2022-07-04', '2022-08-04', 6),
+       ('Projektstart erfolgt', 'Projektstart erfolgt', 1, '2022-07-04', '2022-07-04', 7),
+       ('Projektende', 'Projektende', 1, '2022-07-04', '2022-08-04', 7),
+       ('Projektstart erfolgt', 'Projektstart erfolgt', 1, '2022-07-04', '2022-07-04', 8),
+       ('Pflichtenheft fertig', 'Pflichtenheft fertig', 2, '2022-07-04', '2022-07-15', 8),
+       ('Backend mit DB', 'Backend mit DB', 1, '2022-07-15', '2022-07-04', 8),
+       ('Deployment in Testumgebung', 'Deployment in Testumgebung', 1, '2022-07-04', '2022-12-23', 8),
+       ('Testen und Qualitätssicherung abgeschlossen', 'Testen und Qualitätssicherung abgeschlossen', 1, '2022-07-04', '2023-02-24', 9),
+       ('Projektstart erfolgt', 'Projektstart erfolgt', 1, '2022-07-04', '2022-07-04', 9),
+       ('Projektende', 'Projektende', 1, '2022-07-04', '2022-08-04', 9);
 insert into Meilenstein_Histories (meilenstein_id_meilensteine_id, aenderung, alter_status, datum, end_datum)
 values (2, 'End-Datum geändert.', 1, '2022-07-04', '2022-07-15'),
        (2, 'End-Datum geändert.', 1, '2022-07-04', '2022-07-20');
