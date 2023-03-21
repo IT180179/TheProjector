@@ -49,7 +49,7 @@ export class FreieFolieFormComponent implements OnInit {
     if(!this.dataService.isloggedIn){
       this._router.navigate(['**']);
     }
-    this.ppk_id = this.dataService.ppk_id
+    this.ppk_id = this.dataService.getppk_id()
     this.projekt_id = this.dataService.projekt_id
   }
   get f(){
@@ -90,17 +90,19 @@ export class FreieFolieFormComponent implements OnInit {
       ppk_projekte_id:{
         ppk_projekte_id:{
           ppk_id:{
-            ppk_id: Number(this.ppk_id)
+            ppk_id: this.dataService.getppk_id()
           },
           projekte_id:{
-            projekt_id: Number(this.projekt_id)
+            projekt_id: this.dataService.projekt_id
           }}
       },
       titel: value.beschreibung,
       freitext: value.freitext,
-      upload: this.base64,
+      bild: this.base64,
       beschreibung: value.beschreibung
     }
+
+    console.log(this.newdata)
     this.openSummary()
     this.closeDialog()
   }
@@ -125,25 +127,25 @@ export class FreieFolieFormComponent implements OnInit {
   base64textString = [];
 
   onSelectNewFile(files: any) {
-    this.fileSelected = files.files[0]
+    this.fileSelected = files.target.files[0]
     this.imageUrl = this.sant.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fileSelected)) as string;
     console.log(this.base64)
-    this.convertFileToBase64();}
-  blob: Blob | undefined
+    this.convertFileToBase64();
+  }
 
   convertFileToBase64(): void{
     let reader = new FileReader()
     reader.readAsDataURL(this.fileSelected);
     reader.onloadend = () => {
       this.base64 = reader.result as string;
-      console.log("New" + this.base64)
+      //console.log("New" + this.base64)
     }
 
-    this.blob = this.convertToBlob(this.base64);
-    console.log(this.blob)
+    //this.blob = this.convertToBlob(this.base64);
+    //console.log(this.blob)
 
-    const resizedBlob = this.resizeBlob(this.blob, 300, 300);
-    console.log(resizedBlob)
+    //const resizedBlob = this.resizeBlob(this.blob, 300, 300);
+    //console.log(resizedBlob)
   }
 
   convertToBlob(imageData: any): Blob {
@@ -225,9 +227,8 @@ export class FreieFolieFormComponent implements OnInit {
         this.sendImage(blob);
       }, 'image/jpeg', 0.7);
     };
-    }
+  }
 
-    newData: any
   byteArray: any
 
   sendImage(blob: Blob) {
@@ -235,7 +236,6 @@ export class FreieFolieFormComponent implements OnInit {
     console.log(blob)
     formData.append('image', blob, 'image.jpg');
     console.log(formData)
-
     console.log(blob)
     this.downloadImage(blob)
 
@@ -245,7 +245,6 @@ export class FreieFolieFormComponent implements OnInit {
       this.byteArray = new Uint8Array(reader.result as ArrayBuffer);
       console.log(this.byteArray); // byteArray enthält die Bytes des Blobs als Uint8Array
     };
-
     reader.readAsArrayBuffer(blob);
 
     this.newdata={
@@ -261,10 +260,7 @@ export class FreieFolieFormComponent implements OnInit {
           },
           "projekte_id": {
             "projekt_id": 0,
-          }
-        }
-      }
-    }
+          }}}};
 
     this.httpService.postFreieFolie(this.newdata).subscribe(
        (response) => {
