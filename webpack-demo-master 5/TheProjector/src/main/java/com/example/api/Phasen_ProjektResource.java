@@ -22,7 +22,7 @@ public class Phasen_ProjektResource {
     }
 
     @GET
-    @Path("/all")
+    @Path("/getAll")
     public Response getAll() {
         var all = this.phasen_projektRepo.listAll();
         return Response.ok(all).build();
