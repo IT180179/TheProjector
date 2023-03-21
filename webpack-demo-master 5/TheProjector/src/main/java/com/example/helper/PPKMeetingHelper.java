@@ -417,7 +417,7 @@ public class PPKMeetingHelper {
             byte[] raute_ende = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/raute2.png"));
             XSLFPictureData raute_ende_pd = generiertePowerPointPraesentation.addPicture(raute_ende, PictureData.PictureType.PNG);
 
-            for(int i = 0; i < projekteanzahl; i++) {
+            for(int i = 0; i < allSoftwareanforderungen.size() ; i++) {
                 XSLFSlide softwareanforderungsFolie = generiertePowerPointPraesentation.createSlide(title);
                 //----Logo anlegen
                 XSLFPictureShape pic_softwareanforderungsFolie = softwareanforderungsFolie.createPicture(pd);
@@ -526,145 +526,61 @@ public class PPKMeetingHelper {
 
                 //----------------------------------------------------------------------------------------------------------ABLAUF-DIAGRAMM
                 //Ablaufdiagramm
-
                 XSLFPictureShape raute_start_pic = softwareanforderungsFolie.createPicture(raute_start_pd);
-                raute_start_pic.setAnchor(new Rectangle(562,66,65,45));
-
-                XSLFAutoShape anforderungserhebung = softwareanforderungsFolie.createAutoShape();
-                anforderungserhebung.setShapeType(ShapeType.RECT);
-                anforderungserhebung.setAnchor(new Rectangle(490, 110, 210, 35));
-
-                anforderungserhebung.setFillColor(new Color(172, 192, 219));
-                anforderungserhebung.setLineWidth(0.5);
-                anforderungserhebung.setLineColor(new Color(172, 192, 219));
-                anforderungserhebung.setHorizontalCentered(true);
-
-                anforderungserhebung.setText("Anforderungserhebung");
-                XSLFTextRun tr_anforderungserhebung = anforderungserhebung.getTextParagraphs().get(0).getTextRuns().get(0);
-                tr_anforderungserhebung.setFontSize(15.0);
-                tr_anforderungserhebung.setBold(true);
-                tr_anforderungserhebung.setFontColor(Color.white);
-                anforderungserhebung.setVerticalAlignment(org.apache.poi.sl.usermodel.VerticalAlignment.MIDDLE);
+                raute_start_pic.setAnchor(new Rectangle(562, 66, 65, 45));
 
                 XSLFPictureShape pfeil1 = softwareanforderungsFolie.createPicture(pfeil_pd);
-                pfeil1.setAnchor(new Rectangle(588,147,13,13));
-
-                //Softwarelösung evaluieren
-                XSLFAutoShape softwareloesung_evaluieren = softwareanforderungsFolie.createAutoShape();
-                softwareloesung_evaluieren.setShapeType(ShapeType.RECT);
-                softwareloesung_evaluieren.setAnchor(new Rectangle(490, 160, 210, 35));
-
-                softwareloesung_evaluieren.setFillColor(new Color(172, 192, 219));
-                softwareloesung_evaluieren.setLineWidth(0.5);
-                softwareloesung_evaluieren.setLineColor(new Color(172, 192, 219));
-                softwareloesung_evaluieren.setHorizontalCentered(true);
-
-                softwareloesung_evaluieren.setText("Softwarelösung evaluieren");
-                XSLFTextRun tr_softwareloesung_evaluieren = softwareloesung_evaluieren.getTextParagraphs().get(0).getTextRuns().get(0);
-                tr_softwareloesung_evaluieren.setFontSize(15.0);
-                tr_softwareloesung_evaluieren.setBold(true);
-                tr_softwareloesung_evaluieren.setFontColor(Color.white);
-                softwareloesung_evaluieren.setVerticalAlignment(org.apache.poi.sl.usermodel.VerticalAlignment.MIDDLE);
+                pfeil1.setAnchor(new Rectangle(588, 147, 13, 13));
 
                 XSLFPictureShape pfeil2 = softwareanforderungsFolie.createPicture(pfeil_pd);
-                pfeil2.setAnchor(new Rectangle(588,197,13,13));
-
-                //RFI erstellen
-                XSLFAutoShape rfi = softwareanforderungsFolie.createAutoShape();
-                rfi.setShapeType(ShapeType.RECT);
-                rfi.setAnchor(new Rectangle(490, 210, 210, 35));
-
-                rfi.setFillColor(new Color(172, 192, 219));
-                rfi.setLineWidth(0.5);
-                rfi.setLineColor(new Color(172, 192, 219));
-                rfi.setHorizontalCentered(true);
-
-                rfi.setText("RFI erstellen");
-                XSLFTextRun tr_rfi = rfi.getTextParagraphs().get(0).getTextRuns().get(0);
-                tr_rfi.setFontSize(15.0);
-                tr_rfi.setBold(true);
-                tr_rfi.setFontColor(Color.white);
-                rfi.setVerticalAlignment(org.apache.poi.sl.usermodel.VerticalAlignment.MIDDLE);
+                pfeil2.setAnchor(new Rectangle(588, 197, 13, 13));
 
                 XSLFPictureShape pfeil3 = softwareanforderungsFolie.createPicture(pfeil_pd);
-                pfeil3.setAnchor(new Rectangle(588,247,13,13));
-
-                //Produktpräsentation
-                XSLFAutoShape produktpraesentation = softwareanforderungsFolie.createAutoShape();
-                produktpraesentation.setShapeType(ShapeType.RECT);
-                produktpraesentation.setAnchor(new Rectangle(490, 260, 210, 35));
-
-                produktpraesentation.setFillColor(new Color(172, 192, 219));
-                produktpraesentation.setLineWidth(0.5);
-                produktpraesentation.setLineColor(new Color(172, 192, 219));
-                produktpraesentation.setHorizontalCentered(true);
-
-                produktpraesentation.setText("Produktpräsentation");
-                XSLFTextRun tr_produktpraesentation = produktpraesentation.getTextParagraphs().get(0).getTextRuns().get(0);
-                tr_produktpraesentation.setFontSize(15.0);
-                tr_produktpraesentation.setBold(true);
-                tr_produktpraesentation.setFontColor(Color.white);
-                produktpraesentation.setVerticalAlignment(org.apache.poi.sl.usermodel.VerticalAlignment.MIDDLE);
+                pfeil3.setAnchor(new Rectangle(588, 247, 13, 13));
 
                 XSLFPictureShape pfeil4 = softwareanforderungsFolie.createPicture(pfeil_pd);
-                pfeil4.setAnchor(new Rectangle(588,297,13,13));
-
-                //Softwarelösung bestimmen
-                XSLFAutoShape softwareloesung_erstellen = softwareanforderungsFolie.createAutoShape();
-                softwareloesung_erstellen.setShapeType(ShapeType.RECT);
-                softwareloesung_erstellen.setAnchor(new Rectangle(490, 310, 210, 35));
-                softwareloesung_erstellen.setFillColor(new Color(172, 192, 219));
-                softwareloesung_erstellen.setLineWidth(0.5);
-                softwareloesung_erstellen.setLineColor(new Color(172, 192, 219));
-                softwareloesung_erstellen.setHorizontalCentered(true);
-
-                softwareloesung_erstellen.setText("Softwarelösung bestimmen");
-                XSLFTextRun tr_softwareloesung_erstellen = softwareloesung_erstellen.getTextParagraphs().get(0).getTextRuns().get(0);
-                tr_softwareloesung_erstellen.setFontSize(15.0);
-                tr_softwareloesung_erstellen.setBold(true);
-                tr_softwareloesung_erstellen.setFontColor(Color.white);
-                softwareloesung_erstellen.setVerticalAlignment(org.apache.poi.sl.usermodel.VerticalAlignment.MIDDLE);
+                pfeil4.setAnchor(new Rectangle(588, 297, 13, 13));
 
                 XSLFPictureShape pfeil5 = softwareanforderungsFolie.createPicture(pfeil_pd);
-                pfeil5.setAnchor(new Rectangle(588,347,13,13));
-
-                //IDE erstellen
-                XSLFAutoShape ide = softwareanforderungsFolie.createAutoShape();
-                ide.setShapeType(ShapeType.RECT);
-                ide.setAnchor(new Rectangle(490, 360, 210, 35));
-                ide.setFillColor(new Color(210, 210, 210));
-                ide.setLineWidth(0.5);
-                ide.setLineColor(new Color(210, 210, 210));
-                ide.setHorizontalCentered(true);
-
-                ide.setText("ISD erstellen");
-                XSLFTextRun tr_ide = ide.getTextParagraphs().get(0).getTextRuns().get(0);
-                tr_ide.setFontSize(15.0);
-                tr_ide.setBold(true);
-                tr_ide.setFontColor(Color.white);
-                ide.setVerticalAlignment(org.apache.poi.sl.usermodel.VerticalAlignment.MIDDLE);
+                pfeil5.setAnchor(new Rectangle(588, 347, 13, 13));
 
                 XSLFPictureShape pfeil6 = softwareanforderungsFolie.createPicture(pfeil_pd);
-                pfeil6.setAnchor(new Rectangle(588,397,13,13));
-
-                //Software implementieren
-                XSLFAutoShape software_implementieren = softwareanforderungsFolie.createAutoShape();
-                software_implementieren.setShapeType(ShapeType.RECT);
-                software_implementieren.setAnchor(new Rectangle(490, 410, 210, 35));
-                software_implementieren.setFillColor(new Color(217, 171, 168));
-                software_implementieren.setLineWidth(0.5);
-                software_implementieren.setLineColor(new Color(217, 171, 168));
-                software_implementieren.setHorizontalCentered(true);
-
-                software_implementieren.setText("Software implementieren");
-                XSLFTextRun tr_software_implementieren = software_implementieren.getTextParagraphs().get(0).getTextRuns().get(0);
-                tr_software_implementieren.setFontSize(15.0);
-                tr_software_implementieren.setBold(true);
-                tr_software_implementieren.setFontColor(Color.white);
-                software_implementieren.setVerticalAlignment(org.apache.poi.sl.usermodel.VerticalAlignment.MIDDLE);
+                pfeil6.setAnchor(new Rectangle(588, 397, 13, 13));
 
                 XSLFPictureShape raute_ende_pic = softwareanforderungsFolie.createPicture(raute_ende_pd);
-                raute_ende_pic.setAnchor(new Rectangle(560,447,70,45));
+                raute_ende_pic.setAnchor(new Rectangle(560, 447, 70, 45));
+
+                for(int a = 0; a < allePhasen.size(); a++) {
+
+                    if(allSoftwareanforderungen.get(i).getProjekte_id().getProjekt_id().equals(allePhasen.get(a).getSoftwareanforderungen_id().getProjekte_id().getProjekt_id())) {
+
+                        XSLFAutoShape anforderungserhebung = softwareanforderungsFolie.createAutoShape();
+                        anforderungserhebung.setShapeType(ShapeType.RECT);
+                        anforderungserhebung.setAnchor(new Rectangle(490, (int) (110 + 50 * (allePhasen.get(a).getPhasen_id().getPhasen_id()-1)), 210, 35));
+
+                        if(allePhasen.get(a).getStatus() == 1){
+                            anforderungserhebung.setFillColor(new Color(172, 192, 219));
+                            anforderungserhebung.setLineColor(new Color(172, 192, 219));
+                        }else if(allePhasen.get(a).getStatus() == 2){
+                            anforderungserhebung.setFillColor(new Color(210, 210, 210));
+                            anforderungserhebung.setLineColor(new Color(210, 210, 210));
+                        }else if(allePhasen.get(a).getStatus() == 0){
+                            anforderungserhebung.setFillColor(new Color(217, 171, 168));
+                            anforderungserhebung.setLineColor(new Color(217, 171, 168));
+
+                        }
+
+                        anforderungserhebung.setLineWidth(0.5);
+                        anforderungserhebung.setHorizontalCentered(true);
+
+                        anforderungserhebung.setText("" + allePhasen.get(a).getPhasen_id().getTitel());
+                        XSLFTextRun tr_anforderungserhebung = anforderungserhebung.getTextParagraphs().get(0).getTextRuns().get(0);
+                        tr_anforderungserhebung.setFontSize(15.0);
+                        tr_anforderungserhebung.setBold(true);
+                        tr_anforderungserhebung.setFontColor(Color.white);
+                        anforderungserhebung.setVerticalAlignment(org.apache.poi.sl.usermodel.VerticalAlignment.MIDDLE);
+                    }
+                }
 
                 //----------------------------------------------------------------------------------------------------------FOOTER
                 XSLFTextBox softwareanforderungsfolie_footer = softwareanforderungsFolie.createTextBox();
