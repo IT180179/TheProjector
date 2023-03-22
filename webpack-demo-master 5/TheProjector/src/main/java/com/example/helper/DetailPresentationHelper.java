@@ -77,18 +77,18 @@ public class DetailPresentationHelper {
             //</editor-fold>
 
             //<editor-fold desc="Erste Folie --> STARTBILD">
-            byte[] startSeite = IOUtils.toByteArray(new FileInputStream("/Users/anabikic/Documents/SCHULE/5BHITM/Diplomarbeit/apachePOI_try/src/main/img/sparkassa.jpeg"));
+            byte[] startSeite = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/sparkassa.jpeg"));
             XSLFPictureData startSeite_pd = generiertePowerPointPraesentation.addPicture(startSeite, PictureData.PictureType.JPEG);
             XSLFPictureShape startSeite_pic = startFolie.createPicture(startSeite_pd);
             startSeite_pic.setAnchor(new Rectangle(0, 0, 720, 540));
 
             //----Logo anlegen
-            XSLFPictureShape pic_startfolie = startFolie.createPicture(pd);
-            pic_startfolie.setAnchor(new Rectangle(19, 0, 150, 50));
-
             XSLFTextBox beschreibung = startFolie.createTextBox();
             beschreibung.setFillColor(new Color(195, 227, 248));
             beschreibung.setAnchor(new Rectangle(0, 0, 720, 50));
+
+            XSLFPictureShape pic_startfolie = startFolie.createPicture(pd);
+            pic_startfolie.setAnchor(new Rectangle(19, 0, 150, 50));
 
             XSLFTextBox nextPPKMeeting = startFolie.createTextBox();
             XSLFTextParagraph nextPPKMeeting_p = nextPPKMeeting.addNewTextParagraph();
@@ -106,10 +106,8 @@ public class DetailPresentationHelper {
 
                 XSLFSlide detailFolie = generiertePowerPointPraesentation.createSlide(title_content);
 
-                /*
                 XSLFPictureShape pic_detailFolie = detailFolie.createPicture(pd);
                 pic_detailFolie.setAnchor(new Rectangle(540, 20, 150, 50));
-                 */
 
                 XSLFTextShape detailFolie_title = detailFolie.getPlaceholder(0);
                 detailFolie_title.clearText();
@@ -416,11 +414,9 @@ public class DetailPresentationHelper {
             for (int b = 0; b < allProjects.size(); b++) {
 
                 XSLFSlide meilensteinFolie = generiertePowerPointPraesentation.createSlide(title_content);
-                /*
+
                 XSLFPictureShape pic_meilensteinFolie = meilensteinFolie.createPicture(pd);
                 pic_meilensteinFolie.setAnchor(new Rectangle(540, 20, 150, 50));
-
-                 */
 
                 XSLFTextShape meilensteinFolie_title = meilensteinFolie.getPlaceholder(0);
                 meilensteinFolie_title.clearText();
@@ -662,7 +658,9 @@ public class DetailPresentationHelper {
 
                     XSLFSlide arbeitszeit = generiertePowerPointPraesentation.createSlide(title_content);
 
-
+                    XSLFPictureShape pic_detailFolie = arbeitszeit.createPicture(pd);
+                    pic_detailFolie.setAnchor(new Rectangle(540, 20, 150, 50));
+                    
                     XSLFTextShape meilensteinFolie_title = arbeitszeit.getPlaceholder(0);
                     meilensteinFolie_title.clearText();
                     XSLFTextParagraph meilensteinFolie_title_p = meilensteinFolie_title.addNewTextParagraph();
