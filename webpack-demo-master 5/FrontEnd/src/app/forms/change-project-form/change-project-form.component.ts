@@ -50,25 +50,45 @@ export class ChangeProjectFormComponent implements OnInit {
       next: value => {
         // console.log(value)
         this.employees = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
+          duration: 3000,
+          panelClass: 'snackbar-dark'
+        });
+      }
     });
     this.roles = this.service.getRoles().subscribe({
       next: value => {
         // console.log(value)
         this.roles = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
+          duration: 3000,
+          panelClass: 'snackbar-dark'
+        });
+      }
     });
     this.projects = this.service.getProjects().subscribe({
       next: value => {
         // console.log(value)
         this.projects = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
+          duration: 3000,
+          panelClass: 'snackbar-dark'
+        });
+      }
     });
     this.project = this.service.getProjectByIdNr(this.id).subscribe({
       next: value => {
        // console.log(value)
         this.project = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
+          duration: 3000,
+          panelClass: 'snackbar-dark'
+        });
+      }
     });
   }
 
@@ -91,7 +111,7 @@ export class ChangeProjectFormComponent implements OnInit {
     this.http.put('http://localhost:8080/projekte/update', this.newdata)
       .subscribe({
         next: value => {
-          console.log(value)
+          this.snackBar.open(`Daten wurden GESPEICHERT`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
         }, error: err => {
           this.snackBar.open(`Daten konnten nicht gespeichert werden ${err.message}`, undefined, {
             duration: 3000,

@@ -68,14 +68,9 @@ export class DetailPresentationFormComponent implements OnInit {
 
   getDetailPresentation(){
     console.log("Detail-Präsentation wird generiert")
-    //this.http.getPPKPowerpoint().subscribe(
-    //       {
-    //         next: value => {
-    //           //  console.log(value)
-    //           this.ppkInfos = value
-    //         }, error: err => {}
-    //         });
+
   }
+
   displayStatus(status:number):string{
     if(status==1){
       return "🟢 planmäßig"
@@ -86,7 +81,6 @@ export class DetailPresentationFormComponent implements OnInit {
     }else{
       return "invalid status";
     }
-
   }
 
   setProjektId(id: any) {

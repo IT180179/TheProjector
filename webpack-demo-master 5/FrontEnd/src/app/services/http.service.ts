@@ -268,12 +268,12 @@ export class HttpService {
 
   }
 
-  getResourcesByID(id: number): Observable<Person> {
+  getEinsatzPerPerson(id: number): Observable<any>{
 
-    const url: string = this.API_URL + "ressourcen/getArbeitsaufwand/" + id;
+    const url: string = this.API_URL + "einsaetze/getEinsaetzePerPerson/" + id;
 
     //console.log(this.httpClient.get<any>(url));
-    return this.http.get<Person>(url);
+    return this.http.get(url);
 
   }
 
@@ -283,6 +283,8 @@ export class HttpService {
     const url = this.API_URL + 'personen/add';
     return this.http.post<Person>(url, person);
   }
+
+
 
 
   public postFreieFolie(newdata: any): Observable<any> {

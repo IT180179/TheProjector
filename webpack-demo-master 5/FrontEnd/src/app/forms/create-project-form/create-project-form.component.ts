@@ -47,7 +47,9 @@ export class CreateProjectFormComponent implements OnInit {
       next: value => {
         // console.log(value)
         this.categorie = value
-      }, error: err => {}});
+      }, error: err => {
+        this.snackBar.open(`Kategorie konnte nicht geladen werden`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }});
   }
 
   onSubmit(data: Projekte) {
@@ -67,8 +69,9 @@ export class CreateProjectFormComponent implements OnInit {
         .subscribe({
           next: value => {
             // console.log(value)
+            this.snackBar.open(`Projekt wurde HINZUGEFÜGT`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
           }, error: err => {
-            this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+            this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
           }
         });
       this.openSummary()

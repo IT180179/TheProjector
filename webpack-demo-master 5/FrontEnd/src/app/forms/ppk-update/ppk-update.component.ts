@@ -48,7 +48,7 @@ export class PpkUpdateComponent implements OnInit {
         console.log(value)
         this.ppk = value
       }, error: err => {
-        console.log("Fehler")
+        this.snackBar.open(`PPK konnte nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
 
@@ -59,7 +59,7 @@ export class PpkUpdateComponent implements OnInit {
         console.log(value)
         this.gaeste = value
       }, error: err => {
-        console.log("Fehler")
+        this.snackBar.open(`Gäste konnte nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
 
@@ -68,42 +68,46 @@ export class PpkUpdateComponent implements OnInit {
         console.log(value)
         this.projects = value
       }, error: err => {
-        console.log("Fehler")
+        this.snackBar.open(`Projekte konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
     this.projektAnzahl = this.service.getAnzahlProjekt().subscribe({
       next: (value: any) => {
         console.log(value)
         this.projektAnzahl = value
-      }, error: (err: { message: any; }) => {}
+      }, error: (err: { message: any; }) => {
+        this.snackBar.open(`Anzahl der Projekte konnte nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
     });
   }
 
   onSubmit(data: any) {
     this.ppk = {
+      ppk_id: this.ppk_id,
       datum: data.datum
     }
-    this.http.put<Ppk>('http://localhost:8080/ppk/update', this.ppk)
+    this.http.put('http://localhost:8080/ppk/update', this.ppk)
         .subscribe({
           next: (value: any) => {
-            // console.log(value)
+            console.log(value)
             this.ppk_id = value.ppk_id
             this.ppk_date = value.datum
             //  console.log(this.ppk_id, "ppk")
             this.setProjects();
-            this.snackBar.open(`PPK wurde hinzugefügt`, undefined, {
-              duration: 3000,
+            this.snackBar.open(`PPK wurde geändert`, undefined, {
+              duration: 300,
               panelClass: 'snackbar-dark'
             });
           }, error: (err: { message: any; }) => {
             this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
-              duration: 3000,
+              duration: 300,
               panelClass: 'snackbar-dark'
             });
           }
         });
     this.getCheckboxValue()
     this.disable = false
+    this.toDisableGast()
   }
 
   setProjects() {
@@ -121,17 +125,6 @@ export class PpkUpdateComponent implements OnInit {
         }
       }
 
-      //POST der PPK-Projekte
-      this.http.post('http://localhost:8080/ppk_projekte/add', ppkProjekte)
-          .subscribe({
-            next: value => {
-              //  console.log(value)
-            }, error: err => {
-              this.snackBar.open(`Daten konnten nicht gespeichert werden ${err.message}`, undefined, {
-                duration: 3000,
-                panelClass: 'snackbar-dark'
-              });}
-          });
     }
   }
   getCheckboxValue() {
@@ -152,7 +145,6 @@ export class PpkUpdateComponent implements OnInit {
   }
 
   openDialog() {
-
       const dialogRef = this.dialog.open(GaesteListComponent, {
         width: '500px',
         data: this.ppk_id,
@@ -160,7 +152,6 @@ export class PpkUpdateComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         // console.log('The dialog was closed');
       });
-
   }
 
   openSummary() {
@@ -176,7 +167,4 @@ export class PpkUpdateComponent implements OnInit {
     this.disable = false
   }
 
-  onSelectedPPK(selectedValue: any) {
-    
-  }
 }

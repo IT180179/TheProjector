@@ -43,6 +43,7 @@ export class AddEmployeeFormComponent implements OnInit {
       next: value => {
         this.employees = value
       }, error: err => {
+        this.snackBar.open(`Mitarbeiter konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
     //GET-Rollen
@@ -50,6 +51,7 @@ export class AddEmployeeFormComponent implements OnInit {
       next: value => {
         this.roles = value
       }, error: err => {
+        this.snackBar.open(`Rolen konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
     //GET-Projects
@@ -57,6 +59,7 @@ export class AddEmployeeFormComponent implements OnInit {
       next: value => {
         this.projects = value
       }, error: err => {
+        this.snackBar.open(`Projekte konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
     //GET-Einsatz
@@ -64,6 +67,7 @@ export class AddEmployeeFormComponent implements OnInit {
       next: value => {
         this.einsaetze = value
       }, error: err => {
+        this.snackBar.open(`Einsätze konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
   }
@@ -79,19 +83,17 @@ export class AddEmployeeFormComponent implements OnInit {
       arbeitsstunden: Number(data.arbeitsstunden)
     };
     //POST des neuen Mitarbeiters
-    this.http.post<Person>('http://localhost:8080/einsaetze/add', this.newdata)
+    this.http.post('http://localhost:8080/einsaetze/add', this.newdata)
       .subscribe({
         next: () => {
           this.snackbar.open("Person wurde erfolgreich hinzugefügt", undefined, {duration: 3000});
+          this.onSelectedProject(data.projekt_id);
         },
         error: err => {
           this.snackbar.open(`Hinzufügen fehlgeschlagen: ${err.message}`, undefined, {duration: 3000});
         }
       });
-    //Komponente neu laden
-    this.router.navigateByUrl('/add-employee', {skipLocationChange: true}).then(() => {
-      this.router.navigate(['add-employee']);
-    });
+    this.onSelectedProject(data.projekt_id);
   }
 
   onSelectedProject(id: number) {
@@ -99,6 +101,7 @@ export class AddEmployeeFormComponent implements OnInit {
       next: value => {
         this.employeesOfProject = value
       }, error: err => {
+        this.snackBar.open(`Projekte konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
     this.showtable = true

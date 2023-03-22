@@ -16,7 +16,7 @@
     <form id="create_employee" (ngSubmit)=onSubmit(form.value)  [formGroup]="form" novalidat>
       <mat-form-field appearance="outline" class="full-width-field field">
         <mat-label style="color: #005281;">Projekt</mat-label>
-        <mat-select [(ngModel)]="selectedValue"  matNativeControl required formControlName="projekt_id">
+        <mat-select (selectionChange)="changeEinsaetze()" [(ngModel)]="selectedValue"  matNativeControl required formControlName="projekt_id">
           <mat-option *ngFor="let testobject of projects"
                       [value]="testobject.projekt_id">{{testobject.titel}}</mat-option>
         </mat-select>
@@ -28,8 +28,8 @@
       <mat-form-field appearance="outline" class="full-width-field field">
         <mat-label style="color: #005281;">Rollen</mat-label>
         <mat-select  matNativeControl required formControlName="rollen_id">
-          <mat-option *ngFor="let testobject of roles"
-                      value="{{testobject.rollen_id}}">{{testobject.name}} </mat-option>
+          <mat-option *ngFor="let testobject of allowedEinsaetze"
+                      value="{{testobject.einsaetze_id.rollen_id.rollen_id}}">{{testobject.einsaetze_id.rollen_id.name}} </mat-option>
         </mat-select>
         <mat-error *ngIf="form.hasError('required')">
           Rolle muss ausgewählt werden!

@@ -38,8 +38,6 @@ export class PPKPresentationFormComponent implements OnInit {
   freiData:any = null;
   requestData:any = null;
 
-  // Dass die Buttons disabled werden nachdem alles aufgefüllt ist, muss man ein objekt mit allen attributen der formulare anlegen und nach dem schließen
-  // des formulars überprüfen ob das objekt vollständig ist
 
   constructor(private _router: Router,
               private snackBar: MatSnackBar,
@@ -54,42 +52,38 @@ export class PPKPresentationFormComponent implements OnInit {
     }
     this.employees = this.service.getEmployees().subscribe({
       next: value => {
-        // console.log(value)
         this.employees = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Mitarbeiter konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
       });
     this.roles = this.service.getRoles().subscribe({
       next: value => {
         // console.log(value)
         this.roles = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Rollen konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
       });
     this.projects = this.service.getProjects().subscribe({
       next: value => {
-        // console.log(value)
         this.projects = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Projekt konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
       });
   }
   getCheckboxValue(){
     this.auswahl = [];
-
     for (let i = 0; i <= 6; i++) {
       const checkbox = document.getElementById(
         "checkbox"+ i,
       ) as HTMLInputElement | null;
-
       if (checkbox?.checked) {
-        // console.log('Checkbox is checked');
         this.auswahl.push(checkbox.value);
-        // console.log(checkbox.value)
+      } else {}
 
-      } else {
-        //  console.log('Checkbox is NOT checked');
-      }
-      // console.log(checkbox?.checked);
     }
-    // console.log(this.auswahl)
   }
   onSubmit(data: any) {
     this.getProjektInfo();
@@ -99,7 +93,9 @@ export class PPKPresentationFormComponent implements OnInit {
       next: value => {
         // console.log(value)
         this.projekt = value
-      }, error: err => {}});
+      }, error: err => {
+        this.snackBar.open(`Projekt konnte nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+      }});
   }
 
   setProjektID() {
@@ -171,38 +167,34 @@ export class PPKPresentationFormComponent implements OnInit {
     this.service.http.post('http://localhost:8080/freiefolien/add', this.freiData)
         .subscribe({
           next: value => {
-            console.log("hat funktioniert")
+            this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
           }, error: err => {
             console.log(this.freiData)
             this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
           }
         });
 
-
   this.service.http.post('http://localhost:8080/beschlussfolien/add', this.beschlussData)
       .subscribe({
         next: value => {
           // console.log(value)
-          console.log("Beschlussfolie hinzugefügt!")
+          this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
         }, error: err => {
           this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
           console.log(this.beschlussData)
         }
       });
 
-
-
   this.service.http.post( "http://localhost:8080/softwareanforderungen/add/" + this.requestData.auswahl[1] + "/" + this.requestData.auswahl[2] + "/" + this.requestData.auswahl[3] + "/" + this.requestData.auswahl[4] + "/" +
       this.requestData.auswahl[5] + "/" + this.requestData.auswahl[6] + "/" +  this.requestData.auswahl[7], this.requestData)
       .subscribe({
         next: value => {
           // console.log(value)
-          console.log("Softwareanfoderungsfolie hinzugefügt!")
+          this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
         }, error: err => {
-          this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+          this.snackBar.open(`Folie hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
           console.log(this.requestData)
         }
-
       });
 
     this._router.navigate(['/pp_menu']);

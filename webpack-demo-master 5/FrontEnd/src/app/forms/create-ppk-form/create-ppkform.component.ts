@@ -40,14 +40,22 @@ export class CreatePPKFormComponent implements OnInit {
          // console.log(value)
           this.projects = value
         }, error: err => {
-        console.log("Fehler")
+        this.snackBar.open(`Daten konnten nicht gespeichert werden ${err.message}`, undefined, {
+          duration: 3000,
+          panelClass: 'snackbar-dark'
+        });
       }
     });
     this.projektAnzahl = this.service.getAnzahlProjekt().subscribe({
       next: (value: any) => {
         // console.log(value)
         this.projektAnzahl = value
-      }, error: (err: { message: any; }) => {}
+      }, error: (err: { message: any; }) => {
+        this.snackBar.open(`Daten konnten nicht gespeichert werden ${err.message}`, undefined, {
+          duration: 3000,
+          panelClass: 'snackbar-dark'
+        });
+      }
     });
   }
 
@@ -62,6 +70,7 @@ export class CreatePPKFormComponent implements OnInit {
           this.ppk_id = value.ppk_id
           this.ppk_date = value.datum
          //  console.log(this.ppk_id, "ppk")
+          console.log(value)
 
           this.snackBar.open(`PPK wurde hinzugefügt`, undefined, {
             duration: 3000,
@@ -76,8 +85,12 @@ export class CreatePPKFormComponent implements OnInit {
       });
     this.setProjects();
     this.getCheckboxValue()
+    this.openSummary();
     this.disable = false
+
   }
+
+
 
   setProjects() {
     for (var i = 0; i < this.auswahl.length; i++) {
@@ -103,7 +116,8 @@ export class CreatePPKFormComponent implements OnInit {
             this.snackBar.open(`Daten konnten nicht gespeichert werden ${err.message}`, undefined, {
               duration: 3000,
               panelClass: 'snackbar-dark'
-            });}
+            });
+          }
         });
     }
   }
@@ -125,6 +139,8 @@ export class CreatePPKFormComponent implements OnInit {
   }
 
   openDialog() {
+    console.log("gast")
+    console.log(this.ppk_id + " " + this.ppk_date)
     try {
     if (this.ppk_id != null && this.ppk_date != null) {
       const dialogRef = this.dialog.open(GaesteListComponent, {
@@ -136,7 +152,7 @@ export class CreatePPKFormComponent implements OnInit {
       });
     }
     } catch (error) {
-      // Code to handle the error
+
     }
   }
 

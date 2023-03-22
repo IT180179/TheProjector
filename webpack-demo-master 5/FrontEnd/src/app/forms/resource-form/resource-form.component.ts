@@ -25,6 +25,7 @@ export class ResourceFormComponent implements OnInit {
   showtable: boolean = false;
   user_id: any
   myDate: any
+  einsatz: any
 
   constructor(private _router: Router, private snackBar: MatSnackBar, private http: HttpClient, private fb: FormBuilder, public service: HttpService, public dataservice: DataService) {
     this.form = this.fb.group({
@@ -47,37 +48,38 @@ export class ResourceFormComponent implements OnInit {
       next: value => {
         //  console.log(value)
         this.employees = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+      }
     });
 
-    this.roles = this.service.getRoles().subscribe({
-      next: value => {
-         console.log(value)
-        this.roles = value
-      }, error: err => { }
-    });
 
     this.projects = this.service.getProjectsByPerson(this.user_id).subscribe({
       next: value => {
         // console.log(value)
         this.projects = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+      }
     });
 
-    this.einsaetze = this.service.getEinsaetze().subscribe({
+    this.einsaetze = this.service.getEinsatzPerPerson(this.user_id).subscribe({
       next: value => {
         // console.log(value)
         this.einsaetze = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+      }
     });
   }
   onSubmit(data: any) {
+
     this.newdata = {
       einsaetze_id:{
         einsaetze_id:{
           personen_id:{personen_id: this.user_id},
           projekte_id: {projekt_id: data.projekt_id},
-         // rollen_id:{rollen_id:  Number(data.rollen_id)}
+          rollen_id:{rollen_id:  Number(data.rollen_id)}
         }
       },
       arbeitszeit: Number(data.arbeitsstunden),
@@ -88,9 +90,6 @@ export class ResourceFormComponent implements OnInit {
     this.http.post<any>('http://localhost:8080/arbeitszeiten/add', this.newdata)
       .subscribe({
         next: value => {
-          //  console.log("GEPOSTET")
-          //  console.log(value)
-
           this.snackBar.open(`Daten wurden gespeichert!`, undefined, {
             duration: 3000,
             panelClass: 'snackbar-dark'
@@ -109,8 +108,27 @@ export class ResourceFormComponent implements OnInit {
       next: value => {
         //  console.log(value)
         this.employeesOfProject = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+      }
     });
     this.showtable = true
+  }
+
+  allowedEinsaetze = []
+  changeEinsaetze() {
+    this.allowedEinsaetze = []
+    for (let i of this.einsaetze) {
+
+      console.log("hi")
+      console.log(i.einsaetze_id.projekte_id.projekt_id)
+      console.log(this.selectedValue)
+      if(i.einsaetze_id.projekte_id.projekt_id == this.selectedValue){
+        console.log("hi")
+        // @ts-ignore
+        this.allowedEinsaetze.push(i)
+        console.log(this.allowedEinsaetze)
+      }
+    }
   }
 }

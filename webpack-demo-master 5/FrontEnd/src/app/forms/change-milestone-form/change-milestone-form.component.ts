@@ -54,7 +54,9 @@ export class ChangeMilestoneFormComponent implements OnInit {
       next: value => {
         // console.log(value)
         this.milestone = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Meilenstein konnte nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
     });
 
     //GET Meilensteine
@@ -62,7 +64,9 @@ export class ChangeMilestoneFormComponent implements OnInit {
       next: value => {
         // console.log(value)
         this.milestones = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Rolen konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
     });
   }
 
@@ -83,6 +87,7 @@ export class ChangeMilestoneFormComponent implements OnInit {
       .subscribe({
         next: value => {
           // console.log(value)
+          this.snackBar.open(`Daten wurden GESPEICHERT`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
         }, error: err => {
           this.snackBar.open(`Daten konnten nicht hinzugefügt werden ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
         }
@@ -104,10 +109,7 @@ export class ChangeMilestoneFormComponent implements OnInit {
       .subscribe({
         next: value => {
           // console.log(value)
-          this.snackBar.open(`Änderungen konnten gespeichert werden`, undefined, {
-            duration: 3000,
-            panelClass: 'snackbar-light'
-          });
+          this.snackBar.open(`Daten wurden GESPEICHERT`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
         }, error: err => {
           this.snackBar.open(`Daten konnten nicht geändert werden ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-light'});
         }

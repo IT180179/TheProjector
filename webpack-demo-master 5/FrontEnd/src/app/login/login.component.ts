@@ -72,8 +72,6 @@ export class LoginComponent implements OnInit {
         // console.log("Login Request is completed")
       }
     });
-
-
   }
   ngOnInit(): void {
   }
