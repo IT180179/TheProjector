@@ -90,15 +90,15 @@ export class FreieFolieFormComponent implements OnInit {
       ppk_projekte_id:{
         ppk_projekte_id:{
           ppk_id:{
-            ppk_id: this.dataService.getppk_id()
+            ppk_id: Number(this.dataService.getppk_id())
           },
           projekte_id:{
-            projekt_id: this.dataService.projekt_id
+            projekt_id: Number(this.dataService.projekt_id)
           }}
       },
       titel: value.beschreibung,
       freitext: value.freitext,
-      bild: this.base64,
+      upload: this.base64 || null,
       beschreibung: value.beschreibung
     }
 
@@ -129,7 +129,6 @@ export class FreieFolieFormComponent implements OnInit {
   onSelectNewFile(files: any) {
     this.fileSelected = files.target.files[0]
     this.imageUrl = this.sant.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fileSelected)) as string;
-    console.log(this.base64)
     this.convertFileToBase64();
   }
 
@@ -138,7 +137,7 @@ export class FreieFolieFormComponent implements OnInit {
     reader.readAsDataURL(this.fileSelected);
     reader.onloadend = () => {
       this.base64 = reader.result as string;
-      //console.log("New" + this.base64)
+      console.log(this.base64)
     }
 
     //this.blob = this.convertToBlob(this.base64);
@@ -247,7 +246,7 @@ export class FreieFolieFormComponent implements OnInit {
     };
     reader.readAsArrayBuffer(blob);
 
-    this.newdata={
+   /** this.newdata={
       "titel": "string",
       "untertitel": "string",
       "beschreibung": "string",
@@ -260,7 +259,7 @@ export class FreieFolieFormComponent implements OnInit {
           },
           "projekte_id": {
             "projekt_id": 0,
-          }}}};
+          }}}};**/
 
     this.httpService.postFreieFolie(this.newdata).subscribe(
        (response) => {

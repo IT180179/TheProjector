@@ -148,7 +148,7 @@ import { PpkListeComponent } from './side-components/ppk-liste/ppk-liste.compone
     CommonModule
   ],
   providers: [
-    PPKPresentationFormComponent, LoginComponent,
+    PPKPresentationFormComponent, LoginComponent,FreieFolieFormComponent,
     {provide: MAT_DATE_LOCALE, useValue: 'de-AT'},
     {
       provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
