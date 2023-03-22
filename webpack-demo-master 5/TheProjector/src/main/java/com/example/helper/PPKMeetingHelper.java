@@ -354,6 +354,7 @@ public class PPKMeetingHelper {
                 XSLFTableCell cell_projektprotfolio_startdatum = projektportfolio_tr_projekt1.addCell();
                 XSLFTextParagraph cell_projektprotfolio_startdatum_p = cell_projektprotfolio_startdatum.addNewTextParagraph();
                 XSLFTextRun cell_projektprotfolio_startdatum_r = cell_projektprotfolio_startdatum_p.addNewTextRun();
+
                 //Startdatum
                 LocalDate startDatum = alleMeilensteine.get(generate).getStart_datum();
 
@@ -558,13 +559,13 @@ public class PPKMeetingHelper {
                         anforderungserhebung.setShapeType(ShapeType.RECT);
                         anforderungserhebung.setAnchor(new Rectangle(490, (int) (110 + 50 * (allePhasen.get(a).getPhasen_id().getPhasen_id()-1)), 210, 35));
 
-                        if(allePhasen.get(a).getStatus() == 1){
+                        if(allePhasen.get(a).getStatus() == 0){
                             anforderungserhebung.setFillColor(new Color(172, 192, 219));
                             anforderungserhebung.setLineColor(new Color(172, 192, 219));
-                        }else if(allePhasen.get(a).getStatus() == 2){
+                        }else if(allePhasen.get(a).getStatus() == 1){
                             anforderungserhebung.setFillColor(new Color(210, 210, 210));
                             anforderungserhebung.setLineColor(new Color(210, 210, 210));
-                        }else if(allePhasen.get(a).getStatus() == 0){
+                        }else if(allePhasen.get(a).getStatus() == 2){
                             anforderungserhebung.setFillColor(new Color(217, 171, 168));
                             anforderungserhebung.setLineColor(new Color(217, 171, 168));
 
@@ -607,7 +608,7 @@ public class PPKMeetingHelper {
                     entscheidungsFolie_title.clearText();
                     XSLFTextParagraph entscheidungsFolie_title_p = entscheidungsFolie_title.addNewTextParagraph();
                     XSLFTextRun entscheidungsFolie_title_r = entscheidungsFolie_title_p.addNewTextRun();
-                    entscheidungsFolie_title_r.setText("" + allBeschluss.get(i).getPpk_projekte_id().getPpk_projekte_id().getProjekte_id().getInhalt());
+                    entscheidungsFolie_title_r.setText("" + allBeschluss.get(i).getPpk_projekte_id().getPpk_projekte_id().getProjekte_id().getTitel());
                     entscheidungsFolie_title_r.setFontColor(Color.red);
                     entscheidungsFolie_title_r.setFontSize(24.0);
                     entscheidungsFolie_title_r.setBold(true);
@@ -621,7 +622,7 @@ public class PPKMeetingHelper {
                     entscheidungsFolie_subtitle_r.setText("ENTSCHEIDUNG");
                     entscheidungsFolie_subtitle_r.setFontColor(Color.red);
                     entscheidungsFolie_subtitle_r.setFontSize(20.0);
-                    entscheidungsFolie_subtitle.setAnchor(new Rectangle(20, 60, 245, 50));
+                    entscheidungsFolie_subtitle.setAnchor(new Rectangle(20, 60, 380, 50));
 
                     //pic1
                     byte[] aenderungsVorschlag = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/aenderung.png"));
@@ -639,7 +640,7 @@ public class PPKMeetingHelper {
                     XSLFTextBox aenderungsText = entscheidungsFolie.createTextBox();
                     XSLFTextParagraph aenderungs_p = aenderungsText.addNewTextParagraph();
                     XSLFTextRun aenderungs_r = aenderungs_p.addNewTextRun();
-                    aenderungs_r.setText("" + allBeschluss.get(i).getAnmerkung());
+                    aenderungs_r.setText("" + allBeschluss.get(i).getFreitext());
                     aenderungs_r.setFontColor(new Color(0, 82, 129));
                     aenderungs_r.setFontSize(16.);
                     aenderungsText.setAnchor(new Rectangle(150, 100, 550, 260));
@@ -1331,7 +1332,7 @@ public class PPKMeetingHelper {
             XSLFTextParagraph freierTextParagraph = freierText.addNewTextParagraph();
             XSLFTextRun freierTextRun = freierTextParagraph.addNewTextRun();
             //-------------------------------------------------------------BESCHREIBUNGSTEXT
-            freierTextRun.setText(""+ freieFoliens.get(i).getFreitext());
+            freierTextRun.setText(""+ freieFoliens.get(i).getBeschreibung());
             freierTextRun.setFontColor(new Color(0, 82, 129));
             freierTextRun.setFontSize(14.0);
 
