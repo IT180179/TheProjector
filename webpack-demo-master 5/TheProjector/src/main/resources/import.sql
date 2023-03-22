@@ -132,8 +132,8 @@ insert into Beschlussfolien (entscheidung, anmerkung, freitext, ppk_projekte_id_
 values (1, '', 'Freitext', 1, 1),
        (3, 'Anmerkung', 'Freitext', 1, 2);
 insert into FreieFolien (beschreibung, freitext, upload, ppk_projekte_id_ppk_id_ppk_id, ppk_projekte_id_projekte_id_projekt_id)
-values ('Beschreibung', 'Freitext', null, 1, 1),
-       ('Beschreibung', 'Freitext', null, 1, 2);
+values ('Beschreibung', 'Freitext', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAaVBMVEW+5fq96P286v+/3fHKucvMssPvAADtHCTFy97B1+vuFR3TmqnvAAXVk6LvBBDHwtW77f/ad4TuDhfRnazbfIrZgY/Gw9bJvM7Jv9HC0eXoLjfkSlW+4PXqICnjUFvQqrvUlaTNr8DnNj9SKL0hAAAAxElEQVR4AZXS1QKDMAxA0QRJ0dJtuMP//+PcUvy8ILk4cBQirDFMywJcmdtEJJzFAl0SQnhiMTD8QNyRhUtBKJ+BvRRgRM/AhCXqRGdJFwNm4JOy4yRV+MTHRmplD1Ea5c8Vy1H/86Kkiar+C5qzmJCt+s5tEjOowE/QBbNBrgVSQxkPzqHP9dolZGdzgwvaJQKOskM3uRGQRvIAXIvLfMkCdEKuj8/6JSR3PnST2x9r+3MDFiNNtDX75ZxMUyhgcAJ2ugEzgRYKJn3vPwAAAABJRU5ErkJggg==', 1, 1),
+       ('Beschreibung', 'Freitext', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAaVBMVEW+5fq96P286v+/3fHKucvMssPvAADtHCTFy97B1+vuFR3TmqnvAAXVk6LvBBDHwtW77f/ad4TuDhfRnazbfIrZgY/Gw9bJvM7Jv9HC0eXoLjfkSlW+4PXqICnjUFvQqrvUlaTNr8DnNj9SKL0hAAAAxElEQVR4AZXS1QKDMAxA0QRJ0dJtuMP//+PcUvy8ILk4cBQirDFMywJcmdtEJJzFAl0SQnhiMTD8QNyRhUtBKJ+BvRRgRM/AhCXqRGdJFwNm4JOy4yRV+MTHRmplD1Ea5c8Vy1H/86Kkiar+C5qzmJCt+s5tEjOowE/QBbNBrgVSQxkPzqHP9dolZGdzgwvaJQKOskM3uRGQRvIAXIvLfMkCdEKuj8/6JSR3PnST2x9r+3MDFiNNtDX75ZxMUyhgcAJ2ugEzgRYKJn3vPwAAAABJRU5ErkJggg==', 1, 2);
 insert into PPKategorie (name)
 values ('Vorstand'),
        ('Abteilungsleiter');
