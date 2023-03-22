@@ -21,6 +21,8 @@ import org.apache.poi.xslf.usermodel.*;
 
 import java.awt.*;
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,12 @@ public class DetailPresentationHelper {
 
         Long projekteanzahl = projekteRepo.getProjekteAnzahl();
 
+        //Ändern des Datumsformats beim PPK
+        LocalDate nextPPK = ppkRepo.getNextPPK();
+        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String date_PPK = nextPPK.format(formatters);
+        LocalDate parsedPPK = LocalDate.parse(date_PPK, formatters);
+
         try (XMLSlideShow generiertePowerPointPraesentation = new XMLSlideShow()) {
 
 
@@ -61,33 +69,31 @@ public class DetailPresentationHelper {
             XSLFSlide startFolie = generiertePowerPointPraesentation.createSlide(blank);
             //</editor-fold>
 
-            /*
+
             //<editor-fold desc="LOGO">
             //Logo erstellen
-            byte[] pictureData = IOUtils.toByteArray(new FileInputStream("/Users/anabikic/Documents/SCHULE/5BHITM/Diplomarbeit/apachePOI_try/src/main/img/logo_sparkasse.png"));
+            byte[] pictureData = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/logo_sparkasse.png"));
             XSLFPictureData pd = generiertePowerPointPraesentation.addPicture(pictureData, PictureData.PictureType.PNG);
             //</editor-fold>
 
             //<editor-fold desc="Erste Folie --> STARTBILD">
-            byte[] startSeite = IOUtils.toByteArray(new FileInputStream("/Users/anabikic/Documents/SCHULE/5BHITM/Diplomarbeit/apachePOI_try/src/main/img/sparkassa.jpeg"));
+            byte[] startSeite = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/sparkassa.jpeg"));
             XSLFPictureData startSeite_pd = generiertePowerPointPraesentation.addPicture(startSeite, PictureData.PictureType.JPEG);
             XSLFPictureShape startSeite_pic = startFolie.createPicture(startSeite_pd);
             startSeite_pic.setAnchor(new Rectangle(0, 0, 720, 540));
 
             //----Logo anlegen
-            XSLFPictureShape pic_startfolie = startFolie.createPicture(pd);
-            pic_startfolie.setAnchor(new Rectangle(19, 0, 150, 50));
-
-             */
-
             XSLFTextBox beschreibung = startFolie.createTextBox();
             beschreibung.setFillColor(new Color(195, 227, 248));
             beschreibung.setAnchor(new Rectangle(0, 0, 720, 50));
 
+            XSLFPictureShape pic_startfolie = startFolie.createPicture(pd);
+            pic_startfolie.setAnchor(new Rectangle(19, 0, 150, 50));
+
             XSLFTextBox nextPPKMeeting = startFolie.createTextBox();
             XSLFTextParagraph nextPPKMeeting_p = nextPPKMeeting.addNewTextParagraph();
             XSLFTextRun nextPPKMeeting_r = nextPPKMeeting_p.addNewTextRun();
-            nextPPKMeeting_r.setText("Projekt Portfolio Komitee ( " + ppkRepo.getNextPPK() + " )");
+            nextPPKMeeting_r.setText("Projekt Portfolio Komitee am " + parsedPPK.format(formatters));
             nextPPKMeeting_r.setBold(true);
             nextPPKMeeting_r.setFontColor(new Color(0, 82, 129));
             nextPPKMeeting_r.setFontSize(12.);
@@ -100,10 +106,8 @@ public class DetailPresentationHelper {
 
                 XSLFSlide detailFolie = generiertePowerPointPraesentation.createSlide(title_content);
 
-                /*
                 XSLFPictureShape pic_detailFolie = detailFolie.createPicture(pd);
                 pic_detailFolie.setAnchor(new Rectangle(540, 20, 150, 50));
-                 */
 
                 XSLFTextShape detailFolie_title = detailFolie.getPlaceholder(0);
                 detailFolie_title.clearText();
@@ -280,9 +284,25 @@ public class DetailPresentationHelper {
                 cell_detailFolie_status_eingegeben.setBorderColor(TableCell.BorderEdge.bottom, new Color(211, 211, 211));
                 cell_detailFolie_status_eingegeben.setBorderWidth(TableCell.BorderEdge.bottom, 1);
 
-                cell_detailFolie_status_eingegeben_r.setText("" + allProjects.get(b).getStatus());
-                cell_detailFolie_status_eingegeben_r.setFontColor(new Color(100, 100, 100));
-                cell_detailFolie_status_eingegeben_r.setFontSize(15.0);
+                if(allProjects.get(b).getStatus() == 1){
+
+                    cell_detailFolie_status_eingegeben_r.setText("\uD83D\uDFE2 planmäßig");
+                    cell_detailFolie_status_eingegeben_r.setFontColor(new Color(100, 100, 100));
+                    cell_detailFolie_status_eingegeben_r.setFontSize(15.0);
+
+                }else if(allProjects.get(b).getStatus() == 2){
+
+                    cell_detailFolie_status_eingegeben_r.setText("\uD83D\uDFE0 im Verzug");
+                    cell_detailFolie_status_eingegeben_r.setFontColor(new Color(100, 100, 100));
+                    cell_detailFolie_status_eingegeben_r.setFontSize(15.0);
+
+                }else if(allProjects.get(b).getStatus() == 3){
+
+                    cell_detailFolie_status_eingegeben_r.setText("\uD83D\uDD34 verspätet");
+                    cell_detailFolie_status_eingegeben_r.setFontColor(new Color(100, 100, 100));
+                    cell_detailFolie_status_eingegeben_r.setFontSize(15.0);
+
+                }
 
 
                 //Reihe Startdatum
@@ -325,7 +345,10 @@ public class DetailPresentationHelper {
                 cell_detailFolie_startDatum_eingegeben.setBorderColor(TableCell.BorderEdge.bottom, new Color(211, 211, 211));
                 cell_detailFolie_startDatum_eingegeben.setBorderWidth(TableCell.BorderEdge.bottom, 1);
 
-                cell_detailFolie_startDatum_eingegeben_r.setText("" + allProjects.get(b).getStart_datum());
+                //Startdatum
+                LocalDate startDatum = allProjects.get(b).getStart_datum();
+
+                cell_detailFolie_startDatum_eingegeben_r.setText("" + startDatum.format(formatters));
                 cell_detailFolie_startDatum_eingegeben_r.setFontColor(new Color(100, 100, 100));
                 cell_detailFolie_startDatum_eingegeben_r.setFontSize(15.0);
 
@@ -369,7 +392,10 @@ public class DetailPresentationHelper {
                 cell_detailFolie_endDatum_eingegeben.setBorderColor(TableCell.BorderEdge.bottom, new Color(255, 255, 255));
                 cell_detailFolie_endDatum_eingegeben.setBorderWidth(TableCell.BorderEdge.bottom, 1);
 
-                cell_detailFolie_endDatum_eingegeben_r.setText("" + allProjects.get(b).getEnd_datum());
+                //Enddatum
+                LocalDate enddatum = allProjects.get(b).getEnd_datum();
+
+                cell_detailFolie_endDatum_eingegeben_r.setText("" + enddatum.format(formatters));
                 cell_detailFolie_endDatum_eingegeben_r.setFontColor(new Color(100, 100, 100));
                 cell_detailFolie_endDatum_eingegeben_r.setFontSize(15.0);
 
@@ -377,7 +403,7 @@ public class DetailPresentationHelper {
                 XSLFTextBox detailffolie_footer = detailFolie.createTextBox();
                 XSLFTextParagraph detailffolie_footer_p = detailffolie_footer.addNewTextParagraph();
                 XSLFTextRun detailffolie_footer_r = detailffolie_footer_p.addNewTextRun();
-                detailffolie_footer_r.setText("Projekt Portfolio Komitee ( " + ppkRepo.getNextPPK() + " )");
+                detailffolie_footer_r.setText("Projekt Portfolio Komitee am " + nextPPK.format(formatters));
                 detailffolie_footer_r.setFontColor(new Color(0, 82, 129));
                 detailffolie_footer_r.setFontSize(12.);
                 detailffolie_footer.setAnchor(new Rectangle(440, 500, 270, 50));
@@ -388,11 +414,9 @@ public class DetailPresentationHelper {
             for (int b = 0; b < allProjects.size(); b++) {
 
                 XSLFSlide meilensteinFolie = generiertePowerPointPraesentation.createSlide(title_content);
-                /*
+
                 XSLFPictureShape pic_meilensteinFolie = meilensteinFolie.createPicture(pd);
                 pic_meilensteinFolie.setAnchor(new Rectangle(540, 20, 150, 50));
-
-                 */
 
                 XSLFTextShape meilensteinFolie_title = meilensteinFolie.getPlaceholder(0);
                 meilensteinFolie_title.clearText();
@@ -400,10 +424,10 @@ public class DetailPresentationHelper {
                 XSLFTextRun meilensteinFolie_title_r = meilensteinFolie_title_p.addNewTextRun();
 
                 meilensteinFolie_title_r.setText("" + allProjects.get(b).getTitel()); //Titel des Projekts
-                meilensteinFolie_title_r.setFontColor(new Color(0, 82, 129));
+                meilensteinFolie_title_r.setFontColor(Color.RED);
                 meilensteinFolie_title_r.setFontSize(30.0);
                 meilensteinFolie_title_r.setBold(true);
-                meilensteinFolie_title.setAnchor(new Rectangle(20, 20, 500, 50));
+                meilensteinFolie_title.setAnchor(new Rectangle(20, 120, 500, 50));
 
                 XSLFTextShape body_meilensteinFolie = meilensteinFolie.getPlaceholder(1);
                 body_meilensteinFolie.clearText();
@@ -411,7 +435,7 @@ public class DetailPresentationHelper {
 
                 //Tabelle anlegen
                 XSLFTable table_meilensteine = body_meilensteinFolie.getSheet().createTable();
-                table_meilensteine.setAnchor(new Rectangle(10, 200, 0, 0));
+                table_meilensteine.setAnchor(new Rectangle(20, 200, 0, 0));
 
 
                 XSLFTableRow headerRow_meilensteine = table_meilensteine.addRow();
@@ -426,7 +450,7 @@ public class DetailPresentationHelper {
                 meilenstein.setAnchor(new Rectangle(10, 140, 140, 100));
 
 
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 4; i++) {
                     XSLFTableCell th_detailFolie_meilensteine = headerRow_meilensteine.addCell();
                     XSLFTextParagraph p_th_detailFolie_meilensteine = th_detailFolie_meilensteine.addNewTextParagraph();
                     p_th_detailFolie_meilensteine.setTextAlign(TextParagraph.TextAlign.LEFT);
@@ -436,7 +460,7 @@ public class DetailPresentationHelper {
                     if (i == 0) {
 
                         r_th_detailFolie_meilensteine.setText("Titel");
-                        table_meilensteine.setColumnWidth(i, 144);
+                        table_meilensteine.setColumnWidth(i, 170);
                         table_meilensteine.setRowHeight(i, 20.0);
                         th_detailFolie_meilensteine.setFillColor(new Color(0, 82, 129));
 
@@ -465,7 +489,7 @@ public class DetailPresentationHelper {
                     if (i == 2) {
 
                         r_th_detailFolie_meilensteine.setText("Status");
-                        table_meilensteine.setColumnWidth(i, 144);
+                        table_meilensteine.setColumnWidth(i, 170);
                         th_detailFolie_meilensteine.setFillColor(new Color(0, 82, 129));
 
                         th_detailFolie_meilensteine.setVerticalAlignment(VerticalAlignment.MIDDLE);
@@ -478,22 +502,8 @@ public class DetailPresentationHelper {
                     }
                     if (i == 3) {
 
-                        r_th_detailFolie_meilensteine.setText("Start-Datum");
-                        table_meilensteine.setColumnWidth(i, 120);
-                        th_detailFolie_meilensteine.setFillColor(new Color(0, 82, 129));
-
-                        th_detailFolie_meilensteine.setVerticalAlignment(VerticalAlignment.MIDDLE);
-                        th_detailFolie_meilensteine.setBorderColor(TableCell.BorderEdge.bottom, new Color(0, 82, 129));
-                        th_detailFolie_meilensteine.setBorderWidth(TableCell.BorderEdge.bottom, 1);
-
-                        r_th_detailFolie_meilensteine.setFontColor(new Color(255, 255, 255));
-                        r_th_detailFolie_meilensteine.setFontSize(10.0);
-
-                    }
-                    if (i == 4) {
-
-                        r_th_detailFolie_meilensteine.setText("End-Datum");
-                        table_meilensteine.setColumnWidth(i, 120);
+                        r_th_detailFolie_meilensteine.setText("Fertigstellung");
+                        table_meilensteine.setColumnWidth(i, 170);
                         th_detailFolie_meilensteine.setFillColor(new Color(0, 82, 129));
 
                         th_detailFolie_meilensteine.setVerticalAlignment(VerticalAlignment.MIDDLE);
@@ -522,7 +532,7 @@ public class DetailPresentationHelper {
                     //Erstes Projekt
                     XSLFTableRow detailFolie_tr_meilensteinTitle;
                     detailFolie_tr_meilensteinTitle = table_meilensteine.addRow();
-                    detailFolie_tr_meilensteinTitle.setHeight(25.0);
+                    detailFolie_tr_meilensteinTitle.setHeight(45.0);
 
                     //----------------------------------------------Meilensteintitel
                     XSLFTableCell cell_detailFolie_meielnsteinTitel = detailFolie_tr_meilensteinTitle.addCell();
@@ -579,9 +589,26 @@ public class DetailPresentationHelper {
                     cell_detailFolie_meielnsteinStatus.setBorderColor(TableCell.BorderEdge.bottom, new Color(211, 211, 211));
                     cell_detailFolie_meielnsteinStatus.setBorderWidth(TableCell.BorderEdge.bottom, 1);
 
-                    cell_detailFolie_meielnsteinStatus_r.setText("" + aktuellerMeilenstein.getStatus());
-                    cell_detailFolie_meielnsteinStatus_r.setFontColor(new Color(100, 100, 100));
-                    cell_detailFolie_meielnsteinStatus_r.setFontSize(10.0);
+
+                    if(allProjects.get(b).getStatus() == 1){
+
+                        cell_detailFolie_meielnsteinStatus_r.setText("\uD83D\uDFE2 planmäßig");
+                        cell_detailFolie_meielnsteinStatus_r.setFontColor(new Color(100, 100, 100));
+                        cell_detailFolie_meielnsteinStatus_r.setFontSize(10.0);
+
+                    }else if(allProjects.get(b).getStatus() == 2){
+
+                        cell_detailFolie_meielnsteinStatus_r.setText("\uD83D\uDFE0 im Verzug");
+                        cell_detailFolie_meielnsteinStatus_r.setFontColor(new Color(100, 100, 100));
+                        cell_detailFolie_meielnsteinStatus_r.setFontSize(10.0);
+
+                    }else if(allProjects.get(b).getStatus() == 3){
+
+                        cell_detailFolie_meielnsteinStatus_r.setText("\uD83D\uDD34 verspätet");
+                        cell_detailFolie_meielnsteinStatus_r.setFontColor(new Color(100, 100, 100));
+                        cell_detailFolie_meielnsteinStatus_r.setFontSize(10.0);
+
+                    }
 
                     //----------------------------------------------StartDatum
                     XSLFTableCell cell_detailFolie_meielnsteinStartDatum = detailFolie_tr_meilensteinTitle.addCell();
@@ -599,35 +626,19 @@ public class DetailPresentationHelper {
                     cell_detailFolie_meielnsteinStartDatum.setBorderColor(TableCell.BorderEdge.bottom, new Color(211, 211, 211));
                     cell_detailFolie_meielnsteinStartDatum.setBorderWidth(TableCell.BorderEdge.bottom, 1);
 
-                    cell_detailFolie_meielnsteinStartDatum_r.setText("" + aktuellerMeilenstein.getStart_datum());
+                    //Stardatum
+                    LocalDate enddatum = aktuellerMeilenstein.getEnd_datum();
+
+                    cell_detailFolie_meielnsteinStartDatum_r.setText("" + enddatum.format(formatters));
                     cell_detailFolie_meielnsteinStartDatum_r.setFontColor(new Color(100, 100, 100));
                     cell_detailFolie_meielnsteinStartDatum_r.setFontSize(10.0);
 
-                    //----------------------------------------------EndDatum
-                    XSLFTableCell cell_detailFolie_meielnsteinEndDatum = detailFolie_tr_meilensteinTitle.addCell();
-                    XSLFTextParagraph cell_detailFolie_meielnsteinEndDatum_p = cell_detailFolie_meielnsteinEndDatum.addNewTextParagraph();
-                    XSLFTextRun cell_detailFolie_meielnsteinEndDatum_r = cell_detailFolie_meielnsteinEndDatum_p.addNewTextRun();
-
-
-                    cell_detailFolie_meielnsteinEndDatum.setFillColor(new Color(255, 255, 255));
-                    cell_detailFolie_meielnsteinEndDatum.setVerticalAlignment(VerticalAlignment.MIDDLE);
-
-
-                    cell_detailFolie_meielnsteinEndDatum.setBorderColor(TableCell.BorderEdge.top, Color.white);
-                    cell_detailFolie_meielnsteinEndDatum.setBorderColor(TableCell.BorderEdge.right, Color.white);
-                    cell_detailFolie_meielnsteinEndDatum.setBorderColor(TableCell.BorderEdge.left, Color.white);
-                    cell_detailFolie_meielnsteinEndDatum.setBorderColor(TableCell.BorderEdge.bottom, new Color(211, 211, 211));
-                    cell_detailFolie_meielnsteinEndDatum.setBorderWidth(TableCell.BorderEdge.bottom, 1);
-
-                    cell_detailFolie_meielnsteinEndDatum_r.setText("" + aktuellerMeilenstein.getEnd_datum());
-                    cell_detailFolie_meielnsteinEndDatum_r.setFontColor(new Color(100, 100, 100));
-                    cell_detailFolie_meielnsteinEndDatum_r.setFontSize(10.0);
-
                 }
+
                 XSLFTextBox meilensteinFolie_footer = meilensteinFolie.createTextBox();
                 XSLFTextParagraph meilensteinFolie_footer_p = meilensteinFolie_footer.addNewTextParagraph();
                 XSLFTextRun meilensteinFolie_footer_r = meilensteinFolie_footer_p.addNewTextRun();
-                meilensteinFolie_footer_r.setText("Projekt Portfolio Komitee ( " + ppkRepo.getNextPPK() + " )");
+                meilensteinFolie_footer_r.setText("Projekt Portfolio Komitee am " + nextPPK.format(formatters));
                 meilensteinFolie_footer_r.setFontColor(new Color(0, 82, 129));
                 meilensteinFolie_footer_r.setFontSize(12.);
                 meilensteinFolie_footer.setAnchor(new Rectangle(440, 500, 270, 50));
@@ -635,10 +646,8 @@ public class DetailPresentationHelper {
             //</editor-fold>
 
             //<editor-fold desc="Folie --> Arbeitszeiten">
-
-
-
             for(int i = 0; i < allProjects.size(); i++){
+                double stunden_gesamt = 0.0;
                 List<Arbeitszeiten> arbeitszeitenProProjekt = new ArrayList<>();
                 for(int j = 0; j < allArbeitszeiten.size(); j++){
                     if(allProjects.get(i).getProjekt_id().equals(allArbeitszeiten.get(j).getEinsaetze_id().getEinsaetze_id().getProjekte_id().getProjekt_id())){
@@ -649,37 +658,40 @@ public class DetailPresentationHelper {
 
                     XSLFSlide arbeitszeit = generiertePowerPointPraesentation.createSlide(title_content);
 
-
+                    XSLFPictureShape pic_detailFolie = arbeitszeit.createPicture(pd);
+                    pic_detailFolie.setAnchor(new Rectangle(540, 20, 150, 50));
+                    
                     XSLFTextShape meilensteinFolie_title = arbeitszeit.getPlaceholder(0);
                     meilensteinFolie_title.clearText();
                     XSLFTextParagraph meilensteinFolie_title_p = meilensteinFolie_title.addNewTextParagraph();
                     XSLFTextRun meilensteinFolie_title_r = meilensteinFolie_title_p.addNewTextRun();
 
                     meilensteinFolie_title_r.setText("" + allProjects.get(i).getTitel()); //Titel des Projekts
-                    meilensteinFolie_title_r.setFontColor(new Color(0, 82, 129));
+                    meilensteinFolie_title_r.setFontColor(Color.RED);
                     meilensteinFolie_title_r.setFontSize(30.0);
                     meilensteinFolie_title_r.setBold(true);
-                    meilensteinFolie_title.setAnchor(new Rectangle(20, 20, 500, 50));
+                    meilensteinFolie_title.setAnchor(new Rectangle(20, 30, 700, 50));
 
                     XSLFTextShape body_meilensteinFolie = arbeitszeit.getPlaceholder(1);
                     body_meilensteinFolie.clearText();
 
-
                     //Tabelle anlegen
                     XSLFTable table_meilensteine = body_meilensteinFolie.getSheet().createTable();
-                    table_meilensteine.setAnchor(new Rectangle(50, 200, 0, 0));
-
+                    table_meilensteine.setAnchor(new Rectangle(10, 150, 0, 0));
 
                     XSLFTableRow headerRow_meilensteine = table_meilensteine.addRow();
+
+                    //Arbeitszeitendatum
+                    LocalDate arbeitszeitenDatum = LocalDate.parse(arbeitszeitenProProjekt.get(0).getDate());
 
                     XSLFTextBox meilenstein = arbeitszeit.createTextBox();
                     XSLFTextParagraph meilenstein_p = meilenstein.addNewTextParagraph();
                     XSLFTextRun meilenstein_r = meilenstein_p.addNewTextRun();
-                    meilenstein_r.setText("Anzahl der Stunden pro Mitarbeiter für das Projekt:");
+                    meilenstein_r.setText("Erfasste Stunden in der Woche vom:                          " +arbeitszeitenDatum.format(formatters));
                     meilenstein_r.setFontSize(16.0);
                     meilenstein_r.setBold(true);
                     meilenstein_r.setFontColor(new Color(0, 82, 129));
-                    meilenstein.setAnchor(new Rectangle(30,90,200,100));
+                    meilenstein.setAnchor(new Rectangle(30,90,700,100));
 
 
                     for (int a = 0; a < 3; a++) {
@@ -692,7 +704,7 @@ public class DetailPresentationHelper {
                         if (a == 0) {
 
                             r_th_detailFolie_meilensteine.setText("Mitarbeiter: ");
-                            table_meilensteine.setColumnWidth(a, 144);
+                            table_meilensteine.setColumnWidth(a, 240);
                             table_meilensteine.setRowHeight(a, 20.0);
                             th_detailFolie_meilensteine.setFillColor(new Color(0, 82, 129));
 
@@ -707,7 +719,7 @@ public class DetailPresentationHelper {
                         if (a == 1) {
 
                             r_th_detailFolie_meilensteine.setText("Rolle: ");
-                            table_meilensteine.setColumnWidth(a, 170);
+                            table_meilensteine.setColumnWidth(a, 240);
                             th_detailFolie_meilensteine.setFillColor(new Color(0, 82, 129));
 
                             th_detailFolie_meilensteine.setVerticalAlignment(VerticalAlignment.MIDDLE);
@@ -720,7 +732,7 @@ public class DetailPresentationHelper {
                         }
                         if(a == 2){
                             r_th_detailFolie_meilensteine.setText("Stunden: ");
-                            table_meilensteine.setColumnWidth(a, 170);
+                            table_meilensteine.setColumnWidth(a, 220);
                             th_detailFolie_meilensteine.setFillColor(new Color(0, 82, 129));
 
                             th_detailFolie_meilensteine.setVerticalAlignment(VerticalAlignment.MIDDLE);
@@ -737,7 +749,7 @@ public class DetailPresentationHelper {
                         //Erstes Projekt
                         XSLFTableRow detailFolie_tr_meilensteinTitle;
                         detailFolie_tr_meilensteinTitle = table_meilensteine.addRow();
-                        detailFolie_tr_meilensteinTitle.setHeight(25.0);
+                        detailFolie_tr_meilensteinTitle.setHeight(35.0);
 
                         //----------------------------------------------Mitarbeiter
                         XSLFTableCell cell_detailFolie_meielnsteinTitel = detailFolie_tr_meilensteinTitle.addCell();
@@ -797,14 +809,73 @@ public class DetailPresentationHelper {
                         cell_detailFolie_stunden_r.setFontColor(new Color(100, 100, 100));
                         cell_detailFolie_stunden_r.setFontSize(10.0);
 
+                        stunden_gesamt+=arbeitszeitenProProjekt.get(c).getArbeitszeit();
+
                     }
 
+                    //Erstes Projekt
+                    XSLFTableRow detailFolie_tr_meilensteinTitle;
+                    detailFolie_tr_meilensteinTitle = table_meilensteine.addRow();
+                    detailFolie_tr_meilensteinTitle.setHeight(10.0);
+
+                    //----------------------------------------------Space
+                    XSLFTableCell cell_detailFolie_meielnsteinTitel = detailFolie_tr_meilensteinTitle.addCell();
+                    XSLFTextParagraph cell_detailFolie_meielnsteinTitel_p = cell_detailFolie_meielnsteinTitel.addNewTextParagraph();
+                    XSLFTextRun cell_detailFolie_meielnsteinTitel_r = cell_detailFolie_meielnsteinTitel_p.addNewTextRun();
+
+                    cell_detailFolie_meielnsteinTitel.setFillColor(new Color(0, 82, 129));
+                    cell_detailFolie_meielnsteinTitel.setVerticalAlignment(VerticalAlignment.MIDDLE);
+
+                    cell_detailFolie_meielnsteinTitel.setBorderColor(TableCell.BorderEdge.top, new Color(0, 82, 129));
+                    cell_detailFolie_meielnsteinTitel.setBorderColor(TableCell.BorderEdge.right, new Color(0, 82, 129));
+                    cell_detailFolie_meielnsteinTitel.setBorderColor(TableCell.BorderEdge.left, new Color(0, 82, 129));
+
+                    cell_detailFolie_meielnsteinTitel_r.setText("");
+                    cell_detailFolie_meielnsteinTitel_r.setFontColor(new Color(0, 82, 129));
+                    cell_detailFolie_meielnsteinTitel_r.setFontSize(10.0);
+
+                    //----------------------------------------------GesamtSumme Text
+                    XSLFTableCell cell_detailFolie_meielnsteinBeschreibung = detailFolie_tr_meilensteinTitle.addCell();
+                    XSLFTextParagraph cell_detailFolie_meielnsteinBeschreibung_p = cell_detailFolie_meielnsteinBeschreibung.addNewTextParagraph();
+                    XSLFTextRun cell_detailFolie_meielnsteinBeschreibung_r = cell_detailFolie_meielnsteinBeschreibung_p.addNewTextRun();
+
+
+                    cell_detailFolie_meielnsteinBeschreibung.setFillColor(new Color(0, 82, 129));
+                    cell_detailFolie_meielnsteinBeschreibung.setVerticalAlignment(VerticalAlignment.MIDDLE);
+
+
+                    cell_detailFolie_meielnsteinBeschreibung.setBorderColor(TableCell.BorderEdge.top, Color.white);
+                    cell_detailFolie_meielnsteinBeschreibung.setBorderColor(TableCell.BorderEdge.right, new Color(0, 82, 129));
+                    cell_detailFolie_meielnsteinBeschreibung.setBorderColor(TableCell.BorderEdge.left, Color.white);
+
+                    cell_detailFolie_meielnsteinBeschreibung_r.setText("Gesamtsumme der Stunden: ");
+                    cell_detailFolie_meielnsteinBeschreibung_r.setBold(true);
+                    cell_detailFolie_meielnsteinBeschreibung_r.setFontColor(new Color(255, 255, 255));
+                    cell_detailFolie_meielnsteinBeschreibung_r.setFontSize(10.0);
+
+                    //----------------------------------------------Stunden
+                    XSLFTableCell cell_detailFolie_stunden = detailFolie_tr_meilensteinTitle.addCell();
+                    XSLFTextParagraph cell_detailFolie_stunden_p = cell_detailFolie_stunden.addNewTextParagraph();
+                    XSLFTextRun cell_detailFolie_stunden_r = cell_detailFolie_stunden_p.addNewTextRun();
+
+                    cell_detailFolie_stunden.setFillColor(new Color(0, 82, 129));
+                    cell_detailFolie_stunden.setVerticalAlignment(VerticalAlignment.MIDDLE);
+
+                    cell_detailFolie_stunden.setBorderColor(TableCell.BorderEdge.top, Color.white);
+                    cell_detailFolie_stunden.setBorderWidth(TableCell.BorderEdge.top, 10.0);
+                    cell_detailFolie_stunden.setBorderColor(TableCell.BorderEdge.right, Color.white);
+                    cell_detailFolie_stunden.setBorderColor(TableCell.BorderEdge.left, Color.white);
+
+                    cell_detailFolie_stunden_r.setText("" + stunden_gesamt);
+                    cell_detailFolie_stunden_r.setBold(true);
+                    cell_detailFolie_stunden_r.setFontColor(new Color(255, 255, 255));
+                    cell_detailFolie_stunden_r.setFontSize(10.0);
 
 
                     XSLFTextBox arbeitszeit_footer = arbeitszeit.createTextBox();
                     XSLFTextParagraph arbeitszeit_footer_p = arbeitszeit_footer.addNewTextParagraph();
                     XSLFTextRun arbeitszeit_footer_r = arbeitszeit_footer_p.addNewTextRun();
-                    arbeitszeit_footer_r.setText("Projekt Portfolio Komitee ( " + ppkRepo.getNextPPK() + " )");
+                    arbeitszeit_footer_r.setText("Projekt Portfolio Komitee am " + nextPPK.format(formatters));
                     arbeitszeit_footer_r.setFontColor(new Color(0, 82, 129));
                     arbeitszeit_footer_r.setFontSize(12.);
                     arbeitszeit_footer.setAnchor(new Rectangle(440, 500, 270, 50));
@@ -812,6 +883,7 @@ public class DetailPresentationHelper {
                 }
 
             }
+
 
 
 
