@@ -226,9 +226,6 @@ public class PPKMeetingHelper {
                 gaeste1.setAnchor(new Rectangle(360, 300+20*i, 320, 50));
             }
 
-
-
-
             //</editor-fold>
 
             //<editor-fold desc="Erste Folie --> STARTBILD">

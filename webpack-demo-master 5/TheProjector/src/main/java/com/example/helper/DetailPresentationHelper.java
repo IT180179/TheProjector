@@ -4,6 +4,8 @@ import com.example.api.PPKRessource;
 import com.example.model.PersonenAufwandDTO;
 import com.example.workloads.Arbeitszeiten.Arbeitszeiten;
 import com.example.workloads.Arbeitszeiten.ArbeitszeitenRepo;
+import com.example.workloads.Gaeste.Gaeste;
+import com.example.workloads.Gaeste.GaesteRepo;
 import com.example.workloads.Meilensteine.Meilensteine;
 import com.example.workloads.Meilensteine.MeilensteineRepo;
 import com.example.workloads.PPK.PPKRepo;
@@ -36,6 +38,7 @@ public class DetailPresentationHelper {
         final PersonenRepo personenRepo = new PersonenRepo();
         final MeilensteineRepo meilensteineRepo = new MeilensteineRepo();
         final ArbeitszeitenRepo arbeitszeitenRepo = new ArbeitszeitenRepo();
+        final GaesteRepo gaesteRepo = new GaesteRepo();
 
         List<Projekte> allProjects = new ArrayList<>();
         allProjects = projekteRepo.listAll();
@@ -45,6 +48,9 @@ public class DetailPresentationHelper {
 
         List<Arbeitszeiten> allArbeitszeiten = new ArrayList<>();
         allArbeitszeiten = arbeitszeitenRepo.listAll();
+
+        List<Gaeste> alleGaeste = new ArrayList<>();
+        alleGaeste = gaesteRepo.listAll();
 
         Long id = 1L;
         Personen projekmanager = projekteRepo.getProjektmanager(id);
@@ -66,7 +72,6 @@ public class DetailPresentationHelper {
             XSLFSlideLayout title_content = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
             XSLFSlideLayout title = defaultMaster.getLayout(SlideLayout.TITLE);
             XSLFSlideLayout blank = defaultMaster.getLayout(SlideLayout.BLANK);
-            XSLFSlide startFolie = generiertePowerPointPraesentation.createSlide(blank);
             //</editor-fold>
 
 
@@ -76,28 +81,143 @@ public class DetailPresentationHelper {
             XSLFPictureData pd = generiertePowerPointPraesentation.addPicture(pictureData, PictureData.PictureType.PNG);
             //</editor-fold>
 
-            //<editor-fold desc="Erste Folie --> STARTBILD">
-            byte[] startSeite = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/sparkassa.jpeg"));
-            XSLFPictureData startSeite_pd = generiertePowerPointPraesentation.addPicture(startSeite, PictureData.PictureType.JPEG);
-            XSLFPictureShape startSeite_pic = startFolie.createPicture(startSeite_pd);
-            startSeite_pic.setAnchor(new Rectangle(0, 0, 720, 540));
+            //<editor-fold desc="EINLEITUNGSFOLIE ">
+            XSLFSlide einleitungsFolie = generiertePowerPointPraesentation.createSlide(blank);
+
+            byte[] hintergrund = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/startseite.png"));
+            XSLFPictureData hintergrund_pd = generiertePowerPointPraesentation.addPicture(hintergrund, PictureData.PictureType.PNG);
+            XSLFPictureShape hintergrund_pic = einleitungsFolie.createPicture(hintergrund_pd);
+            hintergrund_pic.setAnchor(new Rectangle(0,0,720,540));
+
+            XSLFTextBox balken = einleitungsFolie.createTextBox();
+            balken.setFillColor(new Color(195,227,248));
+            balken.setAnchor(new Rectangle(0,460,720,80));
 
             //----Logo anlegen
-            XSLFTextBox beschreibung = startFolie.createTextBox();
-            beschreibung.setFillColor(new Color(195, 227, 248));
-            beschreibung.setAnchor(new Rectangle(0, 0, 720, 50));
+            XSLFPictureShape logo = einleitungsFolie.createPicture(pd);
+            logo.setAnchor(new Rectangle(19, 430, 210, 80));
 
-            XSLFPictureShape pic_startfolie = startFolie.createPicture(pd);
-            pic_startfolie.setAnchor(new Rectangle(19, 0, 150, 50));
+            XSLFTextBox box = einleitungsFolie.createTextBox();
+            box.setFillColor(new Color(195,227,248));
+            box.setAnchor(new Rectangle(330,120,360,300));
+
+            XSLFTextBox gremium = einleitungsFolie.createTextBox();
+            XSLFTextParagraph gremium_p = gremium.addNewTextParagraph();
+            XSLFTextRun gremium_r = gremium_p.addNewTextRun();
+            gremium_r.setText("Gremium PPK");
+            gremium_r.setBold(true);
+            gremium_r.setFontColor(Color.white);
+            gremium_r.setFontSize(40.0);
+            gremium.setAnchor(new Rectangle(30, 155, 320, 50));
+
+            XSLFTextBox ppk_text = einleitungsFolie.createTextBox();
+            XSLFTextParagraph ppk_text_p = ppk_text.addNewTextParagraph();
+            XSLFTextRun ppk_text_r = ppk_text_p.addNewTextRun();
+            ppk_text_r.setText("Projekt Portfolio Komitee \n" +nextPPK.format(formatters));
+            ppk_text_r.setFontColor(Color.white);
+            ppk_text_r.setFontSize(23.0);
+            ppk_text.setAnchor(new Rectangle(30, 225, 320, 50));
+
+            XSLFTextBox nebentext1 = einleitungsFolie.createTextBox();
+            XSLFTextParagraph nebentext1_p = nebentext1.addNewTextParagraph();
+            XSLFTextRun nebentext1_r = nebentext1_p.addNewTextRun();
+            nebentext1_r.setText("OE Organisation");
+            nebentext1_r.setFontColor(Color.white);
+            nebentext1_r.setFontSize(12.0);
+            nebentext1.setAnchor(new Rectangle(30, 305, 320, 50));
+
+            XSLFTextBox nebentext2 = einleitungsFolie.createTextBox();
+            XSLFTextParagraph nebentext2_p = nebentext2.addNewTextParagraph();
+            XSLFTextRun nebentext2_r = nebentext2_p.addNewTextRun();
+            nebentext2_r.setText("Bereich Strategisches Risikomanagement & ORG IT");
+            nebentext2_r.setFontColor(Color.white);
+            nebentext2_r.setFontSize(12.0);
+            nebentext2.setAnchor(new Rectangle(30, 320, 320, 50));
+
+            XSLFTextBox zeitplan = einleitungsFolie.createTextBox();
+            XSLFTextParagraph zeitplan_p = zeitplan.addNewTextParagraph();
+            XSLFTextRun zeitplan_r = zeitplan_p.addNewTextRun();
+            zeitplan_r.setText("Zeitplan:");
+            zeitplan_r.setFontColor(new Color(0, 82, 129));
+            zeitplan_r.setFontSize(18.0);
+            zeitplan_r.setBold(true);
+            zeitplan.setAnchor(new Rectangle(360, 140, 320, 50));
+
+            XSLFTextBox zeitplan_1 = einleitungsFolie.createTextBox();
+            XSLFTextParagraph zeitplan_1_p = zeitplan_1.addNewTextParagraph();
+            XSLFTextRun zeitplan_1_r = zeitplan_1_p.addNewTextRun();
+            zeitplan_1_r.setText("14:00 – 14:45 Projekt Portfolio");
+            zeitplan_1_r.setFontColor(new Color(0, 82, 129));
+            zeitplan_1_r.setFontSize(16.0);
+            zeitplan_1.setAnchor(new Rectangle(360, 180, 320, 50));
+
+            XSLFTextBox zeitplan_2 = einleitungsFolie.createTextBox();
+            XSLFTextParagraph zeitplan_2_p = zeitplan_2.addNewTextParagraph();
+            XSLFTextRun zeitplan_2_r = zeitplan_2_p.addNewTextRun();
+            zeitplan_2_r.setText("14:45 – 15:30 Projekt Steuerungskomitees");
+            zeitplan_2_r.setFontColor(new Color(0, 82, 129));
+            zeitplan_2_r.setFontSize(16.0);
+            zeitplan_2.setAnchor(new Rectangle(360, 200, 320, 50));
+
+            XSLFTextBox zeitplan_3 = einleitungsFolie.createTextBox();
+            XSLFTextParagraph zeitplan_3_p = zeitplan_3.addNewTextParagraph();
+            XSLFTextRun zeitplan_3_r = zeitplan_3_p.addNewTextRun();
+            zeitplan_3_r.setText("15:30 – 16:00 Allfälliges");
+            zeitplan_3_r.setFontColor(new Color(0, 82, 129));
+            zeitplan_3_r.setFontSize(16.0);
+            zeitplan_3.setAnchor(new Rectangle(360, 220, 320, 50));
+
+            XSLFTextBox gaeste = einleitungsFolie.createTextBox();
+            XSLFTextParagraph gaeste_p = gaeste.addNewTextParagraph();
+            XSLFTextRun gaeste_r = gaeste_p.addNewTextRun();
+            gaeste_r.setText("Gäste:");
+            gaeste_r.setFontColor(new Color(0, 82, 129));
+            gaeste_r.setFontSize(18.0);
+            gaeste_r.setBold(true);
+            gaeste.setAnchor(new Rectangle(360, 260, 320, 50));
+
+            XSLFTextBox gaeste_beitext = einleitungsFolie.createTextBox();
+            XSLFTextParagraph gaeste_beitext_p = gaeste_beitext.addNewTextParagraph();
+            XSLFTextRun gaeste_beitext_r = gaeste_beitext_p.addNewTextRun();
+            gaeste_beitext_r.setText(" (werden zum jeweiligen Thema via MS Teams \n zugeschaltet)");
+            gaeste_beitext_r.setFontColor(new Color(0, 82, 129));
+            gaeste_beitext_r.setFontSize(11.0);
+            gaeste_beitext.setAnchor(new Rectangle(420, 264, 320, 50));
+
+            for(int i = 0; i < alleGaeste.size(); i++){
+                XSLFTextBox gaeste1 = einleitungsFolie.createTextBox();
+                XSLFTextParagraph gaeste1_p = gaeste1.addNewTextParagraph();
+                XSLFTextRun gaeste1_r = gaeste1_p.addNewTextRun();
+                gaeste1_r.setText(""+ alleGaeste.get(i).getName());
+                gaeste1_r.setFontColor(new Color(0, 82, 129));
+                gaeste1_r.setFontSize(16.0);
+                gaeste1.setAnchor(new Rectangle(360, 300+20*i, 320, 50));
+            }
+            //</editor-fold>
+
+            //<editor-fold desc="Erste Folie --> STARTBILD">
+            XSLFSlide ersteFolie = generiertePowerPointPraesentation.createSlide(blank);
+            byte[] ersteSeite = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/firstPicture.png"));
+            XSLFPictureData ersteSeite_pd = generiertePowerPointPraesentation.addPicture(ersteSeite, PictureData.PictureType.PNG);
+            XSLFPictureShape ersteSeite_pic = ersteFolie.createPicture(ersteSeite_pd);
+            ersteSeite_pic.setAnchor(new Rectangle(0,0,720,540));
+            //</editor-fold>
+
+            //<editor-fold desc="STARTFOLIE ">
+            XSLFSlide startFolie = generiertePowerPointPraesentation.createSlide(blank);
+            byte[] startSeite = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/laufende_projekte.png"));
+            XSLFPictureData startSeite_pd = generiertePowerPointPraesentation.addPicture(startSeite, PictureData.PictureType.PNG);
+            XSLFPictureShape startSeite_pic = startFolie.createPicture(startSeite_pd);
+            startSeite_pic.setAnchor(new Rectangle(0,0,750,540));
 
             XSLFTextBox nextPPKMeeting = startFolie.createTextBox();
             XSLFTextParagraph nextPPKMeeting_p = nextPPKMeeting.addNewTextParagraph();
             XSLFTextRun nextPPKMeeting_r = nextPPKMeeting_p.addNewTextRun();
-            nextPPKMeeting_r.setText("Projekt Portfolio Komitee am " + parsedPPK.format(formatters));
+            nextPPKMeeting_r.setText("");
             nextPPKMeeting_r.setBold(true);
-            nextPPKMeeting_r.setFontColor(new Color(0, 82, 129));
-            nextPPKMeeting_r.setFontSize(12.);
-            nextPPKMeeting.setAnchor(new Rectangle(450, 10, 270, 50));
+            nextPPKMeeting_r.setFontColor(Color.white);
+            nextPPKMeeting_r.setFontSize(70.0);
+            nextPPKMeeting.setAnchor(new Rectangle(450, 10, 720, 50));
             //</editor-fold>
 
             //<editor-fold desc="Zweite Folie --> DETAILPRÄSENTATION">
@@ -660,7 +780,7 @@ public class DetailPresentationHelper {
 
                     XSLFPictureShape pic_detailFolie = arbeitszeit.createPicture(pd);
                     pic_detailFolie.setAnchor(new Rectangle(540, 20, 150, 50));
-                    
+
                     XSLFTextShape meilensteinFolie_title = arbeitszeit.getPlaceholder(0);
                     meilensteinFolie_title.clearText();
                     XSLFTextParagraph meilensteinFolie_title_p = meilensteinFolie_title.addNewTextParagraph();
@@ -884,33 +1004,17 @@ public class DetailPresentationHelper {
 
             }
 
+            //<editor-fold desc="ENDFOLIE">
+            //FOLIE ERSTELLEN
+            XSLFSlide letzteFolie = generiertePowerPointPraesentation.createSlide(blank);
 
-
-
-
-
-
-
-                /*
-                XSLFPictureShape pic_meilensteinFolie = arbeitszeit.createPicture(pd);
-                pic_meilensteinFolie.setAnchor(new Rectangle(540, 20, 150, 50));
-
-                 */
-
-
-
-            //</editor-fold>
-
-            //<editor-fold desc="Letzte Folie --> ENDBILD">
-            /*
-            XSLFSlide endFolie = generiertePowerPointPraesentation.createSlide(blank);
-            byte[] endSeite = IOUtils.toByteArray(new FileInputStream("/Users/anabikic/Documents/SCHULE/5BHITM/Diplomarbeit/apachePOI_try/src/main/img/glaubandich.png"));
+            //BILD ERSTELLEN
+            byte[] endSeite = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/glaubandich.png"));
             XSLFPictureData endSeite_pd = generiertePowerPointPraesentation.addPicture(endSeite, PictureData.PictureType.PNG);
-            XSLFPictureShape endSeite_pic = endFolie.createPicture(endSeite_pd);
+            XSLFPictureShape endSeite_pic = letzteFolie.createPicture(endSeite_pd);
             endSeite_pic.setAnchor(new Rectangle(0,0,720,540));
             //</editor-fold>
 
-             */
 
             //OUTPUT
             ByteArrayOutputStream b = new ByteArrayOutputStream();
