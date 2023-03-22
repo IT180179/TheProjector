@@ -83,19 +83,17 @@ export class AddEmployeeFormComponent implements OnInit {
       arbeitsstunden: Number(data.arbeitsstunden)
     };
     //POST des neuen Mitarbeiters
-    this.http.post<Person>('http://localhost:8080/einsaetze/add', this.newdata)
+    this.http.post('http://localhost:8080/einsaetze/add', this.newdata)
       .subscribe({
         next: () => {
           this.snackbar.open("Person wurde erfolgreich hinzugefügt", undefined, {duration: 3000});
+          this.onSelectedProject(data.projekt_id);
         },
         error: err => {
           this.snackbar.open(`Hinzufügen fehlgeschlagen: ${err.message}`, undefined, {duration: 3000});
         }
       });
-    //Komponente neu laden
-    this.router.navigateByUrl('/add-employee', {skipLocationChange: true}).then(() => {
-      this.router.navigate(['add-employee']);
-    });
+    this.onSelectedProject(data.projekt_id);
   }
 
   onSelectedProject(id: number) {

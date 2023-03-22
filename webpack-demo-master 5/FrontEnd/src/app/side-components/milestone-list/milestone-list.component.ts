@@ -101,13 +101,30 @@ export class MilestoneListComponent implements OnInit {
     if(status==1){
       return "🟢 planmäßig"
     }else if(status==2){
-      return "🟠 im Verzug";
+      return "🔵 anstehend";
     }else if(status==3){
-      return "🔴 verspätet";
+      return "🟠 in Verzug";
+    }else if(status==4){
+      return "🔴 Fehlgeschlagen";
     }else{
-      return "invalid status";
+      return "Falscher Status";
     }
 
+  }
+
+  ngAfterContentInit(){
+    // GET - Meilensteine Per Projekt
+    this.milestones = this.service.getMilestonesOfProjects(this.projekt_id).subscribe({
+      next: value => {
+        //  console.log(value)
+        this.milestones = value
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
+          duration: 3000,
+          panelClass: 'snackbar-dark'
+        });
+      }
+    });
   }
 
 }

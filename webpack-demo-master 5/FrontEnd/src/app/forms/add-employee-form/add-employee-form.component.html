@@ -13,7 +13,7 @@
 <div id="main">
   <h1 class="subtitle is-3" style="color: #005281;">Mitarbeiter zum Projekt hinzufügen</h1>
   <div class="box" id="form">
-    <form id="create_employee" (ngSubmit)=onSubmit(form.value)  [formGroup]="form" novalidat>
+    <form id="create_employee"  [formGroup]="form" novalidat>
       <mat-form-field appearance="outline" class="full-width-field field">
         <mat-label style="color: #005281;">Projekt</mat-label>
         <mat-select (selectionChange)="onSelectedProject(selectedValue)" [(ngModel)]="selectedValue"  matNativeControl required formControlName="projekt_id">
@@ -62,7 +62,7 @@
       </div>
       <br>
       <div class=" has-text-centered " style=" background-color: #e5f6ff;">
-        <button type="submit" [disabled]="!form.valid" class="button is-medium" (click)="onSelectedProject(selectedValue)" style="color: #005281">+ Mitarbeiter hinzufügen</button>
+        <button type="submit" [disabled]="!form.valid" class="button is-medium" (click)=onSubmit(form.value) style="color: #005281">+ Mitarbeiter hinzufügen</button>
       </div>
       <br>
       <table  *ngIf="showtable" class="table is-bordered is-fullwidth" style="background-color: #e5f6ff; border-color: #005281;">
@@ -79,7 +79,7 @@
       </table>
       <br>
       <div class=" has-text-centered ">
-        <button type="submit" [disabled]="!form.valid" class="full-width-field button is-medium" routerLink="/project_overview" style="background-color: #005281; color: white;"> Fertig</button>
+        <button class="full-width-field button is-medium" routerLink="/project_overview" style="background-color: #005281; color: white;"> Fertig</button>
       </div>
     </form>
   </div>
