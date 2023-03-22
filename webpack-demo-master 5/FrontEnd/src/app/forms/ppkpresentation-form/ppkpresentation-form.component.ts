@@ -119,8 +119,6 @@ export class PPKPresentationFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed');
       this.x = document.getElementById("button5");
-      // console.log(result.data.titel);
-      // console.log(result.data.freitext)
       if(result.data.titel != null && result.data.freitext != null){
         this.x.innerText = "Entscheindungs-Folie ✓"
         this.disbale5 = true;
@@ -137,7 +135,7 @@ export class PPKPresentationFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed');
       this.x = document.getElementById("button6");
-      if(result.data.freitext != null && result.data.beschreibung != null && result.data.bild != null){
+      if(result.data.freitext != null && result.data.beschreibung != null){
         this.x.innerText = "Freie-Folie ✓"
         this.disbale6 = true;
         this.freiData = result.data;
@@ -170,41 +168,43 @@ export class PPKPresentationFormComponent implements OnInit {
     });
   }
   postData(){
-  if(this.disbale6){
     this.service.http.post('http://localhost:8080/freiefolien/add', this.freiData)
         .subscribe({
           next: value => {
-            console.log(value)
+            console.log("hat funktioniert")
           }, error: err => {
+            console.log(this.freiData)
             this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
           }
         });
-  }
 
-if(this.disbale5){
+
   this.service.http.post('http://localhost:8080/beschlussfolien/add', this.beschlussData)
       .subscribe({
         next: value => {
           // console.log(value)
-          //  console.log("Beschlussfolie hinzugefügt!")
+          console.log("Beschlussfolie hinzugefügt!")
         }, error: err => {
           this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+          console.log(this.beschlussData)
         }
       });
-}
 
-if(this.disbale2){
+
+
   this.service.http.post( "http://localhost:8080/softwareanforderungen/add/" + this.requestData.auswahl[1] + "/" + this.requestData.auswahl[2] + "/" + this.requestData.auswahl[3] + "/" + this.requestData.auswahl[4] + "/" +
       this.requestData.auswahl[5] + "/" + this.requestData.auswahl[6] + "/" +  this.requestData.auswahl[7], this.requestData)
       .subscribe({
         next: value => {
           // console.log(value)
-          // console.log("Softwareanfoderungsfolie hinzugefügt!")
+          console.log("Softwareanfoderungsfolie hinzugefügt!")
         }, error: err => {
           this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+          console.log(this.requestData)
         }
-      });
-}
 
+      });
+
+    this._router.navigate(['/pp_menu']);
   }
 }

@@ -90,7 +90,7 @@ export class BeschlussFolieFormComponent implements OnInit {
             ppk_id: 1
           },
           projekte_id: {
-            projekt_id: Number(this.id)
+            projekt_id: Number(this.dataService.projekt_id)
           }
         }
       }

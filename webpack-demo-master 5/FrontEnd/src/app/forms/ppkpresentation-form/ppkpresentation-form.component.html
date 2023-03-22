@@ -39,7 +39,7 @@
       </div>
       <div class="field">
         <button class="button  full-width-field  is-dark"
-                style="background-color: #005281;" (click)="openFreieFolie()"[disabled]="!selected " id="button6">Freie-Folie erstellen</button>
+                style="background-color: #005281;" (click)="openFreieFolie()" [disabled]="!selected " id="button6">Freie-Folie erstellen</button>
       </div>
       <div class="field">
         <button class="button  full-width-field  is-dark"
@@ -49,10 +49,8 @@
       <br>
       <div>
         <div class="field">
-          <button (click)="postData()" [disabled]="!selected" class="button is-medium full-width-field is-responsive" type="submit" style="background-color: #005281;color: white;" routerLink="/pp_menu">Präsentation freigeben </button>
+          <button (click)="postData()" [disabled]="!selected" class="button is-medium full-width-field is-responsive" type="submit" style="background-color: #005281;color: white;" >Präsentation freigeben </button>
           <br/>
-          <br />
-          <a class="button full-width-field is-responsive" style="background-color: white; color: #005281; border-color: #005281">Generieren</a>
         </div>
       </div>
     </form>
