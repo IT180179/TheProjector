@@ -1335,6 +1335,18 @@ public class PPKMeetingHelper {
             freierTextRun.setFontColor(new Color(0, 82, 129));
             freierTextRun.setFontSize(14.0);
 
+            //Bild
+
+                XSLFTextBox base = freieFolie.createTextBox();
+                base.setAnchor(new Rectangle(40, 90,640, 140 ));
+                XSLFTextParagraph basep = base.addNewTextParagraph();
+                XSLFTextRun baser = basep.addNewTextRun();
+                //-------------------------------------------------------------BESCHREIBUNGSTEXT
+                baser.setText(""+ freieFoliens.get(i).getUpload());
+                baser.setFontColor(new Color(0, 82, 129));
+                baser.setFontSize(14.0);
+
+
             //FOOTER
             XSLFTextBox projektuebersichtsfolie_footer = freieFolie.createTextBox();
             XSLFTextParagraph projektuebersichtsfolie_footer_p = projektuebersichtsfolie_footer.addNewTextParagraph();
