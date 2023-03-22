@@ -51,7 +51,7 @@ export class CreatePPKFormComponent implements OnInit {
     });
   }
 
-  onSubmit(data: any) {
+  onPost(data: any) {
     this.ppk = {
       datum: data.datum
     }
@@ -62,7 +62,7 @@ export class CreatePPKFormComponent implements OnInit {
           this.ppk_id = value.ppk_id
           this.ppk_date = value.datum
          //  console.log(this.ppk_id, "ppk")
-          this.setProjects();
+
           this.snackBar.open(`PPK wurde hinzugefügt`, undefined, {
             duration: 3000,
             panelClass: 'snackbar-dark'
@@ -74,6 +74,7 @@ export class CreatePPKFormComponent implements OnInit {
           });
         }
       });
+    this.setProjects();
     this.getCheckboxValue()
     this.disable = false
   }
