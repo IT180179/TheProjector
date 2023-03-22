@@ -35,6 +35,8 @@ export class DeletedialogComponent implements OnInit {
     this.http.delete("http://localhost:8080/meilenstein_histories/deletePerMeilensteinId/" + this.data.id).subscribe({
       next: value => {
         // console.log(value)
+        this.snackBar.open(`Daten konnten gel werden`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+
       }, error: err => {
         this.snackBar.open(`Daten konnten nicht gelöscht werden ${err.message}`, undefined, {
           duration: 3000,

@@ -56,8 +56,6 @@ export class BeschlussFolieFormComponent implements OnInit {
       }else{
         this.entscheidungBool = true;
       }
-
-
     } catch (e){
     console.log("test");
   }
@@ -66,9 +64,6 @@ export class BeschlussFolieFormComponent implements OnInit {
       this.router.navigate(['**']);
     }
     this.ppk_id = this.dataService.ppk_id;
-
-
-
   }
 
   onSubmit(data: any) {

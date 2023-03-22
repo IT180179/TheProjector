@@ -24,26 +24,23 @@
       <mat-form-field appearance="outline" class="full-width-field">
         <mat-label style="color: #005281;">Projektname</mat-label>
         <mat-select (selectionChange)="setProjektID()" formControlName="projekt_id" [(value)]="selected">
-          <mat-option *ngFor="let testobject of projects"
-                      value="{{testobject.projekt_id}}">{{testobject.titel}}</mat-option>
+          <mat-option *ngFor="let testobject of projects" value="{{testobject.projekt_id}}">{{testobject.titel}}</mat-option>
         </mat-select>
       </mat-form-field>
       <div class="field">
         <div *ngFor="let folien of folienTypen">
           <h2 style="color: #005281; font-size: 90%;">✓ {{ folien.name }} Folie</h2>
-        </div></div>
+        </div>
+      </div>
       <br>
       <div class="field">
-        <button class="button  full-width-field  is-dark"
-                style="background-color: #005281;" (click)="openEntscheidung()" [disabled]="!selected "  id="button5">Entscheindungs-Folie erstellen </button>
+        <button class="button  full-width-field  is-dark" style="background-color: #005281;" (click)="openEntscheidung()" [disabled]="!selected " id="button5">Entscheindungs-Folie erstellen </button>
       </div>
       <div class="field">
-        <button class="button  full-width-field  is-dark"
-                style="background-color: #005281;" (click)="openFreieFolie()" [disabled]="!selected " id="button6">Freie-Folie erstellen</button>
+        <button class="button  full-width-field  is-dark" style="background-color: #005281;" (click)="openFreieFolie()" [disabled]="!selected " id="button6">Freie-Folie erstellen</button>
       </div>
       <div class="field">
-        <button class="button  full-width-field  is-dark"
-                style="background-color: #005281;" (click)="openSR()" [disabled]="!selected "  id="button2">Software-Anforderungen erstellen</button>
+        <button class="button  full-width-field  is-dark" style="background-color: #005281;" (click)="openSR()" [disabled]="!selected "  id="button2">Software-Anforderungen erstellen</button>
       </div>
       <br>
       <br>

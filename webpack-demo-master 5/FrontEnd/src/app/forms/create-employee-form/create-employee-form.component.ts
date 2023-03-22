@@ -39,19 +39,34 @@ export class CreateEmployeeFormComponent implements OnInit {
       next: value => {
         // console.log(value)
         this.employees = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
+          duration: 3000,
+          panelClass: 'snackbar-dark'
+        });
+      }
     });
     this.abteilung = this.service.getAbteilung().subscribe({
       next: value => {
         console.log(value)
         this.abteilung = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
+          duration: 3000,
+          panelClass: 'snackbar-dark'
+        });
+      }
     });
     this.bereich = this.service.getBereiche().subscribe({
       next: value => {
         console.log(value)
         this.bereich = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
+          duration: 3000,
+          panelClass: 'snackbar-dark'
+        });
+      }
     });
     if(!this.data.isloggedIn){
       this._router.navigate(['**']);
@@ -78,6 +93,10 @@ export class CreateEmployeeFormComponent implements OnInit {
       .subscribe({
         next: value => {
           // console.log(value)
+          this.snackBar.open(`Daten konnten GESPEICHERT werden`, undefined, {
+            duration: 3000,
+            panelClass: 'snackbar-dark'
+          });
         }, error: err => {
           this.snackBar.open(`Daten konnten nicht gespeichert werden ${err.message}`, undefined, {
             duration: 3000,

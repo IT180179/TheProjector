@@ -47,28 +47,36 @@ export class ResourceFormComponent implements OnInit {
       next: value => {
         //  console.log(value)
         this.employees = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+      }
     });
 
     this.roles = this.service.getRoles().subscribe({
       next: value => {
          console.log(value)
         this.roles = value
-      }, error: err => { }
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+      }
     });
 
     this.projects = this.service.getProjectsByPerson(this.user_id).subscribe({
       next: value => {
         // console.log(value)
         this.projects = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+      }
     });
 
     this.einsaetze = this.service.getEinsaetze().subscribe({
       next: value => {
         // console.log(value)
         this.einsaetze = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+      }
     });
   }
   onSubmit(data: any) {
@@ -88,9 +96,6 @@ export class ResourceFormComponent implements OnInit {
     this.http.post<any>('http://localhost:8080/arbeitszeiten/add', this.newdata)
       .subscribe({
         next: value => {
-          //  console.log("GEPOSTET")
-          //  console.log(value)
-
           this.snackBar.open(`Daten wurden gespeichert!`, undefined, {
             duration: 3000,
             panelClass: 'snackbar-dark'
@@ -109,7 +114,9 @@ export class ResourceFormComponent implements OnInit {
       next: value => {
         //  console.log(value)
         this.employeesOfProject = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+      }
     });
     this.showtable = true
   }

@@ -43,6 +43,7 @@ export class AddEmployeeFormComponent implements OnInit {
       next: value => {
         this.employees = value
       }, error: err => {
+        this.snackBar.open(`Mitarbeiter konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
     //GET-Rollen
@@ -50,6 +51,7 @@ export class AddEmployeeFormComponent implements OnInit {
       next: value => {
         this.roles = value
       }, error: err => {
+        this.snackBar.open(`Rolen konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
     //GET-Projects
@@ -57,6 +59,7 @@ export class AddEmployeeFormComponent implements OnInit {
       next: value => {
         this.projects = value
       }, error: err => {
+        this.snackBar.open(`Projekte konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
     //GET-Einsatz
@@ -64,6 +67,7 @@ export class AddEmployeeFormComponent implements OnInit {
       next: value => {
         this.einsaetze = value
       }, error: err => {
+        this.snackBar.open(`Einsätze konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
   }
@@ -99,6 +103,7 @@ export class AddEmployeeFormComponent implements OnInit {
       next: value => {
         this.employeesOfProject = value
       }, error: err => {
+        this.snackBar.open(`Projekte konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
     this.showtable = true

@@ -10,7 +10,7 @@
 <div id="main">
     <h1 class="subtitle is-2" style="color: #005281;">PPK - Ändern</h1>
     <div class="box" id="form">
-        <form #userPost="ngForm" (ngSubmit)="onSubmit(addressForm.value)" [formGroup]="addressForm" novalidate>
+        <form #userPost="ngForm" [formGroup]="addressForm" novalidate>
             <mat-label for="datum">Datum des PPK-Meetings</mat-label>
             <br>
             <input [min]="todayDate" class="full-width-field datepicker" value="{{ppk.datum}}" type="date" id="datum" formControlName="datum">
@@ -39,7 +39,7 @@
 
             <div class="field">
                 <br><br>
-                <button [disabled]="!addressForm.valid"  class="button is-dark" (click)="toDisableGast()" style="background-color: #005281;"
+                <button [disabled]="!addressForm.valid" (click)="onSubmit(addressForm.value)" class="button is-dark" style="background-color: #005281;"
                         type="submit" > Ändern</button>
                 <br><br>
 
