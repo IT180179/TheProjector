@@ -204,5 +204,7 @@ export class PPKPresentationFormComponent implements OnInit {
         }
 
       });
+
+    this._router.navigate(['/pp_menu']);
   }
 }
