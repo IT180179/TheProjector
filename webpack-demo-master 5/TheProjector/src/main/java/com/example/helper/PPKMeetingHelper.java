@@ -1443,20 +1443,20 @@ public class PPKMeetingHelper {
 
             //BESCHREIBUNGSTEXT
             XSLFTextBox freierText = freieFolie.createTextBox();
-            freierText.setAnchor(new Rectangle(40, 90,640, 140 ));
+            freierText.setAnchor(new Rectangle(40, 90,640, 100 ));
             XSLFTextParagraph freierTextParagraph = freierText.addNewTextParagraph();
             XSLFTextRun freierTextRun = freierTextParagraph.addNewTextRun();
             //-------------------------------------------------------------BESCHREIBUNGSTEXT
-            freierTextRun.setText(""+ freieFoliens.get(i).getBeschreibung());
+            freierTextRun.setText(""+ freieFoliens.get(i).getFreitext());
             freierTextRun.setFontColor(new Color(0, 82, 129));
             freierTextRun.setFontSize(14.0);
 
             XSLFTextBox base = freieFolie.createTextBox();
-            base.setAnchor(new Rectangle(40, 90,640, 140 ));
+            base.setAnchor(new Rectangle(40, 190,640, 100 ));
             XSLFTextParagraph basep = base.addNewTextParagraph();
             XSLFTextRun baser = basep.addNewTextRun();
             //-------------------------------------------------------------BESCHREIBUNGSTEXT
-                baser.setText("");
+                baser.setText(""+freieFoliens.get(i).getBeschreibung());
                 baser.setFontColor(new Color(0, 82, 129));
                 baser.setFontSize(14.0);
 
@@ -1476,7 +1476,7 @@ public class PPKMeetingHelper {
                 byte[] base64IMg = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/image2.jpeg"));
                 XSLFPictureData base64IMg_pd = generiertePowerPointPraesentation.addPicture(base64IMg, PictureData.PictureType.JPEG);
                 XSLFPictureShape base64IMg_pic = freieFolie.createPicture(base64IMg_pd);
-                base64IMg_pic.setAnchor(new Rectangle(310,250,100,100));
+                base64IMg_pic.setAnchor(new Rectangle(210,300,300,200));
 
 
 
