@@ -243,7 +243,7 @@ public class DetailPresentationHelper {
 
                 //Logo einbinden
                 XSLFPictureShape pic_detailFolie = detailFolie.createPicture(pd);
-                pic_detailFolie.setAnchor(new Rectangle(540, 20, 150, 50));
+                pic_detailFolie.setAnchor(new Rectangle(560, 32, 130, 20));
 
                 //Titel einfügen
                 XSLFTextShape detailFolie_title = detailFolie.getPlaceholder(0);
@@ -557,7 +557,7 @@ public class DetailPresentationHelper {
 
                 //Logo einfügen
                 XSLFPictureShape pic_meilensteinFolie = meilensteinFolie.createPicture(pd);
-                pic_meilensteinFolie.setAnchor(new Rectangle(540, 20, 150, 50));
+                pic_meilensteinFolie.setAnchor(new Rectangle(560, 32, 130, 20));
 
                 //Titel einfügen
                 XSLFTextShape meilensteinFolie_title = meilensteinFolie.getPlaceholder(0);
@@ -809,7 +809,7 @@ public class DetailPresentationHelper {
 
                     //Logo einfügen
                     XSLFPictureShape pic_detailFolie = arbeitszeit.createPicture(pd);
-                    pic_detailFolie.setAnchor(new Rectangle(540, 20, 150, 50));
+                    pic_detailFolie.setAnchor(new Rectangle(560, 32, 130, 20));
 
                     //Titel einfügen
                     XSLFTextShape meilensteinFolie_title = arbeitszeit.getPlaceholder(0);
