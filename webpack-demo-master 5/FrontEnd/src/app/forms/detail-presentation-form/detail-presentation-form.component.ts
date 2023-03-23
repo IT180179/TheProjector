@@ -70,7 +70,7 @@ export class DetailPresentationFormComponent implements OnInit {
   getDetailPresentation(){
     console.log("Detail-Präsentation wird generiert")
 
-      this.service.getPPKPowerpoint().subscribe({
+      this.service.getDetailPowerpoint().subscribe({
         next: blob => {
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);

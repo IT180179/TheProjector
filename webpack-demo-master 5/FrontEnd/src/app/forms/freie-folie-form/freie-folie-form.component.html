@@ -37,10 +37,11 @@
             <div class=" full-width-field form-group">
                 <div class="file full-width-field">
                     <label class="file-label full-width-field">
-                        <img id ="imageView" [src]="imageUrl" alt="Bild auswählen">
 
                         <input type="file" id="file" name="file" (change)="onSelectNewFile($event)" accept="image/png, image/jpeg">
                         <br>
+
+                        <img id ="imageView" [src]="imageUrl">
                     </label>
                 </div>
                 <br>
