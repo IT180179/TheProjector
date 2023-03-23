@@ -51,7 +51,7 @@ public class ProjekteRepo implements PanacheRepository<Projekte> {
     }
 
     public List<Meilensteine> getMeilensteineOfProject(Long projekt_id) {
-        Query query = this.getEntityManager().createQuery("select m from Meilensteine m where m.projekt_id.projekt_id = :projekt_id", Meilensteine.class)
+        Query query = this.getEntityManager().createQuery("select m from Meilensteine m where m.projekt_id.projekt_id = :projekt_id order by m.end_datum asc", Meilensteine.class)
                 .setParameter("projekt_id", projekt_id);
         return query.getResultList();
     }
