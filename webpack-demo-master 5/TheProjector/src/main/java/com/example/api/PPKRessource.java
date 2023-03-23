@@ -31,7 +31,7 @@ public class PPKRessource {
     @GET
     @Path("/all")
     public Response getAll() {
-        var allPersonen = this.ppkRepo.listAll();
+        var allPersonen = this.ppkRepo.getAllNewSorted();
         return Response.ok(allPersonen).build();
     }
 
