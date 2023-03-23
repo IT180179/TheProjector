@@ -33,47 +33,61 @@ public class DetailPresentationHelper {
     public static ByteArrayInputStream generateDetailPresentation()
             throws FileNotFoundException, IOException, InvalidFormatException {
 
+        //<editor-fold desc="REPOS">
+        //ProjekteRepo
         final ProjekteRepo projekteRepo = new ProjekteRepo();
+        //PPKRepo
         final PPKRepo ppkRepo = new PPKRepo();
+        //PersonenRepo
         final PersonenRepo personenRepo = new PersonenRepo();
+        //MeilensteinRepo
         final MeilensteineRepo meilensteineRepo = new MeilensteineRepo();
+        //ArbeitszeitenRepo
         final ArbeitszeitenRepo arbeitszeitenRepo = new ArbeitszeitenRepo();
+        //GästeRepo
         final GaesteRepo gaesteRepo = new GaesteRepo();
+        //</editor-fold>
 
+        //<editor-fold desc="Repoaufruf">
+        //Liste allerProjekte
         List<Projekte> allProjects = new ArrayList<>();
         allProjects = projekteRepo.listAll();
 
+        //Liste aller MEilensteine
         List<Meilensteine> alleMeilensteine = new ArrayList<>();
         alleMeilensteine = meilensteineRepo.listAll();
 
+        //Liste aller Arbeitszeiten
         List<Arbeitszeiten> allArbeitszeiten = new ArrayList<>();
         allArbeitszeiten = arbeitszeitenRepo.listAll();
 
+        //Liste aller Gäste
         List<Gaeste> alleGaeste = new ArrayList<>();
         alleGaeste = gaesteRepo.listAll();
 
+        //Projekmanager
         Long id = 1L;
         Personen projekmanager = projekteRepo.getProjektmanager(id);
 
+        //Projekteanzahl
         Long projekteanzahl = projekteRepo.getProjekteAnzahl();
 
-        //Ändern des Datumsformats beim PPK
+        //Datumsformat änder
         LocalDate nextPPK = ppkRepo.getNextPPK();
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String date_PPK = nextPPK.format(formatters);
         LocalDate parsedPPK = LocalDate.parse(date_PPK, formatters);
+        //</editor-fold>
 
         try (XMLSlideShow generiertePowerPointPraesentation = new XMLSlideShow()) {
 
-
-            //<editor-fold desc="Folien mit einzelnen Layout">
+            //<editor-fold desc="LAYOUT">
             //Layout der Folien
             XSLFSlideMaster defaultMaster = generiertePowerPointPraesentation.getSlideMasters().get(0);
             XSLFSlideLayout title_content = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
             XSLFSlideLayout title = defaultMaster.getLayout(SlideLayout.TITLE);
             XSLFSlideLayout blank = defaultMaster.getLayout(SlideLayout.BLANK);
             //</editor-fold>
-
 
             //<editor-fold desc="LOGO">
             //Logo erstellen
@@ -82,8 +96,10 @@ public class DetailPresentationHelper {
             //</editor-fold>
 
             //<editor-fold desc="EINLEITUNGSFOLIE ">
+            //Folie generieren
             XSLFSlide einleitungsFolie = generiertePowerPointPraesentation.createSlide(blank);
 
+            //Hintergrundbild
             byte[] hintergrund = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/startseite.png"));
             XSLFPictureData hintergrund_pd = generiertePowerPointPraesentation.addPicture(hintergrund, PictureData.PictureType.PNG);
             XSLFPictureShape hintergrund_pic = einleitungsFolie.createPicture(hintergrund_pd);
@@ -93,7 +109,7 @@ public class DetailPresentationHelper {
             balken.setFillColor(new Color(195,227,248));
             balken.setAnchor(new Rectangle(0,460,720,80));
 
-            //----Logo anlegen
+            //Logo einbinden
             XSLFPictureShape logo = einleitungsFolie.createPicture(pd);
             logo.setAnchor(new Rectangle(19, 430, 210, 80));
 
@@ -195,8 +211,11 @@ public class DetailPresentationHelper {
             }
             //</editor-fold>
 
-            //<editor-fold desc="Erste Folie --> STARTBILD">
+            //<editor-fold desc="STARTBILD">
+            //Folie generiern
             XSLFSlide ersteFolie = generiertePowerPointPraesentation.createSlide(blank);
+
+            //Hintergrundbild
             byte[] ersteSeite = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/firstPicture.png"));
             XSLFPictureData ersteSeite_pd = generiertePowerPointPraesentation.addPicture(ersteSeite, PictureData.PictureType.PNG);
             XSLFPictureShape ersteSeite_pic = ersteFolie.createPicture(ersteSeite_pd);
@@ -204,31 +223,29 @@ public class DetailPresentationHelper {
             //</editor-fold>
 
             //<editor-fold desc="STARTFOLIE ">
+            //Folie generiern
             XSLFSlide startFolie = generiertePowerPointPraesentation.createSlide(blank);
+
+            //Hintergrundbild
             byte[] startSeite = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/laufende_projekte.png"));
             XSLFPictureData startSeite_pd = generiertePowerPointPraesentation.addPicture(startSeite, PictureData.PictureType.PNG);
             XSLFPictureShape startSeite_pic = startFolie.createPicture(startSeite_pd);
             startSeite_pic.setAnchor(new Rectangle(0,0,750,540));
-
-            XSLFTextBox nextPPKMeeting = startFolie.createTextBox();
-            XSLFTextParagraph nextPPKMeeting_p = nextPPKMeeting.addNewTextParagraph();
-            XSLFTextRun nextPPKMeeting_r = nextPPKMeeting_p.addNewTextRun();
-            nextPPKMeeting_r.setText("");
-            nextPPKMeeting_r.setBold(true);
-            nextPPKMeeting_r.setFontColor(Color.white);
-            nextPPKMeeting_r.setFontSize(70.0);
-            nextPPKMeeting.setAnchor(new Rectangle(450, 10, 720, 50));
             //</editor-fold>
 
-            //<editor-fold desc="Zweite Folie --> DETAILPRÄSENTATION">
+            //<editor-fold desc="DETAILINFOS">
+            //Durchlaufen aller Projekte
             for (int b = 0; b < projekteanzahl; b++) {
                 id++;
 
+                //Folie generieren
                 XSLFSlide detailFolie = generiertePowerPointPraesentation.createSlide(title_content);
 
+                //Logo einbinden
                 XSLFPictureShape pic_detailFolie = detailFolie.createPicture(pd);
                 pic_detailFolie.setAnchor(new Rectangle(540, 20, 150, 50));
 
+                //Titel einfügen
                 XSLFTextShape detailFolie_title = detailFolie.getPlaceholder(0);
                 detailFolie_title.clearText();
                 XSLFTextParagraph detailFolie_title_p = detailFolie_title.addNewTextParagraph();
@@ -240,7 +257,7 @@ public class DetailPresentationHelper {
                 detailFolie_title_r.setBold(true);
                 detailFolie_title.setAnchor(new Rectangle(20, 20, 500, 50));
 
-                //Body
+                //Tabelle anlegen
                 XSLFTextShape body_detailFolie = detailFolie.getPlaceholder(1);
                 body_detailFolie.clearText();
 
@@ -251,7 +268,7 @@ public class DetailPresentationHelper {
                 XSLFTableRow headerRow_detailFolie = table_detailFolie.addRow();
                 headerRow_detailFolie.setHeight(20.0);
 
-                //Header für Tabelle
+                //Header für die Tabelle
                 for (int i = 0; i < numColumns_detailFolie; i++) {
 
                     XSLFTableCell th_detailFolie = headerRow_detailFolie.addCell();
@@ -260,14 +277,14 @@ public class DetailPresentationHelper {
                     XSLFTextRun r_th_detailFolie = p_th_detailFolie.addNewTextRun();
 
                     if (i == 0) {
-                        r_th_detailFolie.setText(".");
+                        r_th_detailFolie.setText("");
                         r_th_detailFolie.setFontSize(2.0);
                         table_detailFolie.setColumnWidth(i, 350);
                         th_detailFolie.setFillColor(new Color(0, 82, 129));
                         r_th_detailFolie.setFontColor(new Color(0, 82, 129));
                     }
                     if (i == 1) {
-                        r_th_detailFolie.setText(".");
+                        r_th_detailFolie.setText("");
                         r_th_detailFolie.setFontSize(2.0);
                         table_detailFolie.setColumnWidth(i, 350);
                         th_detailFolie.setFillColor(new Color(0, 82, 129));
@@ -275,7 +292,7 @@ public class DetailPresentationHelper {
                     }
                 }
 
-                //Reihe Projektname
+                //Row Projektname
                 XSLFTableRow detailFoli_tr_projektTitel;
                 detailFoli_tr_projektTitel = table_detailFolie.addRow();
                 detailFoli_tr_projektTitel.setHeight(50.0);
@@ -299,7 +316,7 @@ public class DetailPresentationHelper {
                 cell_detailFolie_projektname_r.setFontSize(15.0);
                 cell_detailFolie_projektname_r.setBold(true);
 
-                //----------------------------------------------eingegebener Projektname
+                //----------------------------------------------Projektname DB
                 XSLFTableCell cell_detailFolie_projektname_eingegeben = detailFoli_tr_projektTitel.addCell();
                 XSLFTextParagraph cell_detailFolie_projektname_eingegeben_p = cell_detailFolie_projektname_eingegeben.addNewTextParagraph();
                 XSLFTextRun cell_detailFolie_projektname_eingegeben_r = cell_detailFolie_projektname_eingegeben_p.addNewTextRun();
@@ -320,7 +337,7 @@ public class DetailPresentationHelper {
                 cell_detailFolie_projektname_eingegeben_r.setFontColor(new Color(100, 100, 100));
                 cell_detailFolie_projektname_eingegeben_r.setFontSize(15.0);
 
-                //Reihe Projektmanager
+                //Row Projektmanager
                 XSLFTableRow detailFolie_tr_projektStatus;
                 detailFolie_tr_projektStatus = table_detailFolie.addRow();
                 detailFolie_tr_projektStatus.setHeight(50.0);
@@ -344,7 +361,7 @@ public class DetailPresentationHelper {
                 cell_detailFolie_projektStatus_r.setFontSize(15.0);
                 cell_detailFolie_projektStatus_r.setBold(true);
 
-                //----------------------------------------------eingegebener Projektmanager
+                //----------------------------------------------Projektmanager DB
                 XSLFTableCell cell_detailFolie_projektStatus_eingegeben = detailFolie_tr_projektStatus.addCell();
                 XSLFTextParagraph cell_detailFolie_projektStatus_eingegeben_p = cell_detailFolie_projektStatus_eingegeben.addNewTextParagraph();
                 XSLFTextRun cell_detailFolie_projektStatus_eingegeben_r = cell_detailFolie_projektStatus_eingegeben_p.addNewTextRun();
@@ -364,7 +381,7 @@ public class DetailPresentationHelper {
                 cell_detailFolie_projektStatus_eingegeben_r.setFontColor(new Color(100, 100, 100));
                 cell_detailFolie_projektStatus_eingegeben_r.setFontSize(15.0);
 
-                //Reihe Status
+                //Row Status
                 XSLFTableRow detailFolie_tr_status;
                 detailFolie_tr_status = table_detailFolie.addRow();
                 detailFolie_tr_status.setHeight(50.0);
@@ -388,7 +405,7 @@ public class DetailPresentationHelper {
                 cell_detailFolie_status_r.setFontSize(15.0);
                 cell_detailFolie_status_r.setBold(true);
 
-                //----------------------------------------------eingegebener Status
+                //----------------------------------------------Status DB
                 XSLFTableCell cell_detailFolie_status_eingegeben = detailFolie_tr_status.addCell();
                 XSLFTextParagraph cell_detailFolie_status_eingegeben_p = cell_detailFolie_status_eingegeben.addNewTextParagraph();
                 XSLFTextRun cell_detailFolie_status_eingegeben_r = cell_detailFolie_status_eingegeben_p.addNewTextRun();
@@ -404,6 +421,7 @@ public class DetailPresentationHelper {
                 cell_detailFolie_status_eingegeben.setBorderColor(TableCell.BorderEdge.bottom, new Color(211, 211, 211));
                 cell_detailFolie_status_eingegeben.setBorderWidth(TableCell.BorderEdge.bottom, 1);
 
+                //Status durch Icon ersetzen
                 if(allProjects.get(b).getStatus() == 1){
 
                     cell_detailFolie_status_eingegeben_r.setText("\uD83D\uDFE2 planmäßig");
@@ -425,7 +443,7 @@ public class DetailPresentationHelper {
                 }
 
 
-                //Reihe Startdatum
+                //Row Startdatum
                 XSLFTableRow detailFolie_tr_startDatum;
                 detailFolie_tr_startDatum = table_detailFolie.addRow();
                 detailFolie_tr_startDatum.setHeight(50.0);
@@ -449,7 +467,7 @@ public class DetailPresentationHelper {
                 cell_detailFolie_startDatum_r.setFontSize(15.0);
                 cell_detailFolie_startDatum_r.setBold(true);
 
-                //----------------------------------------------eingegebenes Startdatum
+                //----------------------------------------------Startdatum DB
                 XSLFTableCell cell_detailFolie_startDatum_eingegeben = detailFolie_tr_startDatum.addCell();
                 XSLFTextParagraph cell_detailFolie_startDatum_eingegeben_p = cell_detailFolie_startDatum_eingegeben.addNewTextParagraph();
                 XSLFTextRun cell_detailFolie_startDatum_eingegeben_r = cell_detailFolie_startDatum_eingegeben_p.addNewTextRun();
@@ -465,7 +483,7 @@ public class DetailPresentationHelper {
                 cell_detailFolie_startDatum_eingegeben.setBorderColor(TableCell.BorderEdge.bottom, new Color(211, 211, 211));
                 cell_detailFolie_startDatum_eingegeben.setBorderWidth(TableCell.BorderEdge.bottom, 1);
 
-                //Startdatum
+                //Startdatum Format ändern
                 LocalDate startDatum = allProjects.get(b).getStart_datum();
 
                 cell_detailFolie_startDatum_eingegeben_r.setText("" + startDatum.format(formatters));
@@ -496,7 +514,7 @@ public class DetailPresentationHelper {
                 cell_detailFolie_endDatum_r.setFontSize(15.0);
                 cell_detailFolie_endDatum_r.setBold(true);
 
-                //----------------------------------------------eingegebenes End-Datum
+                //----------------------------------------------End-Datum DB
                 XSLFTableCell cell_detailFolie_endDatum_eingegeben = detailFolie_tr_endDatum.addCell();
                 XSLFTextParagraph cell_detailFolie_endDatum_eingegeben_p = cell_detailFolie_endDatum_eingegeben.addNewTextParagraph();
                 XSLFTextRun cell_detailFolie_endDatum_eingegeben_r = cell_detailFolie_endDatum_eingegeben_p.addNewTextRun();
@@ -512,7 +530,7 @@ public class DetailPresentationHelper {
                 cell_detailFolie_endDatum_eingegeben.setBorderColor(TableCell.BorderEdge.bottom, new Color(255, 255, 255));
                 cell_detailFolie_endDatum_eingegeben.setBorderWidth(TableCell.BorderEdge.bottom, 1);
 
-                //Enddatum
+                //Enddatum Format ändern
                 LocalDate enddatum = allProjects.get(b).getEnd_datum();
 
                 cell_detailFolie_endDatum_eingegeben_r.setText("" + enddatum.format(formatters));
@@ -530,14 +548,18 @@ public class DetailPresentationHelper {
             }
             //</editor-fold>
 
-            //<editor-fold desc="Dritte Folie --> Meilensteinliste">
+            //<editor-fold desc="MEILENSTEINLISTE">
+            //Durchlaufen aller Projekte
             for (int b = 0; b < allProjects.size(); b++) {
 
+                //Folie generieren
                 XSLFSlide meilensteinFolie = generiertePowerPointPraesentation.createSlide(title_content);
 
+                //Logo einfügen
                 XSLFPictureShape pic_meilensteinFolie = meilensteinFolie.createPicture(pd);
                 pic_meilensteinFolie.setAnchor(new Rectangle(540, 20, 150, 50));
 
+                //Titel einfügen
                 XSLFTextShape meilensteinFolie_title = meilensteinFolie.getPlaceholder(0);
                 meilensteinFolie_title.clearText();
                 XSLFTextParagraph meilensteinFolie_title_p = meilensteinFolie_title.addNewTextParagraph();
@@ -552,11 +574,9 @@ public class DetailPresentationHelper {
                 XSLFTextShape body_meilensteinFolie = meilensteinFolie.getPlaceholder(1);
                 body_meilensteinFolie.clearText();
 
-
                 //Tabelle anlegen
                 XSLFTable table_meilensteine = body_meilensteinFolie.getSheet().createTable();
                 table_meilensteine.setAnchor(new Rectangle(20, 200, 0, 0));
-
 
                 XSLFTableRow headerRow_meilensteine = table_meilensteine.addRow();
 
@@ -569,7 +589,7 @@ public class DetailPresentationHelper {
                 meilenstein_r.setFontColor(new Color(0, 82, 129));
                 meilenstein.setAnchor(new Rectangle(10, 140, 140, 100));
 
-
+                //Header für Tabelle
                 for (int i = 0; i < 4; i++) {
                     XSLFTableCell th_detailFolie_meilensteine = headerRow_meilensteine.addCell();
                     XSLFTextParagraph p_th_detailFolie_meilensteine = th_detailFolie_meilensteine.addNewTextParagraph();
@@ -637,6 +657,7 @@ public class DetailPresentationHelper {
                 }
 
 
+                //Liste, um Meilensteine pro Projekt zu bekommen
                 List<Meilensteine> meileinensteineProProjekt = new ArrayList<>();
 
                 for (int i = 0; i < alleMeilensteine.size(); i++) {
@@ -646,15 +667,16 @@ public class DetailPresentationHelper {
                     }
                 }
 
+                //Durchlaufen der Meilensteine pro Projekt
                 for (int i = 0; i < meileinensteineProProjekt.size(); i++) {
                     Meilensteine aktuellerMeilenstein = alleMeilensteine.get(i);
 
-                    //Erstes Projekt
+                    //Row Meilensteintitel
                     XSLFTableRow detailFolie_tr_meilensteinTitle;
                     detailFolie_tr_meilensteinTitle = table_meilensteine.addRow();
                     detailFolie_tr_meilensteinTitle.setHeight(45.0);
 
-                    //----------------------------------------------Meilensteintitel
+                    //----------------------------------------------Meilensteintitel DB
                     XSLFTableCell cell_detailFolie_meielnsteinTitel = detailFolie_tr_meilensteinTitle.addCell();
                     XSLFTextParagraph cell_detailFolie_meielnsteinTitel_p = cell_detailFolie_meielnsteinTitel.addNewTextParagraph();
                     XSLFTextRun cell_detailFolie_meielnsteinTitel_r = cell_detailFolie_meielnsteinTitel_p.addNewTextRun();
@@ -672,7 +694,7 @@ public class DetailPresentationHelper {
                     cell_detailFolie_meielnsteinTitel_r.setFontColor(new Color(0, 82, 129));
                     cell_detailFolie_meielnsteinTitel_r.setFontSize(10.0);
 
-                    //----------------------------------------------Beschreibung
+                    //----------------------------------------------Beschreibung DB
                     XSLFTableCell cell_detailFolie_meielnsteinBeschreibung = detailFolie_tr_meilensteinTitle.addCell();
                     XSLFTextParagraph cell_detailFolie_meielnsteinBeschreibung_p = cell_detailFolie_meielnsteinBeschreibung.addNewTextParagraph();
                     XSLFTextRun cell_detailFolie_meielnsteinBeschreibung_r = cell_detailFolie_meielnsteinBeschreibung_p.addNewTextRun();
@@ -693,7 +715,7 @@ public class DetailPresentationHelper {
                     cell_detailFolie_meielnsteinBeschreibung_r.setFontSize(10.0);
 
 
-                    //----------------------------------------------Meilensteinstatus
+                    //----------------------------------------------Meilensteinstatus DB
                     XSLFTableCell cell_detailFolie_meielnsteinStatus = detailFolie_tr_meilensteinTitle.addCell();
                     XSLFTextParagraph cell_detailFolie_meielnsteinStatus_p = cell_detailFolie_meielnsteinStatus.addNewTextParagraph();
                     XSLFTextRun cell_detailFolie_meielnsteinStatus_r = cell_detailFolie_meielnsteinStatus_p.addNewTextRun();
@@ -709,7 +731,7 @@ public class DetailPresentationHelper {
                     cell_detailFolie_meielnsteinStatus.setBorderColor(TableCell.BorderEdge.bottom, new Color(211, 211, 211));
                     cell_detailFolie_meielnsteinStatus.setBorderWidth(TableCell.BorderEdge.bottom, 1);
 
-
+                    //Status ändern durch ICON
                     if(allProjects.get(b).getStatus() == 1){
 
                         cell_detailFolie_meielnsteinStatus_r.setText("\uD83D\uDFE2 planmäßig");
@@ -730,7 +752,7 @@ public class DetailPresentationHelper {
 
                     }
 
-                    //----------------------------------------------StartDatum
+                    //----------------------------------------------StartDatum DB
                     XSLFTableCell cell_detailFolie_meielnsteinStartDatum = detailFolie_tr_meilensteinTitle.addCell();
                     XSLFTextParagraph cell_detailFolie_meielnsteinStartDatum_p = cell_detailFolie_meielnsteinStartDatum.addNewTextParagraph();
                     XSLFTextRun cell_detailFolie_meielnsteinStartDatum_r = cell_detailFolie_meielnsteinStartDatum_p.addNewTextRun();
@@ -746,7 +768,7 @@ public class DetailPresentationHelper {
                     cell_detailFolie_meielnsteinStartDatum.setBorderColor(TableCell.BorderEdge.bottom, new Color(211, 211, 211));
                     cell_detailFolie_meielnsteinStartDatum.setBorderWidth(TableCell.BorderEdge.bottom, 1);
 
-                    //Stardatum
+                    //Stardatum Format ändern
                     LocalDate enddatum = aktuellerMeilenstein.getEnd_datum();
 
                     cell_detailFolie_meielnsteinStartDatum_r.setText("" + enddatum.format(formatters));
@@ -755,6 +777,7 @@ public class DetailPresentationHelper {
 
                 }
 
+                //----------------------------------------------------------------------------------------------------------FOOTER
                 XSLFTextBox meilensteinFolie_footer = meilensteinFolie.createTextBox();
                 XSLFTextParagraph meilensteinFolie_footer_p = meilensteinFolie_footer.addNewTextParagraph();
                 XSLFTextRun meilensteinFolie_footer_r = meilensteinFolie_footer_p.addNewTextRun();
@@ -765,22 +788,30 @@ public class DetailPresentationHelper {
             }
             //</editor-fold>
 
-            //<editor-fold desc="Folie --> Arbeitszeiten">
+            //<editor-fold desc="ARBEITSZEITEN">
+            //Durchlaufen aller Projekte
             for(int i = 0; i < allProjects.size(); i++){
+                //Variable um Gesamtstunden zu erfassen
                 double stunden_gesamt = 0.0;
+                //Liste der Arbeitszeiten pro Projekt
                 List<Arbeitszeiten> arbeitszeitenProProjekt = new ArrayList<>();
+                //Durchlaufen der Arbeitszeiten pro Projekt
                 for(int j = 0; j < allArbeitszeiten.size(); j++){
                     if(allProjects.get(i).getProjekt_id().equals(allArbeitszeiten.get(j).getEinsaetze_id().getEinsaetze_id().getProjekte_id().getProjekt_id())){
                         arbeitszeitenProProjekt.add(allArbeitszeiten.get(j));
                     }
                 }
+                //Falls keine Arbeitszeiten eingetragen wurden, wird keine Folie generiert
                 if(!arbeitszeitenProProjekt.isEmpty()){
 
+                    //Folie generieren
                     XSLFSlide arbeitszeit = generiertePowerPointPraesentation.createSlide(title_content);
 
+                    //Logo einfügen
                     XSLFPictureShape pic_detailFolie = arbeitszeit.createPicture(pd);
                     pic_detailFolie.setAnchor(new Rectangle(540, 20, 150, 50));
 
+                    //Titel einfügen
                     XSLFTextShape meilensteinFolie_title = arbeitszeit.getPlaceholder(0);
                     meilensteinFolie_title.clearText();
                     XSLFTextParagraph meilensteinFolie_title_p = meilensteinFolie_title.addNewTextParagraph();
@@ -801,7 +832,7 @@ public class DetailPresentationHelper {
 
                     XSLFTableRow headerRow_meilensteine = table_meilensteine.addRow();
 
-                    //Arbeitszeitendatum
+                    //Arbeitszeitendatum Format ändern
                     LocalDate arbeitszeitenDatum = LocalDate.parse(arbeitszeitenProProjekt.get(0).getDate());
 
                     XSLFTextBox meilenstein = arbeitszeit.createTextBox();
@@ -813,7 +844,7 @@ public class DetailPresentationHelper {
                     meilenstein_r.setFontColor(new Color(0, 82, 129));
                     meilenstein.setAnchor(new Rectangle(30,90,700,100));
 
-
+                    //Header für die Tabelle
                     for (int a = 0; a < 3; a++) {
                         XSLFTableCell th_detailFolie_meilensteine = headerRow_meilensteine.addCell();
                         XSLFTextParagraph p_th_detailFolie_meilensteine = th_detailFolie_meilensteine.addNewTextParagraph();
@@ -864,9 +895,10 @@ public class DetailPresentationHelper {
                         }
                     }
 
+                    //Durchlaufen der Arbeitszeiten pro Projekt
                     for(int c = 0; c < arbeitszeitenProProjekt.size(); c++){
 
-                        //Erstes Projekt
+                        //Row
                         XSLFTableRow detailFolie_tr_meilensteinTitle;
                         detailFolie_tr_meilensteinTitle = table_meilensteine.addRow();
                         detailFolie_tr_meilensteinTitle.setHeight(35.0);
@@ -933,12 +965,12 @@ public class DetailPresentationHelper {
 
                     }
 
-                    //Erstes Projekt
+                    //row Gesamtsumme
                     XSLFTableRow detailFolie_tr_meilensteinTitle;
                     detailFolie_tr_meilensteinTitle = table_meilensteine.addRow();
                     detailFolie_tr_meilensteinTitle.setHeight(10.0);
 
-                    //----------------------------------------------Space
+                    //----------------------------------------------
                     XSLFTableCell cell_detailFolie_meielnsteinTitel = detailFolie_tr_meilensteinTitle.addCell();
                     XSLFTextParagraph cell_detailFolie_meielnsteinTitel_p = cell_detailFolie_meielnsteinTitel.addNewTextParagraph();
                     XSLFTextRun cell_detailFolie_meielnsteinTitel_r = cell_detailFolie_meielnsteinTitel_p.addNewTextRun();
@@ -973,7 +1005,7 @@ public class DetailPresentationHelper {
                     cell_detailFolie_meielnsteinBeschreibung_r.setFontColor(new Color(255, 255, 255));
                     cell_detailFolie_meielnsteinBeschreibung_r.setFontSize(10.0);
 
-                    //----------------------------------------------Stunden
+                    //----------------------------------------------Gesamtstunden berechnet
                     XSLFTableCell cell_detailFolie_stunden = detailFolie_tr_meilensteinTitle.addCell();
                     XSLFTextParagraph cell_detailFolie_stunden_p = cell_detailFolie_stunden.addNewTextParagraph();
                     XSLFTextRun cell_detailFolie_stunden_r = cell_detailFolie_stunden_p.addNewTextRun();
@@ -991,7 +1023,7 @@ public class DetailPresentationHelper {
                     cell_detailFolie_stunden_r.setFontColor(new Color(255, 255, 255));
                     cell_detailFolie_stunden_r.setFontSize(10.0);
 
-
+                    //----------------------------------------------------------------------------------------------------------FOOTER
                     XSLFTextBox arbeitszeit_footer = arbeitszeit.createTextBox();
                     XSLFTextParagraph arbeitszeit_footer_p = arbeitszeit_footer.addNewTextParagraph();
                     XSLFTextRun arbeitszeit_footer_r = arbeitszeit_footer_p.addNewTextRun();
@@ -1003,20 +1035,20 @@ public class DetailPresentationHelper {
                 }
 
             }
+            //</editor-fold>
 
             //<editor-fold desc="ENDFOLIE">
-            //FOLIE ERSTELLEN
+            //Folie generieren
             XSLFSlide letzteFolie = generiertePowerPointPraesentation.createSlide(blank);
 
-            //BILD ERSTELLEN
+            //Bild einfügen
             byte[] endSeite = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/glaubandich.png"));
             XSLFPictureData endSeite_pd = generiertePowerPointPraesentation.addPicture(endSeite, PictureData.PictureType.PNG);
             XSLFPictureShape endSeite_pic = letzteFolie.createPicture(endSeite_pd);
             endSeite_pic.setAnchor(new Rectangle(0,0,720,540));
             //</editor-fold>
 
-
-            //OUTPUT
+            //PowerPoint ausgeben
             ByteArrayOutputStream b = new ByteArrayOutputStream();
             generiertePowerPointPraesentation.write(b);
             return new ByteArrayInputStream(b.toByteArray());
