@@ -20,7 +20,8 @@ export class InfoPpkComponent implements OnInit {
         next: value => {
           this.ppk = value
           //console.log(this.ppk)
-        }, error: err => {}
+        }, error: err => {
+        }
       });
 
   }

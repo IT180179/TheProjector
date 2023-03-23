@@ -77,6 +77,7 @@ gast:any
         // console.log(value)
         this.gaeste_list = value
       }, error: err => {
+        this.snackBar.open(`Gäste laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }});
   }
   onNoClick(): void {

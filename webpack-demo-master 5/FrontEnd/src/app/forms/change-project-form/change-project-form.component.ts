@@ -52,7 +52,7 @@ export class ChangeProjectFormComponent implements OnInit {
         this.employees = value
       }, error: err => {
         this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
-          duration: 3000,
+          duration: 300,
           panelClass: 'snackbar-dark'
         });
       }
@@ -63,7 +63,7 @@ export class ChangeProjectFormComponent implements OnInit {
         this.roles = value
       }, error: err => {
         this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
-          duration: 3000,
+          duration: 300,
           panelClass: 'snackbar-dark'
         });
       }
@@ -74,7 +74,7 @@ export class ChangeProjectFormComponent implements OnInit {
         this.projects = value
       }, error: err => {
         this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
-          duration: 3000,
+          duration: 300,
           panelClass: 'snackbar-dark'
         });
       }
@@ -85,7 +85,7 @@ export class ChangeProjectFormComponent implements OnInit {
         this.project = value
       }, error: err => {
         this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
-          duration: 3000,
+          duration: 300,
           panelClass: 'snackbar-dark'
         });
       }
@@ -114,7 +114,7 @@ export class ChangeProjectFormComponent implements OnInit {
           this.snackBar.open(`Daten wurden GESPEICHERT`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
         }, error: err => {
           this.snackBar.open(`Daten konnten nicht gespeichert werden ${err.message}`, undefined, {
-            duration: 3000,
+            duration: 300,
             panelClass: 'snackbar-dark'
           });
         }

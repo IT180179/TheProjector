@@ -74,4 +74,18 @@ export class ProjectDetailComponent implements OnInit {
     }
 
   }
+
+  translateRoles(rechte:number):string{
+    switch (rechte){
+      case 1:
+        return "Projektmanager";
+        break;
+      case 2:
+        return "Mitarbeiter";
+        break;
+      default:
+        return "Invalid"
+
+    }
+  }
 }

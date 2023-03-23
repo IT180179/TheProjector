@@ -23,17 +23,21 @@ export class PpkInformationComponent implements OnInit {
     }
     this.nextPpk = this.service.getNextPPK().subscribe({
       next: value => {
-        // console.log(value)
+         console.log(value)
         this.nextPpk = value
-      }, error: err => { }
+      }, error: err => {
+        this.snackBar.open(`Nächstes PPK laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
     })
 
     this.ppkInfos = this.http.get('http://localhost:8080/ppk/getNextPPKWithProjektAndGaeste').subscribe(
       {
         next: value => {
-          //  console.log(value)
+          console.log(value)
           this.ppkInfos = value
-        }, error: err => {}}
+        }, error: err => {
+          this.snackBar.open(`PPK-Infos laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+        }}
     )
 
   }

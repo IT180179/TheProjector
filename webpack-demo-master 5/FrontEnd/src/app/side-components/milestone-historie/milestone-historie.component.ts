@@ -28,7 +28,9 @@ export class MilestoneHistorieComponent implements OnInit {
             this.onNoClick()
           }
           this.milestonesHistorie = value
-        }, error: err => {}
+        }, error: err => {
+        this.snackBar.open(`Meilenstein-Historie laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
       });
   }
 

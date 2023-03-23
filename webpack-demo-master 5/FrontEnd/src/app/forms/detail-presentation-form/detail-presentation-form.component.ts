@@ -20,7 +20,8 @@ export class DetailPresentationFormComponent implements OnInit {
     project: [null, Validators.required]
   });
 
-  constructor(private data: DataService, private router: Router, public datePipe: DatePipe, private authService: AuthService, private snackBar: MatSnackBar, private _router: Router, public dialog: MatDialog, private fb: FormBuilder, public service: HttpService) {
+  constructor(private data: DataService, private router: Router, public datePipe: DatePipe, private authService: AuthService,
+              private snackBar: MatSnackBar, private _router: Router, public dialog: MatDialog, private fb: FormBuilder, public service: HttpService) {
   }
 
   employees: any;
@@ -68,6 +69,16 @@ export class DetailPresentationFormComponent implements OnInit {
 
   getDetailPresentation(){
     console.log("Detail-Präsentation wird generiert")
+
+      this.service.getPPKPowerpoint().subscribe({
+        next: blob => {
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'Detail-Präsentation.pptx';
+        link.click();
+      }, error: err => {
+      this.snackBar.open(`Präsentation herunterladen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+    }});
 
   }
 

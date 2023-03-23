@@ -6,9 +6,6 @@ import {SummaryComponent} from "../../side-components/summary/summary.component"
 import {Router} from "@angular/router";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {PPKPresentationFormComponent} from "../ppkpresentation-form/ppkpresentation-form.component";
-import * as pako from 'pako';
-import html2canvas from 'html2canvas';
 
 import {DomSanitizer} from "@angular/platform-browser";
 import {DialogData} from "../../side-components/projects-overview/projects-overview.component";

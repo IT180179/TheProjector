@@ -62,10 +62,10 @@ export class AddMilestoneFormComponent implements OnInit {
     this.http.post('http://localhost:8080/meilensteine/add', this.newData)
       .subscribe({
         next: value => {
-          this.snackBar.open(`Meilenstein wurde hinzugefügt`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+          this.snackBar.open(`Meilenstein wurde hinzugefügt`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
           // console.log(value)
         }, error: err => {
-          this.snackBar.open(`Daten konnten nicht hinzugefügt werden ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+          this.snackBar.open(`Daten konnten nicht hinzugefügt werden ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
         }
       });
     this.openSummary()

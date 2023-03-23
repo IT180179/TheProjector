@@ -59,6 +59,7 @@ export class ProjectsOverviewComponent implements OnInit {
           console.log(this.foundprojects)
       }, error: err => {
         //  console.log("Es können keine Projekte abgefragt werden")
+        this.snackBar.open(`Projekt laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
   }
@@ -69,12 +70,13 @@ export class ProjectsOverviewComponent implements OnInit {
     }else {
    this.service.search(this.text).subscribe( {
       next: value => {
-        console.log("Wurde überschrieben!")
+        //console.log("Wurde überschrieben!")
         // @ts-ignore
         this.foundprojects = value;
-        console.log(this.foundprojects)
+       // console.log(this.foundprojects)
       },error: err => {
-        console.log("Projekt '" + this.text + "' wurde nicht gefunden!")
+        //console.log("Projekt '" + this.text + "' wurde nicht gefunden!")
+       this.snackBar.open(`Projekt laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     })
   }

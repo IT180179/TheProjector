@@ -87,9 +87,9 @@ export class ChangeMilestoneFormComponent implements OnInit {
       .subscribe({
         next: value => {
           // console.log(value)
-          this.snackBar.open(`Daten wurden GESPEICHERT`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+          this.snackBar.open(`Daten wurden GESPEICHERT`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
         }, error: err => {
-          this.snackBar.open(`Daten konnten nicht hinzugefügt werden ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+          this.snackBar.open(`Daten konnten nicht hinzugefügt werden ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
         }
       });
 
@@ -109,9 +109,9 @@ export class ChangeMilestoneFormComponent implements OnInit {
       .subscribe({
         next: value => {
           // console.log(value)
-          this.snackBar.open(`Daten wurden GESPEICHERT`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+          this.snackBar.open(`Daten wurden GESPEICHERT`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
         }, error: err => {
-          this.snackBar.open(`Daten konnten nicht geändert werden ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-light'});
+          this.snackBar.open(`Daten konnten nicht geändert werden ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-light'});
         }
       });
     this.close()

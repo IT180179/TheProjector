@@ -73,7 +73,7 @@
         </tr>
         <tr *ngFor="let testobject of employeesOfProject">
           <td class="has-text-weight-bold">{{testobject.nachname}} {{testobject.vorname}}</td>
-          <td>{{testobject.rechte}}</td>
+          <td>{{translateRoles(testobject.rechte)}}</td>
           <td>{{testobject.abteilungs_id.name}}</td>
         </tr>
       </table>

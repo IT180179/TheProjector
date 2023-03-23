@@ -41,7 +41,7 @@ export class CreatePPKFormComponent implements OnInit {
           this.projects = value
         }, error: err => {
         this.snackBar.open(`Daten konnten nicht gespeichert werden ${err.message}`, undefined, {
-          duration: 3000,
+          duration: 300,
           panelClass: 'snackbar-dark'
         });
       }
@@ -52,7 +52,7 @@ export class CreatePPKFormComponent implements OnInit {
         this.projektAnzahl = value
       }, error: (err: { message: any; }) => {
         this.snackBar.open(`Daten konnten nicht gespeichert werden ${err.message}`, undefined, {
-          duration: 3000,
+          duration: 300,
           panelClass: 'snackbar-dark'
         });
       }
@@ -73,12 +73,12 @@ export class CreatePPKFormComponent implements OnInit {
           console.log(value)
 
           this.snackBar.open(`PPK wurde hinzugefügt`, undefined, {
-            duration: 3000,
+            duration: 300,
             panelClass: 'snackbar-dark'
           });
         }, error: (err: { message: any; }) => {
           this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
-            duration: 3000,
+            duration: 300,
             panelClass: 'snackbar-dark'
           });
         }
@@ -89,9 +89,6 @@ export class CreatePPKFormComponent implements OnInit {
     this.disable = false
 
   }
-
-
-
   setProjects() {
     for (var i = 0; i < this.auswahl.length; i++) {
       // console.log(this.auswahl[i])
@@ -114,7 +111,7 @@ export class CreatePPKFormComponent implements OnInit {
           //  console.log(value)
           }, error: err => {
             this.snackBar.open(`Daten konnten nicht gespeichert werden ${err.message}`, undefined, {
-              duration: 3000,
+              duration: 300,
               panelClass: 'snackbar-dark'
             });
           }

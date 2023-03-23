@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from "../../services/http.service";
 import {DataService} from "../../services/data.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-resourcen-overview',
@@ -9,7 +10,7 @@ import {DataService} from "../../services/data.service";
 })
 export class ResourcenOverviewComponent implements OnInit {
 
-  constructor(private http: HttpService, private dataService: DataService) { }
+  constructor(private http: HttpService, private dataService: DataService, public snackbar: MatSnackBar) { }
   id: any
   resourcen: any
 
@@ -19,7 +20,9 @@ export class ResourcenOverviewComponent implements OnInit {
       next: value => {
         console.log(value)
         this.resourcen = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackbar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
     });
   }
 

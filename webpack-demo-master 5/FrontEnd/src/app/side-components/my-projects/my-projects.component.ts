@@ -32,7 +32,7 @@ export class MyProjectsComponent implements OnInit {
         this.projects = value
       }, error: err => {
         this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
-          duration: 3000,
+          duration: 300,
           panelClass: 'snackbar-dark'
         });
       }

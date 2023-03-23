@@ -41,7 +41,7 @@ export class CreateEmployeeFormComponent implements OnInit {
         this.employees = value
       }, error: err => {
         this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
-          duration: 3000,
+          duration: 300,
           panelClass: 'snackbar-dark'
         });
       }
@@ -52,7 +52,7 @@ export class CreateEmployeeFormComponent implements OnInit {
         this.abteilung = value
       }, error: err => {
         this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
-          duration: 3000,
+          duration: 300,
           panelClass: 'snackbar-dark'
         });
       }
@@ -63,7 +63,7 @@ export class CreateEmployeeFormComponent implements OnInit {
         this.bereich = value
       }, error: err => {
         this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
-          duration: 3000,
+          duration: 300,
           panelClass: 'snackbar-dark'
         });
       }
@@ -94,12 +94,12 @@ export class CreateEmployeeFormComponent implements OnInit {
         next: value => {
           // console.log(value)
           this.snackBar.open(`Daten konnten GESPEICHERT werden`, undefined, {
-            duration: 3000,
+            duration: 300,
             panelClass: 'snackbar-dark'
           });
         }, error: err => {
           this.snackBar.open(`Daten konnten nicht gespeichert werden ${err.message}`, undefined, {
-            duration: 3000,
+            duration: 300,
             panelClass: 'snackbar-dark'
           });
         }

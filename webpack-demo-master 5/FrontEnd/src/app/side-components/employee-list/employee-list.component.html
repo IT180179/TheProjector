@@ -21,11 +21,13 @@
       <tr style="border-color: #005281;">
         <th class="is-uppercase" style="border-color: #005281; color: #005281;">Mitarbeiter</th>
         <th class="is-uppercase" style="border-color: #005281; color: #005281;">Abteilung</th>
+        <th class="is-uppercase" style="border-color: #005281; color: #005281;">Rolle</th>
         <th class="is-uppercase" style="background-color: #e5f6ff; border-color: #005281; border-radius: 50px; color: #005281;">Arbeitsaufwand</th>
       </tr>
       <tr  style="border-color: #005281;"*ngFor="let testobject of employees">
         <td class="has-text-weight-bold">{{testobject.nachname}} {{testobject.vorname}}</td>
         <td>{{testobject.abteilung.name}}</td>
+        <td>{{translateRoles(testobject.rechte)}}</td>
         <td >{{testobject.arbeitsstunden}}</td>
       </tr>
     </table>
