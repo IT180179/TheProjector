@@ -24,7 +24,7 @@ public class MeilensteineResource {
     @GET
     @Path("/all")
     public Response getAll() {
-        var all = this.meilensteineRepo.listAll();
+        var all = this.meilensteineRepo.getAllSorted();
         return Response.ok(all).build();
     }
 
