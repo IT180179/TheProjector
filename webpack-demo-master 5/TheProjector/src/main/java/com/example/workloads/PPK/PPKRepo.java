@@ -13,6 +13,11 @@ import java.util.List;
 @ApplicationScoped
 public class PPKRepo implements PanacheRepository<PPK> {
 
+    public List<PPK> getAllNewSorted() {
+        Query query = this.getEntityManager().createQuery("select p from PPK p where p.datum >= CURRENT_DATE order by p.datum asc");
+        return query.getResultList();
+    }
+
     public void update(PPK ppk) {
         this.getEntityManager().merge(ppk);
     }
