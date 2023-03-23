@@ -127,7 +127,7 @@ public class PPKMeetingHelper {
 
             //----Logo anlegen
             XSLFPictureShape logo = einleitungsFolie.createPicture(pd);
-            logo.setAnchor(new Rectangle(19, 430, 210, 80));
+            logo.setAnchor(new Rectangle(30, 480, 150, 35));
 
             XSLFTextBox box = einleitungsFolie.createTextBox();
             box.setFillColor(new Color(195,227,248));
@@ -257,7 +257,7 @@ public class PPKMeetingHelper {
             XSLFSlide projektportfolioFolie = generiertePowerPointPraesentation.createSlide(title_content);
             //----Logo anlegen
             XSLFPictureShape pic_projektportfolioFolie = projektportfolioFolie.createPicture(pd);
-            pic_projektportfolioFolie.setAnchor(new Rectangle(540, 20, 150, 50));
+            pic_projektportfolioFolie.setAnchor(new Rectangle(560, 32, 130, 20));
 
             //Titel erstellen
             XSLFTextShape title_projektportfolio = projektportfolioFolie.getPlaceholder(0);
@@ -538,7 +538,7 @@ public class PPKMeetingHelper {
                 XSLFSlide softwareanforderungsFolie = generiertePowerPointPraesentation.createSlide(title);
                 //----Logo anlegen
                 XSLFPictureShape pic_softwareanforderungsFolie = softwareanforderungsFolie.createPicture(pd);
-                pic_softwareanforderungsFolie.setAnchor(new Rectangle(540, 20, 150, 50));
+                pic_softwareanforderungsFolie.setAnchor(new Rectangle(560, 32, 130, 20));
 
                 //Titel erstellen
                 XSLFTextShape title_softwareanforderungsFolie = softwareanforderungsFolie.getPlaceholder(0);
@@ -717,7 +717,7 @@ public class PPKMeetingHelper {
                     XSLFSlide entscheidungsFolie = generiertePowerPointPraesentation.createSlide(title);
                     //----Logo anlegen
                     XSLFPictureShape pic_entscheidungsFolie = entscheidungsFolie.createPicture(pd);
-                    pic_entscheidungsFolie.setAnchor(new Rectangle(540, 20, 150, 50));
+                    pic_entscheidungsFolie.setAnchor(new Rectangle(560, 32, 130, 20));
 
                     //Titel erstellen
                     XSLFTextShape entscheidungsFolie_title = entscheidungsFolie.getPlaceholder(0);
@@ -846,7 +846,7 @@ public class PPKMeetingHelper {
             XSLFSlide meilensteinFolie = generiertePowerPointPraesentation.createSlide(title);
             //----Logo anlegen
             XSLFPictureShape pic_meilensteinFolie = meilensteinFolie.createPicture(pd);
-            pic_meilensteinFolie.setAnchor(new Rectangle(540, 20, 150, 50));
+            pic_meilensteinFolie.setAnchor(new Rectangle(560, 32, 130, 20));
 
             //Titel erstellen
             XSLFTextShape meilensteinFolie_title = meilensteinFolie.getPlaceholder(0);
@@ -990,7 +990,7 @@ public class PPKMeetingHelper {
 
             //LOGO
             XSLFPictureShape pic_projektuebersichtsFolie = projektuebersichtsFolie.createPicture(pd);
-            pic_projektuebersichtsFolie.setAnchor(new Rectangle(540, 20, 150, 50));
+            pic_projektuebersichtsFolie.setAnchor(new Rectangle(560, 32, 130, 20));
 
             //TITEL
             XSLFTextShape title_projektuebersichtsFolie = projektuebersichtsFolie.getPlaceholder(0);
@@ -1427,7 +1427,7 @@ public class PPKMeetingHelper {
 
             //LOGO
             XSLFPictureShape pic_freieFolie = freieFolie.createPicture(pd);
-            pic_freieFolie.setAnchor(new Rectangle(540, 20, 150, 50));
+            pic_freieFolie.setAnchor(new Rectangle(560, 32, 130, 20));
 
             //TITLE
             XSLFTextShape title_freieFolie = freieFolie.createTextBox();

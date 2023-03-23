@@ -111,7 +111,7 @@ public class DetailPresentationHelper {
 
             //Logo einbinden
             XSLFPictureShape logo = einleitungsFolie.createPicture(pd);
-            logo.setAnchor(new Rectangle(19, 430, 210, 80));
+            logo.setAnchor(new Rectangle(30, 480, 150, 35));
 
             XSLFTextBox box = einleitungsFolie.createTextBox();
             box.setFillColor(new Color(195,227,248));
