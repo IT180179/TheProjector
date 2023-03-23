@@ -674,7 +674,7 @@ public class DetailPresentationHelper {
                     //Row Meilensteintitel
                     XSLFTableRow detailFolie_tr_meilensteinTitle;
                     detailFolie_tr_meilensteinTitle = table_meilensteine.addRow();
-                    detailFolie_tr_meilensteinTitle.setHeight(45.0);
+                    detailFolie_tr_meilensteinTitle.setHeight(35.0);
 
                     //----------------------------------------------Meilensteintitel DB
                     XSLFTableCell cell_detailFolie_meielnsteinTitel = detailFolie_tr_meilensteinTitle.addCell();
@@ -901,7 +901,7 @@ public class DetailPresentationHelper {
                         //Row
                         XSLFTableRow detailFolie_tr_meilensteinTitle;
                         detailFolie_tr_meilensteinTitle = table_meilensteine.addRow();
-                        detailFolie_tr_meilensteinTitle.setHeight(35.0);
+                        detailFolie_tr_meilensteinTitle.setHeight(30.0);
 
                         //----------------------------------------------Mitarbeiter
                         XSLFTableCell cell_detailFolie_meielnsteinTitel = detailFolie_tr_meilensteinTitle.addCell();

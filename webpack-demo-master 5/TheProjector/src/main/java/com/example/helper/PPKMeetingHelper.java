@@ -374,7 +374,7 @@ public class PPKMeetingHelper {
                 //Erstes Projekt
                 XSLFTableRow projektportfolio_tr_projekt1;
                 projektportfolio_tr_projekt1=table_projektportfolio.addRow();
-                projektportfolio_tr_projekt1.setHeight(45.0);
+                projektportfolio_tr_projekt1.setHeight(33.0);
 
                 //----------------------------------------------Projektname
                 XSLFTableCell cell_projektprotfolio_projektname = projektportfolio_tr_projekt1.addCell();
@@ -1435,15 +1435,15 @@ public class PPKMeetingHelper {
             XSLFTextRun title_freieFolie_r = title_freieFolie_p.addNewTextRun();
             title_freieFolie.setHorizontalCentered(true);
             //-------------------------------------------------------------TITEL
-            title_freieFolie_r.setText("Freie Folie");
+            title_freieFolie_r.setText(""+freieFoliens.get(i).getBeschreibung());
             title_freieFolie_r.setFontColor(new Color(0, 82, 129));
             title_freieFolie_r.setFontSize(24.0);
             title_freieFolie_r.setBold(true);
             title_freieFolie.setAnchor(new Rectangle(20, 20, 500, 50));
 
-            //BESCHREIBUNGSTEXT
+            //FREIE FOLIEN
             XSLFTextBox freierText = freieFolie.createTextBox();
-            freierText.setAnchor(new Rectangle(40, 90,640, 100 ));
+            freierText.setAnchor(new Rectangle(40, 90,640, 130 ));
             XSLFTextParagraph freierTextParagraph = freierText.addNewTextParagraph();
             XSLFTextRun freierTextRun = freierTextParagraph.addNewTextRun();
             //-------------------------------------------------------------BESCHREIBUNGSTEXT
@@ -1451,34 +1451,27 @@ public class PPKMeetingHelper {
             freierTextRun.setFontColor(new Color(0, 82, 129));
             freierTextRun.setFontSize(14.0);
 
-            XSLFTextBox base = freieFolie.createTextBox();
-            base.setAnchor(new Rectangle(40, 190,640, 100 ));
-            XSLFTextParagraph basep = base.addNewTextParagraph();
-            XSLFTextRun baser = basep.addNewTextRun();
-            //-------------------------------------------------------------BESCHREIBUNGSTEXT
-                baser.setText(""+freieFoliens.get(i).getBeschreibung());
-                baser.setFontColor(new Color(0, 82, 129));
-                baser.setFontSize(14.0);
-
             //Bild
 
-                String data = freieFoliens.get(i).getUpload();
-                String base64Image = data.split(",")[1];
+                if(freieFoliens.get(i).getUpload() != null){
 
-                byte[] decodedBytes = Base64.getDecoder().decode(base64Image);
+                    String data = freieFoliens.get(i).getUpload();
+                    String base64Image = data.split(",")[1];
 
-                BufferedImage img = ImageIO.read(new ByteArrayInputStream(decodedBytes));
+                    byte[] decodedBytes = Base64.getDecoder().decode(base64Image);
 
-                // write the image to a file
-                File outputfile = new File("src/main/resources/images/image2.jpeg");
-                ImageIO.write(img, "jpeg", outputfile);
+                    BufferedImage img = ImageIO.read(new ByteArrayInputStream(decodedBytes));
 
-                byte[] base64IMg = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/image2.jpeg"));
-                XSLFPictureData base64IMg_pd = generiertePowerPointPraesentation.addPicture(base64IMg, PictureData.PictureType.JPEG);
-                XSLFPictureShape base64IMg_pic = freieFolie.createPicture(base64IMg_pd);
-                base64IMg_pic.setAnchor(new Rectangle(210,300,300,200));
+                    // write the image to a file
+                    File outputfile = new File("src/main/resources/images/image2.jpeg");
+                    ImageIO.write(img, "jpeg", outputfile);
 
+                    byte[] base64IMg = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/image2.jpeg"));
+                    XSLFPictureData base64IMg_pd = generiertePowerPointPraesentation.addPicture(base64IMg, PictureData.PictureType.JPEG);
+                    XSLFPictureShape base64IMg_pic = freieFolie.createPicture(base64IMg_pd);
+                    base64IMg_pic.setAnchor(new Rectangle(210,300,300,200));
 
+                }
 
 
             //FOOTER
