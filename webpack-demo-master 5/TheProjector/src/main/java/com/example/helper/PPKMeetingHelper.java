@@ -4,6 +4,8 @@ import com.example.workloads.BeschlussFolien.BeschlussFolien;
 import com.example.workloads.BeschlussFolien.BeschlussFolienRepo;
 import com.example.workloads.FreieFolien.FreieFolien;
 import com.example.workloads.FreieFolien.FreieFolienRepo;
+import com.example.workloads.Gaeste.Gaeste;
+import com.example.workloads.Gaeste.GaesteRepo;
 import com.example.workloads.Meilensteine.Meilensteine;
 import com.example.workloads.Meilensteine.MeilensteineRepo;
 import com.example.workloads.PPK.PPKRepo;
@@ -19,12 +21,15 @@ import org.apache.poi.sl.usermodel.*;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xslf.usermodel.*;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class PPKMeetingHelper {
@@ -40,6 +45,7 @@ public class PPKMeetingHelper {
         final PPKRepo ppk = new PPKRepo();
         final FreieFolienRepo freieFolienRepo = new FreieFolienRepo();
         final Phasen_ProjektRepo phasen_projektRepo = new Phasen_ProjektRepo(softwareanforderungenRepo);
+        final GaesteRepo gaesteRepo = new GaesteRepo();
 
         //GET --> alle Projekte
         List<Projekte> allProjects = new ArrayList<>();
@@ -73,6 +79,10 @@ public class PPKMeetingHelper {
         List<FreieFolien> freieFoliens = new ArrayList<>();
         freieFoliens = freieFolienRepo.listAll();
 
+        //GET --> alle Gäste
+        List<Gaeste> alleGaeste = new ArrayList<>();
+        alleGaeste = gaesteRepo.listAll();
+
         //Ändern des Datumsformats beim PPK
         LocalDate nextPPK = ppk.getNextPPK();
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -103,25 +113,119 @@ public class PPKMeetingHelper {
             XSLFPictureData pd = generiertePowerPointPraesentation.addPicture(pictureData, PictureData.PictureType.PNG);
             //</editor-fold>
 
-            //<editor-fold desc="STARTFOLIE ">
-            XSLFSlide startFolie = generiertePowerPointPraesentation.createSlide(blank);
-            byte[] startSeite = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/sparkassa.jpeg"));
-            XSLFPictureData startSeite_pd = generiertePowerPointPraesentation.addPicture(startSeite, PictureData.PictureType.JPEG);
-            XSLFPictureShape startSeite_pic = startFolie.createPicture(startSeite_pd);
-            startSeite_pic.setAnchor(new Rectangle(0,0,720,540));
+            //<editor-fold desc="EINLEITUNGSFOLIE ">
+            XSLFSlide einleitungsFolie = generiertePowerPointPraesentation.createSlide(blank);
 
-            XSLFTextBox beschreibung = startFolie.createTextBox();
-            beschreibung.setFillColor(new Color(195,227,248));
-            beschreibung.setAnchor(new Rectangle(0,0,720,50));
+            byte[] hintergrund = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/startseite.png"));
+            XSLFPictureData hintergrund_pd = generiertePowerPointPraesentation.addPicture(hintergrund, PictureData.PictureType.PNG);
+            XSLFPictureShape hintergrund_pic = einleitungsFolie.createPicture(hintergrund_pd);
+            hintergrund_pic.setAnchor(new Rectangle(0,0,720,540));
 
-            XSLFTextBox nextPPKMeeting = startFolie.createTextBox();
-            XSLFTextParagraph nextPPKMeeting_p = nextPPKMeeting.addNewTextParagraph();
-            XSLFTextRun nextPPKMeeting_r = nextPPKMeeting_p.addNewTextRun();
-            nextPPKMeeting_r.setText("Projekt Portfolio Komitee am " +parsedPPK.format(formatters));
-            nextPPKMeeting_r.setBold(true);
-            nextPPKMeeting_r.setFontColor(new Color(0, 82, 129));
-            nextPPKMeeting_r.setFontSize(12.);
-            nextPPKMeeting.setAnchor(new Rectangle(450, 10, 270, 50));
+            XSLFTextBox balken = einleitungsFolie.createTextBox();
+            balken.setFillColor(new Color(195,227,248));
+            balken.setAnchor(new Rectangle(0,460,720,80));
+
+            //----Logo anlegen
+            XSLFPictureShape logo = einleitungsFolie.createPicture(pd);
+            logo.setAnchor(new Rectangle(19, 430, 210, 80));
+
+            XSLFTextBox box = einleitungsFolie.createTextBox();
+            box.setFillColor(new Color(195,227,248));
+            box.setAnchor(new Rectangle(330,120,360,300));
+
+            XSLFTextBox gremium = einleitungsFolie.createTextBox();
+            XSLFTextParagraph gremium_p = gremium.addNewTextParagraph();
+            XSLFTextRun gremium_r = gremium_p.addNewTextRun();
+            gremium_r.setText("Gremium PPK");
+            gremium_r.setBold(true);
+            gremium_r.setFontColor(Color.white);
+            gremium_r.setFontSize(40.0);
+            gremium.setAnchor(new Rectangle(30, 155, 320, 50));
+
+            XSLFTextBox ppk_text = einleitungsFolie.createTextBox();
+            XSLFTextParagraph ppk_text_p = ppk_text.addNewTextParagraph();
+            XSLFTextRun ppk_text_r = ppk_text_p.addNewTextRun();
+            ppk_text_r.setText("Projekt Portfolio Komitee \n" +nextPPK.format(formatters));
+            ppk_text_r.setFontColor(Color.white);
+            ppk_text_r.setFontSize(23.0);
+            ppk_text.setAnchor(new Rectangle(30, 225, 320, 50));
+
+            XSLFTextBox nebentext1 = einleitungsFolie.createTextBox();
+            XSLFTextParagraph nebentext1_p = nebentext1.addNewTextParagraph();
+            XSLFTextRun nebentext1_r = nebentext1_p.addNewTextRun();
+            nebentext1_r.setText("OE Organisation");
+            nebentext1_r.setFontColor(Color.white);
+            nebentext1_r.setFontSize(12.0);
+            nebentext1.setAnchor(new Rectangle(30, 305, 320, 50));
+
+            XSLFTextBox nebentext2 = einleitungsFolie.createTextBox();
+            XSLFTextParagraph nebentext2_p = nebentext2.addNewTextParagraph();
+            XSLFTextRun nebentext2_r = nebentext2_p.addNewTextRun();
+            nebentext2_r.setText("Bereich Strategisches Risikomanagement & ORG IT");
+            nebentext2_r.setFontColor(Color.white);
+            nebentext2_r.setFontSize(12.0);
+            nebentext2.setAnchor(new Rectangle(30, 320, 320, 50));
+
+            XSLFTextBox zeitplan = einleitungsFolie.createTextBox();
+            XSLFTextParagraph zeitplan_p = zeitplan.addNewTextParagraph();
+            XSLFTextRun zeitplan_r = zeitplan_p.addNewTextRun();
+            zeitplan_r.setText("Zeitplan:");
+            zeitplan_r.setFontColor(new Color(0, 82, 129));
+            zeitplan_r.setFontSize(18.0);
+            zeitplan_r.setBold(true);
+            zeitplan.setAnchor(new Rectangle(360, 140, 320, 50));
+
+            XSLFTextBox zeitplan_1 = einleitungsFolie.createTextBox();
+            XSLFTextParagraph zeitplan_1_p = zeitplan_1.addNewTextParagraph();
+            XSLFTextRun zeitplan_1_r = zeitplan_1_p.addNewTextRun();
+            zeitplan_1_r.setText("14:00 – 14:45 Projekt Portfolio");
+            zeitplan_1_r.setFontColor(new Color(0, 82, 129));
+            zeitplan_1_r.setFontSize(16.0);
+            zeitplan_1.setAnchor(new Rectangle(360, 180, 320, 50));
+
+            XSLFTextBox zeitplan_2 = einleitungsFolie.createTextBox();
+            XSLFTextParagraph zeitplan_2_p = zeitplan_2.addNewTextParagraph();
+            XSLFTextRun zeitplan_2_r = zeitplan_2_p.addNewTextRun();
+            zeitplan_2_r.setText("14:45 – 15:30 Projekt Steuerungskomitees");
+            zeitplan_2_r.setFontColor(new Color(0, 82, 129));
+            zeitplan_2_r.setFontSize(16.0);
+            zeitplan_2.setAnchor(new Rectangle(360, 200, 320, 50));
+
+            XSLFTextBox zeitplan_3 = einleitungsFolie.createTextBox();
+            XSLFTextParagraph zeitplan_3_p = zeitplan_3.addNewTextParagraph();
+            XSLFTextRun zeitplan_3_r = zeitplan_3_p.addNewTextRun();
+            zeitplan_3_r.setText("15:30 – 16:00 Allfälliges");
+            zeitplan_3_r.setFontColor(new Color(0, 82, 129));
+            zeitplan_3_r.setFontSize(16.0);
+            zeitplan_3.setAnchor(new Rectangle(360, 220, 320, 50));
+
+            XSLFTextBox gaeste = einleitungsFolie.createTextBox();
+            XSLFTextParagraph gaeste_p = gaeste.addNewTextParagraph();
+            XSLFTextRun gaeste_r = gaeste_p.addNewTextRun();
+            gaeste_r.setText("Gäste:");
+            gaeste_r.setFontColor(new Color(0, 82, 129));
+            gaeste_r.setFontSize(18.0);
+            gaeste_r.setBold(true);
+            gaeste.setAnchor(new Rectangle(360, 260, 320, 50));
+
+            XSLFTextBox gaeste_beitext = einleitungsFolie.createTextBox();
+            XSLFTextParagraph gaeste_beitext_p = gaeste_beitext.addNewTextParagraph();
+            XSLFTextRun gaeste_beitext_r = gaeste_beitext_p.addNewTextRun();
+            gaeste_beitext_r.setText(" (werden zum jeweiligen Thema via MS Teams \n zugeschaltet)");
+            gaeste_beitext_r.setFontColor(new Color(0, 82, 129));
+            gaeste_beitext_r.setFontSize(11.0);
+            gaeste_beitext.setAnchor(new Rectangle(420, 264, 320, 50));
+
+            for(int i = 0; i < alleGaeste.size(); i++){
+                XSLFTextBox gaeste1 = einleitungsFolie.createTextBox();
+                XSLFTextParagraph gaeste1_p = gaeste1.addNewTextParagraph();
+                XSLFTextRun gaeste1_r = gaeste1_p.addNewTextRun();
+                gaeste1_r.setText(""+ alleGaeste.get(i).getName());
+                gaeste1_r.setFontColor(new Color(0, 82, 129));
+                gaeste1_r.setFontSize(16.0);
+                gaeste1.setAnchor(new Rectangle(360, 300+20*i, 320, 50));
+            }
+
             //</editor-fold>
 
             //<editor-fold desc="Erste Folie --> STARTBILD">
@@ -130,11 +234,23 @@ public class PPKMeetingHelper {
             XSLFPictureData ersteSeite_pd = generiertePowerPointPraesentation.addPicture(ersteSeite, PictureData.PictureType.PNG);
             XSLFPictureShape ersteSeite_pic = ersteFolie.createPicture(ersteSeite_pd);
             ersteSeite_pic.setAnchor(new Rectangle(0,0,720,540));
+            //</editor-fold>
 
-            //----Logo anlegen
-            XSLFPictureShape pic_startfolie = startFolie.createPicture(pd);
-            pic_startfolie.setAnchor(new Rectangle(19, 0, 150, 50));
+            //<editor-fold desc="STARTFOLIE ">
+            XSLFSlide startFolie = generiertePowerPointPraesentation.createSlide(blank);
+            byte[] startSeite = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/laufende_projekte.png"));
+            XSLFPictureData startSeite_pd = generiertePowerPointPraesentation.addPicture(startSeite, PictureData.PictureType.PNG);
+            XSLFPictureShape startSeite_pic = startFolie.createPicture(startSeite_pd);
+            startSeite_pic.setAnchor(new Rectangle(0,0,750,540));
 
+            XSLFTextBox nextPPKMeeting = startFolie.createTextBox();
+            XSLFTextParagraph nextPPKMeeting_p = nextPPKMeeting.addNewTextParagraph();
+            XSLFTextRun nextPPKMeeting_r = nextPPKMeeting_p.addNewTextRun();
+            nextPPKMeeting_r.setText("");
+            nextPPKMeeting_r.setBold(true);
+            nextPPKMeeting_r.setFontColor(Color.white);
+            nextPPKMeeting_r.setFontSize(70.0);
+            nextPPKMeeting.setAnchor(new Rectangle(450, 10, 720, 50));
             //</editor-fold>
 
             //<editor-fold desc="Zweite Folie --> PROJEKT-PORTFOLIO">
@@ -402,7 +518,7 @@ public class PPKMeetingHelper {
             XSLFTextBox projektportfolio_footer = projektportfolioFolie.createTextBox();
             XSLFTextParagraph projektportfolio_footer_p = projektportfolio_footer.addNewTextParagraph();
             XSLFTextRun projektportfolio_footer_r = projektportfolio_footer_p.addNewTextRun();
-            projektportfolio_footer_r.setText("Projekt Portfolio Komitee am " +parsedPPK.format(formatters));
+            projektportfolio_footer_r.setText("Projekt Portfolio Komitee (PPK) am " +parsedPPK.format(formatters));
             projektportfolio_footer_r.setFontColor(new Color(0, 82, 129));
             projektportfolio_footer_r.setFontSize(12.);
             projektportfolio_footer.setAnchor(new Rectangle(440, 500, 270, 50));
@@ -587,7 +703,7 @@ public class PPKMeetingHelper {
                 XSLFTextBox softwareanforderungsfolie_footer = softwareanforderungsFolie.createTextBox();
                 XSLFTextParagraph softwareanforderungsfolie_footer_p = softwareanforderungsfolie_footer.addNewTextParagraph();
                 XSLFTextRun softwareanforderungsfolie_footer_r = softwareanforderungsfolie_footer_p.addNewTextRun();
-                softwareanforderungsfolie_footer_r.setText("Projekt Portfolio Komitee am " + parsedPPK.format(formatters));
+                softwareanforderungsfolie_footer_r.setText("Projekt Portfolio Komitee (PPK) am " + parsedPPK.format(formatters));
                 softwareanforderungsfolie_footer_r.setFontColor(new Color(0, 82, 129));
                 softwareanforderungsfolie_footer_r.setFontSize(12.);
                 softwareanforderungsfolie_footer.setAnchor(new Rectangle(440, 500, 270, 50));
@@ -718,7 +834,7 @@ public class PPKMeetingHelper {
                     XSLFTextBox footer = entscheidungsFolie.createTextBox();
                     XSLFTextParagraph footer_p = footer.addNewTextParagraph();
                     XSLFTextRun footer_r = footer_p.addNewTextRun();
-                    footer_r.setText("Projekt Portfolio Komitee am " + parsedPPK.format(formatters));
+                    footer_r.setText("Projekt Portfolio Komitee (PPK) am " + parsedPPK.format(formatters));
                     footer_r.setFontColor(new Color(0, 82, 129));
                     footer_r.setFontSize(12.);
                     footer.setAnchor(new Rectangle(440, 500, 270, 50));
@@ -857,7 +973,7 @@ public class PPKMeetingHelper {
                 XSLFTextBox projektuebersichtsfolie_footer = meilensteinFolie.createTextBox();
                 XSLFTextParagraph projektuebersichtsfolie_footer_p = projektuebersichtsfolie_footer.addNewTextParagraph();
                 XSLFTextRun projektuebersichtsfolie_footer_r = projektuebersichtsfolie_footer_p.addNewTextRun();
-                projektuebersichtsfolie_footer_r.setText("Projekt Portfolio Komitee am " +parsedPPK.format(formatters));
+                projektuebersichtsfolie_footer_r.setText("Projekt Portfolio Komitee (PPK) am " +parsedPPK.format(formatters));
                 projektuebersichtsfolie_footer_r.setFontColor(new Color(0, 82, 129));
                 projektuebersichtsfolie_footer_r.setFontSize(12.);
                 projektuebersichtsfolie_footer.setAnchor(new Rectangle(440, 500, 270, 50));
@@ -1061,7 +1177,6 @@ public class PPKMeetingHelper {
             cell_inhalt_kommentar.setBorderColor(TableCell.BorderEdge.bottom, Color.white);
 
             cell_inhalt_kommentar_r.setText(""+allProjects.get(a).getInhalt());
-
 
             //ZEILE = BUDGET
             XSLFTableRow tr_budget;
@@ -1297,7 +1412,7 @@ public class PPKMeetingHelper {
                 XSLFTextBox projektuebersichtsfolie_footer = projektuebersichtsFolie.createTextBox();
                 XSLFTextParagraph projektuebersichtsfolie_footer_p = projektuebersichtsfolie_footer.addNewTextParagraph();
                 XSLFTextRun projektuebersichtsfolie_footer_r = projektuebersichtsfolie_footer_p.addNewTextRun();
-                projektuebersichtsfolie_footer_r.setText("Projekt Portfolio Komitee am " +parsedPPK.format(formatters));
+                projektuebersichtsfolie_footer_r.setText("Projekt Portfolio Komitee (PPK) am " +parsedPPK.format(formatters));
                 projektuebersichtsfolie_footer_r.setFontColor(new Color(0, 82, 129));
                 projektuebersichtsfolie_footer_r.setFontSize(12.);
                 projektuebersichtsfolie_footer.setAnchor(new Rectangle(440, 500, 270, 50));
@@ -1336,16 +1451,34 @@ public class PPKMeetingHelper {
             freierTextRun.setFontColor(new Color(0, 82, 129));
             freierTextRun.setFontSize(14.0);
 
-            //Bild
-
-                XSLFTextBox base = freieFolie.createTextBox();
-                base.setAnchor(new Rectangle(40, 90,640, 140 ));
-                XSLFTextParagraph basep = base.addNewTextParagraph();
-                XSLFTextRun baser = basep.addNewTextRun();
-                //-------------------------------------------------------------BESCHREIBUNGSTEXT
-                baser.setText(""+ freieFoliens.get(i).getUpload());
+            XSLFTextBox base = freieFolie.createTextBox();
+            base.setAnchor(new Rectangle(40, 90,640, 140 ));
+            XSLFTextParagraph basep = base.addNewTextParagraph();
+            XSLFTextRun baser = basep.addNewTextRun();
+            //-------------------------------------------------------------BESCHREIBUNGSTEXT
+                baser.setText("");
                 baser.setFontColor(new Color(0, 82, 129));
                 baser.setFontSize(14.0);
+
+            //Bild
+
+                String data = freieFoliens.get(i).getUpload();
+                String base64Image = data.split(",")[1];
+
+                byte[] decodedBytes = Base64.getDecoder().decode(base64Image);
+
+                BufferedImage img = ImageIO.read(new ByteArrayInputStream(decodedBytes));
+
+                // write the image to a file
+                File outputfile = new File("src/main/resources/images/image2.jpeg");
+                ImageIO.write(img, "jpeg", outputfile);
+
+                byte[] base64IMg = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/image2.jpeg"));
+                XSLFPictureData base64IMg_pd = generiertePowerPointPraesentation.addPicture(base64IMg, PictureData.PictureType.JPEG);
+                XSLFPictureShape base64IMg_pic = freieFolie.createPicture(base64IMg_pd);
+                base64IMg_pic.setAnchor(new Rectangle(310,250,100,100));
+
+
 
 
             //FOOTER
@@ -1353,7 +1486,7 @@ public class PPKMeetingHelper {
             XSLFTextParagraph projektuebersichtsfolie_footer_p = projektuebersichtsfolie_footer.addNewTextParagraph();
             XSLFTextRun projektuebersichtsfolie_footer_r = projektuebersichtsfolie_footer_p.addNewTextRun();
             //-------------------------------------------------------------NÄCHSTES PPK AUS DER DATENBAK
-            projektuebersichtsfolie_footer_r.setText("Projekt Portfolio Komitee am " +parsedPPK.format(formatters));
+            projektuebersichtsfolie_footer_r.setText("Projekt Portfolio Komitee (PPK) am " +parsedPPK.format(formatters));
             projektuebersichtsfolie_footer_r.setFontColor(new Color(0, 82, 129));
             projektuebersichtsfolie_footer_r.setFontSize(12.);
             projektuebersichtsfolie_footer.setAnchor(new Rectangle(440, 500, 270, 50));
