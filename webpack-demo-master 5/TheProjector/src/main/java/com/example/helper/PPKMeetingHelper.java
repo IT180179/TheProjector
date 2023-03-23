@@ -1463,10 +1463,10 @@ public class PPKMeetingHelper {
                     BufferedImage img = ImageIO.read(new ByteArrayInputStream(decodedBytes));
 
                     // write the image to a file
-                    File outputfile = new File("src/main/resources/images/image2.jpeg");
+                    File outputfile = new File("src/main/resources/images/image"+i+".jpeg");
                     ImageIO.write(img, "jpeg", outputfile);
 
-                    byte[] base64IMg = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/image2.jpeg"));
+                    byte[] base64IMg = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/image"+i+".jpeg"));
                     XSLFPictureData base64IMg_pd = generiertePowerPointPraesentation.addPicture(base64IMg, PictureData.PictureType.JPEG);
                     XSLFPictureShape base64IMg_pic = freieFolie.createPicture(base64IMg_pd);
                     base64IMg_pic.setAnchor(new Rectangle(210,300,300,200));
