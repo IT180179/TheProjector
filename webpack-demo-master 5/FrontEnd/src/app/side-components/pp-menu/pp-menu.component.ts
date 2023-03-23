@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DataService} from "../../services/data.service";
 import {Router} from "@angular/router";
 import {HttpService} from "../../services/http.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-pp-menu',
@@ -10,7 +11,7 @@ import {HttpService} from "../../services/http.service";
 })
 export class PPMenuComponent implements OnInit {
 
-  constructor(public data: DataService, public router: Router,private http: HttpService) {
+  constructor(public data: DataService, public router: Router,private http: HttpService, public snackbar: MatSnackBar) {
   }
   rechte: any;
   isLoggedIn: any;
@@ -30,11 +31,16 @@ export class PPMenuComponent implements OnInit {
 
   }
   getPresentation(){
-    this.http.getPPKPowerpoint().subscribe(blob => {
+    this.http.getPPKPowerpoint().subscribe({next: blob => {
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
       link.download = 'PPK-Meeting.pptx';
       link.click();
-    });
+      }, error: err => {
+        this.snackbar.open(`Präsentation konnte nicht geladen werden ${err.message}`, undefined, {
+          duration: 300,
+          panelClass: 'snackbar-dark'
+        });
+      }});
   }
 }

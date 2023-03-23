@@ -64,7 +64,9 @@ export class SoftwareRequestsFormComponent implements OnInit {
     this.phasen = this.service.getPhasen().subscribe({
       next: value => {
         this.phasen = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Phasen konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
     });
     console.log(this.phasen + " phasen");
   }

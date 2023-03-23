@@ -94,7 +94,7 @@ export class PPKPresentationFormComponent implements OnInit {
         // console.log(value)
         this.projekt = value
       }, error: err => {
-        this.snackBar.open(`Projekt konnte nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+        this.snackBar.open(`Projekt konnte nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }});
   }
 
@@ -167,10 +167,10 @@ export class PPKPresentationFormComponent implements OnInit {
     this.service.http.post('http://localhost:8080/freiefolien/add', this.freiData)
         .subscribe({
           next: value => {
-            this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+            this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
           }, error: err => {
             console.log(this.freiData)
-            this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+            this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
           }
         });
 
@@ -178,9 +178,9 @@ export class PPKPresentationFormComponent implements OnInit {
       .subscribe({
         next: value => {
           // console.log(value)
-          this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+          this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
         }, error: err => {
-          this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+          this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
           console.log(this.beschlussData)
         }
       });
@@ -190,9 +190,9 @@ export class PPKPresentationFormComponent implements OnInit {
       .subscribe({
         next: value => {
           // console.log(value)
-          this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+          this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
         }, error: err => {
-          this.snackBar.open(`Folie hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+          this.snackBar.open(`Folie hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
           console.log(this.requestData)
         }
       });

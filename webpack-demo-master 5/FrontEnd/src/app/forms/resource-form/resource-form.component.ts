@@ -49,7 +49,7 @@ export class ResourceFormComponent implements OnInit {
         //  console.log(value)
         this.employees = value
       }, error: err => {
-        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
 
@@ -59,7 +59,7 @@ export class ResourceFormComponent implements OnInit {
         // console.log(value)
         this.projects = value
       }, error: err => {
-        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
 
@@ -68,7 +68,7 @@ export class ResourceFormComponent implements OnInit {
         // console.log(value)
         this.einsaetze = value
       }, error: err => {
-        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});
+        this.snackBar.open(`Daten konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
   }
@@ -91,13 +91,13 @@ export class ResourceFormComponent implements OnInit {
       .subscribe({
         next: value => {
           this.snackBar.open(`Daten wurden gespeichert!`, undefined, {
-            duration: 3000,
+            duration: 300,
             panelClass: 'snackbar-dark'
           });
           this._router.navigate(['resourcen_overview']);
         }, error: err => {
           this.snackBar.open(`Daten konnten nicht gespeichert werden ${err.message}`, undefined, {
-            duration: 3000,
+            duration: 300,
             panelClass: 'snackbar-dark'
           });
         }
@@ -120,11 +120,9 @@ export class ResourceFormComponent implements OnInit {
     this.allowedEinsaetze = []
     for (let i of this.einsaetze) {
 
-      console.log("hi")
       console.log(i.einsaetze_id.projekte_id.projekt_id)
       console.log(this.selectedValue)
       if(i.einsaetze_id.projekte_id.projekt_id == this.selectedValue){
-        console.log("hi")
         // @ts-ignore
         this.allowedEinsaetze.push(i)
         console.log(this.allowedEinsaetze)

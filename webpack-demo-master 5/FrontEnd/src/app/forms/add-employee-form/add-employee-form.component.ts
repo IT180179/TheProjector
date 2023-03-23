@@ -86,11 +86,11 @@ export class AddEmployeeFormComponent implements OnInit {
     this.http.post('http://localhost:8080/einsaetze/add', this.newdata)
       .subscribe({
         next: () => {
-          this.snackbar.open("Person wurde erfolgreich hinzugefügt", undefined, {duration: 3000});
+          this.snackbar.open("Person wurde erfolgreich hinzugefügt", undefined, {duration: 300});
           this.onSelectedProject(data.projekt_id);
         },
         error: err => {
-          this.snackbar.open(`Hinzufügen fehlgeschlagen: ${err.message}`, undefined, {duration: 3000});
+          this.snackbar.open(`Hinzufügen fehlgeschlagen: ${err.message}`, undefined, {duration: 300});
         }
       });
     this.onSelectedProject(data.projekt_id);
@@ -100,10 +100,25 @@ export class AddEmployeeFormComponent implements OnInit {
     this.employeesOfProject = this.service.getPersonsOfProjectsNumber(id).subscribe({
       next: value => {
         this.employeesOfProject = value
+        console.log(this.employeesOfProject)
       }, error: err => {
         this.snackBar.open(`Projekte konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
     this.showtable = true
+  }
+
+  translateRoles(rechte:number):string{
+    switch (rechte){
+      case 1:
+        return "Projektmanager";
+        break;
+      case 2:
+        return "Mitarbeiter";
+        break;
+      default:
+        return "Invalid"
+
+    }
   }
 }

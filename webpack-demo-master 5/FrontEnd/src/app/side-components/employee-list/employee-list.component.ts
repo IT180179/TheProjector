@@ -24,7 +24,24 @@ export class EmployeeListComponent implements OnInit {
         next: value => {
           //   console.log(value)
           this.employees = value
-        }, error: err => {}
+        }, error: err => {
+          this.snackBar.open(`Mitarbeiter laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+        }
       });
+  }
+
+
+  translateRoles(rechte:number):string{
+    switch (rechte){
+      case 1:
+        return "Projektmanager";
+        break;
+      case 2:
+        return "Mitarbeiter";
+        break;
+      default:
+        return "Invalid"
+
+    }
   }
 }

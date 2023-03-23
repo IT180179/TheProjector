@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
              // console.log(value[0].personen_id)
           }, error: err => {
             this.snackBar.open(`Daten konnten nicht geladen werden ${err.message}`, undefined, {
-              duration: 3000,
+              duration: 300,
               panelClass: 'snackbar-dark'
             });
           }
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
       }, error: err => {
         this.dataService.isloggedIn = false
         this.authService.logout();
-        this.snackBar.open(`ANMELDUNG FEHLGESCHLAGEN: Versuchen Sie es erneut!`, undefined, { panelClass: 'snackbar-dark'});
+        this.snackBar.open(`ANMELDUNG FEHLGESCHLAGEN: Versuchen Sie es erneut!`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }, complete: () => {
         // console.log("Login Request is completed")
       }

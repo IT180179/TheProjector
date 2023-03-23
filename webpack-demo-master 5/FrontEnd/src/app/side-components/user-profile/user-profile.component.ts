@@ -34,27 +34,37 @@ export class UserProfileComponent implements OnInit {
       next: value => {
         // console.log(value)
         this.employees = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Mitarbeiter laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
     });
 
     this.fachkoordinator = this.service.countFachkoordinator(this.user_id).subscribe({
       next: value => {
         // console.log(value)
         this.fachkoordinator = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Fachkoordinator laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
     });
 
     this.project = this.service.countProjects(this.user_id).subscribe({
       next: value => {
         //  console.log(value)
         this.project = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Projekt laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+
+      }
     });
     this.projectmanager = this.service.countProjectmanager(this.user_id).subscribe({
       next: value => {
         // console.log(value)
         this.projectmanager = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`Projektmanager laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+
+      }
     });
   }
 

@@ -30,7 +30,9 @@ export class StartMenuComponent implements OnInit {
       next: value => {
         // console.log(value)
         this.ppk = value
-      }, error: err => {}
+      }, error: err => {
+        this.snackBar.open(`PPK laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+      }
     });
   }
 }
