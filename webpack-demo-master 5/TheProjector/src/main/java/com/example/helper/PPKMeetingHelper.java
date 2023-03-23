@@ -1469,7 +1469,7 @@ public class PPKMeetingHelper {
                     byte[] base64IMg = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/image"+i+".jpeg"));
                     XSLFPictureData base64IMg_pd = generiertePowerPointPraesentation.addPicture(base64IMg, PictureData.PictureType.JPEG);
                     XSLFPictureShape base64IMg_pic = freieFolie.createPicture(base64IMg_pd);
-                    base64IMg_pic.setAnchor(new Rectangle(210,300,300,200));
+                    base64IMg_pic.setAnchor(new Rectangle(135,300,450,200));
 
                 }
 
