@@ -16,7 +16,7 @@ export class PpkListeComponent implements OnInit {
   id: number | undefined;
   ppks: any;
   recht:any
-  isLoggedIn: any
+  isLoggedIn: any;
 
   constructor(public _router: Router,public service: HttpService, public dialog: MatDialog,
               private snackBar: MatSnackBar, public data: DataService) {}

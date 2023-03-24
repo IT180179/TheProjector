@@ -28,7 +28,6 @@
       <br>
       <mat-label for="end_datum">End-Datum:</mat-label><br>
       <input [min]="todayDate" class="full-width-field datepicker" type="date" id="end_datum" name="end_datum" formControlName="end_datum">
-
       <mat-label>Status</mat-label>
       <br>
       <mat-radio-group color="primary" aria-label="Status" formControlName="status" name="status">
@@ -36,13 +35,10 @@
         <mat-radio-button value="2">anstehend</mat-radio-button>
         <mat-radio-button value="3">in Verzug</mat-radio-button>
         <mat-radio-button value="4">fehlgeschlagen</mat-radio-button>
-        <mat-error *ngIf="addressForm.controls['status'].hasError('required')">
-          Status muss ausgefüllt werden!
-        </mat-error>
+        <mat-error *ngIf="addressForm.controls['status'].hasError('required')">Status muss ausgefüllt werden!</mat-error>
       </mat-radio-group>
       <div class="field">
-        <button [disabled]="!addressForm.valid" class="button full-width-field is-dark" style="background-color: #005281;"
-                type="submit">Anlegen</button>
+        <button [disabled]="!addressForm.valid" class="button full-width-field is-dark" style="background-color: #005281;" type="submit">Anlegen</button>
       </div>
     </form>
   </div>

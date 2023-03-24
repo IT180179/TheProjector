@@ -36,13 +36,14 @@
 
             <div class=" full-width-field form-group">
                 <div class="file full-width-field">
-                    <label class="file-label full-width-field">
 
+                        <label class="custom-file-upload button"> Bild hinzufügen
                         <input type="file" id="file" name="file" (change)="onFileSelectedNew($event)" accept="image/png, image/jpeg">
+                        </label>
                         <br>
-                        <img id ="imageView" [src]="imageUrl">
-                    </label>
+
                 </div>
+                <img id ="imageView" [src]="imageUrl">
                 <br>
             </div>
             <img *ngIf="imageSrc" [src]="imageSrc" id="img" style="height: 300px; width:500px; margin-left:15%; margin-right:15%;">

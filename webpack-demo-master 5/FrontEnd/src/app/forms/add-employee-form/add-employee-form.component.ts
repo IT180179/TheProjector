@@ -100,7 +100,6 @@ export class AddEmployeeFormComponent implements OnInit {
     this.employeesOfProject = this.service.getPersonsOfProjectsNumber(id).subscribe({
       next: value => {
         this.employeesOfProject = value
-        console.log(this.employeesOfProject)
       }, error: err => {
         this.snackBar.open(`Projekte konnten nicht geladen werden: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
@@ -118,7 +117,6 @@ export class AddEmployeeFormComponent implements OnInit {
         break;
       default:
         return "Invalid"
-
     }
   }
 }
