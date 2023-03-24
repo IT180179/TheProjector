@@ -38,9 +38,8 @@
                 <div class="file full-width-field">
                     <label class="file-label full-width-field">
 
-                        <input type="file" id="file" name="file" (change)="onSelectNewFile($event)" accept="image/png, image/jpeg">
+                        <input type="file" id="file" name="file" (change)="onFileSelectedNew($event)" accept="image/png, image/jpeg">
                         <br>
-
                         <img id ="imageView" [src]="imageUrl">
                     </label>
                 </div>

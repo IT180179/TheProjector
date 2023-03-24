@@ -9,6 +9,7 @@ import {ProjectDetailComponent} from "../../side-components/project-detail/proje
 import {HttpService} from "../../services/http.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
+import {quotes} from "html2canvas/dist/types/css/property-descriptors/quotes";
 
 @Component({
   selector: 'app-ppkpresentation-form',
@@ -164,38 +165,51 @@ export class PPKPresentationFormComponent implements OnInit {
     });
   }
   postData(){
-    this.service.http.post('http://localhost:8080/freiefolien/add', this.freiData)
-        .subscribe({
-          next: value => {
-            this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
-          }, error: err => {
-            console.log(this.freiData)
-            this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
-          }
-        });
-
-  this.service.http.post('http://localhost:8080/beschlussfolien/add', this.beschlussData)
-      .subscribe({
-        next: value => {
-          // console.log(value)
-          this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
-        }, error: err => {
-          this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
-          console.log(this.beschlussData)
-        }
-      });
-
-  this.service.http.post( "http://localhost:8080/softwareanforderungen/add/" + this.requestData.auswahl[1] + "/" + this.requestData.auswahl[2] + "/" + this.requestData.auswahl[3] + "/" + this.requestData.auswahl[4] + "/" +
-      this.requestData.auswahl[5] + "/" + this.requestData.auswahl[6] + "/" +  this.requestData.auswahl[7], this.requestData)
-      .subscribe({
-        next: value => {
-          // console.log(value)
-          this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
-        }, error: err => {
-          this.snackBar.open(`Folie hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
-          console.log(this.requestData)
-        }
-      });
+    if(this.freiData) {
+      this.service.http.post('http://localhost:8080/freiefolien/add', this.freiData)
+          .subscribe({
+            next: value => {
+              this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+            }, error: err => {
+              console.log(this.freiData)
+              this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {
+                duration: 300,
+                panelClass: 'snackbar-dark'
+              });
+            }
+          });
+    }
+    if(this.beschlussData) {
+      this.service.http.post('http://localhost:8080/beschlussfolien/add', this.beschlussData)
+          .subscribe({
+            next: value => {
+              // console.log(value)
+              this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+            }, error: err => {
+              this.snackBar.open(`Projekt hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {
+                duration: 300,
+                panelClass: 'snackbar-dark'
+              });
+              console.log(this.beschlussData)
+            }
+          });
+    }
+    if(this.requestData) {
+      this.service.http.post("http://localhost:8080/softwareanforderungen/add/" + this.requestData.auswahl[1] + "/" + this.requestData.auswahl[2] + "/" + this.requestData.auswahl[3] + "/" + this.requestData.auswahl[4] + "/" +
+          this.requestData.auswahl[5] + "/" + this.requestData.auswahl[6] + "/" + this.requestData.auswahl[7], this.requestData)
+          .subscribe({
+            next: value => {
+              // console.log(value)
+              this.snackBar.open(`Folie hinzugefügt werden`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
+            }, error: err => {
+              this.snackBar.open(`Folie hinzufügen ist fehlgeschlagen: ${err.message}`, undefined, {
+                duration: 300,
+                panelClass: 'snackbar-dark'
+              });
+              console.log(this.requestData)
+            }
+          });
+    }
 
     this._router.navigate(['/pp_menu']);
   }

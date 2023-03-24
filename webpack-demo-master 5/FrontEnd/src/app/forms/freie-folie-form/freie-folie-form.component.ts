@@ -126,12 +126,12 @@ export class FreieFolieFormComponent implements OnInit {
   onSelectNewFile(files: any) {
     this.fileSelected = files.target.files[0]
     this.imageUrl = this.sant.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fileSelected)) as string;
-    this.convertFileToBase64();
+    //this.convertFileToBase64();
   }
 
-  convertFileToBase64(): void{
+  convertFileToBase64(blob: Blob): void{
     let reader = new FileReader()
-    reader.readAsDataURL(this.fileSelected);
+    reader.readAsDataURL(blob);
     reader.onloadend = () => {
       this.base64 = reader.result as string;
       console.log(this.base64)
@@ -233,15 +233,17 @@ export class FreieFolieFormComponent implements OnInit {
     formData.append('image', blob, 'image.jpg');
     console.log(formData)
     console.log(blob)
-    this.downloadImage(blob)
 
-    const reader = new FileReader();
+    this.convertFileToBase64(blob)
+    // this.downloadImage(blob)
+
+ /***   const reader = new FileReader();
 
     reader.onload = () => {
       this.byteArray = new Uint8Array(reader.result as ArrayBuffer);
       console.log(this.byteArray); // byteArray enthält die Bytes des Blobs als Uint8Array
     };
-    reader.readAsArrayBuffer(blob);
+    reader.readAsArrayBuffer(blob);**/
 
    /** this.newdata={
       "titel": "string",
@@ -256,7 +258,7 @@ export class FreieFolieFormComponent implements OnInit {
           },
           "projekte_id": {
             "projekt_id": 0,
-          }}}};**/
+          }}}}
 
     this.httpService.postFreieFolie(this.newdata).subscribe(
        (response) => {
@@ -264,7 +266,7 @@ export class FreieFolieFormComponent implements OnInit {
         }, (error) => {
          console.error('Error uploading image', error);
         }
-        );
+        );;**/
   }
 
   downloadImage(blob: Blob): void {

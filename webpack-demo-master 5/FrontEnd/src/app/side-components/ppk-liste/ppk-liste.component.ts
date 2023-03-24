@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginComponent} from "../../login/login.component";
 import {DataService} from "../../services/data.service";
 import {Router} from "@angular/router";
 import {HttpService} from "../../services/http.service";
@@ -16,14 +15,11 @@ export class PpkListeComponent implements OnInit {
   text = '';
   id: number | undefined;
   ppks: any;
-  foundprojects = [];
   recht:any
   isLoggedIn: any
 
-  constructor(public loginComponent: LoginComponent,
-              public _router: Router,public service: HttpService, public dialog: MatDialog,
-              private snackBar: MatSnackBar, public data: DataService) {
-  }
+  constructor(public _router: Router,public service: HttpService, public dialog: MatDialog,
+              private snackBar: MatSnackBar, public data: DataService) {}
 
   openDialog(projekt_id: number): void {
     this.id = projekt_id;
@@ -33,7 +29,6 @@ export class PpkListeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // console.log('The dialog was closed');
       this.id = result;
     });
   }
@@ -47,15 +42,12 @@ export class PpkListeComponent implements OnInit {
 
     this.ppks = this.service.getPPK().subscribe({
       next: value => {
-        //  console.log(value)
         this.ppks = value
       }, error: err => {
-        //  console.log("Es können keine Projekte abgefragt werden")
         this.snackBar.open(`PPK laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     });
   }
-
 
   setPPK(ppk_id: any) {
     this.data.ppk_id = ppk_id

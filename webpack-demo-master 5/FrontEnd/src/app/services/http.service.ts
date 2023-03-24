@@ -76,12 +76,12 @@ export class HttpService {
 
     const url: string = this.API_URL + "ppt/detail";
 
-    return this.http.get<any>(url);
+    return this.http.get(url, { responseType: 'blob' });
 
   }
   getRoles(): Observable<any> {
 
-    const url = "http://localhost:8080/rollen/all";
+    const url = this.API_URL + "rollen/all";
 
     //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);
