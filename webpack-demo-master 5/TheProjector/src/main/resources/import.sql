@@ -114,7 +114,7 @@ insert into Gaeste (ppk_id_ppk_id, name)
 values (1, 'Bikic'),
        (1, 'Cagitz'),
        (2, 'Ursprung'),
-         (2, 'Maar'),
+        (2, 'Maar'),
        (2, 'Halilovic');
 insert into PPK_Projekte (ppk_id_ppk_id, projekte_id_projekt_id)
 values (1, 1),

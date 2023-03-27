@@ -99,13 +99,13 @@ public class PPKMeetingHelper {
 
         try(XMLSlideShow generiertePowerPointPraesentation = new XMLSlideShow()) {
 
-
             //<editor-fold desc="Folien mit einzelnen Layout">
             //Layout der Folien
             XSLFSlideMaster defaultMaster = generiertePowerPointPraesentation.getSlideMasters().get(0);
             XSLFSlideLayout title_content = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
             XSLFSlideLayout title = defaultMaster.getLayout(SlideLayout.TITLE);
             XSLFSlideLayout blank = defaultMaster.getLayout(SlideLayout.BLANK);
+            XSLFSlideLayout title_only = defaultMaster.getLayout(SlideLayout.TITLE_ONLY);
 
             //<editor-fold desc="LOGO">
             //Logo erstellen
