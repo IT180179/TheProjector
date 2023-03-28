@@ -1022,7 +1022,7 @@ public class PPKMeetingHelper {
                 p.setTextAlign(TextParagraph.TextAlign.CENTER);
                 XSLFTextRun r = p.addNewTextRun();
                 if (i == 0) {
-                    r.setText("Nenning/\nBrandstetter");
+                    r.setText("Nenning/\n" + projekmanager.getNachname());
                     tbl.setColumnWidth(i, 110);
                     th.setFillColor(new Color(0, 82, 129));
 
