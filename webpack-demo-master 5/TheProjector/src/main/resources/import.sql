@@ -48,9 +48,7 @@ values ('Softwareprojekt'),
        ('Organisationsprojekt');
 insert into Projekte (titel, inhalt, ziel, status, budget, start_datum, end_datum, kategorie_id_kategorien_id)
 values ('The Projector', 'The Projector ist ein Tool für die Projektverwaltung und Generierung einer Powerpoint', 'Einfach und Übersichtliche Projektverwaltung', 1, 0, '2022-07-04', '2023-03-29', 1),
-       ('Aurora', 'Aurora ein Projekt der Sparkasse OÖ ', 'Aurora ein Projekt der Sparkasse OÖ', 1, 0, '2023-07-27', '2023-01-01', 1),
-       ('Digitaler Vorstandsantrag', 'Digitaler Vorstandsantrag ein Projekt der Sparkasse OÖ ', 'Digitaler Vorstandsantrag ein Projekt der Sparkasse OÖ', 1, 0, '2023-07-27', '2023-01-01', 1),
-       ('UnserKundenHub', 'UnserKundenHub ein Projekt der Sparkasse OÖ ', 'UnserKundenHub ein Projekt der Sparkasse OÖ', 1, 0, '2023-07-27', '2023-01-01', 1),
+       ('Aurora', 'Aurora ein Projekt der Sparkasse OÖ ', 'Aurora ein Projekt der Sparkasse OÖ', 1, 848750, '2023-07-27', '2023-01-01', 1),
        ('Digitaler Tresor', 'Digitaler Tresor ein Projekt der Sparkasse OÖ ', 'Digitaler Tresor ein Projekt der Sparkasse OÖ ', 1, 75000, '2023-07-27', '2023-01-01', 1),
        ('Einkaufssoftware', 'Einkaufssoftware ein Projekt der Sparkasse OÖ', 'Einkaufssoftware ein Projekt der Sparkasse OÖ', 1, 2000, '2023-07-27', '2023-01-01', 1),
        ('LeoGreen', 'Quiz über die Natur', 'Menschen über das Klima und die Natur zu infomieren', 1, 10000, '2022-07-04', '2023-03-29', 1),
@@ -58,6 +56,7 @@ values ('The Projector', 'The Projector ist ein Tool für die Projektverwaltung 
        ('Der Cagitzer', 'Reservierungssystem für Gasthäuser', 'Leichtes Verwalten und Reservieren der Reservierungen', 1, 10000, '2023-07-27', '2023-01-01', 1),
        ('Desking', 'Zeiterfassungs-Tool', 'Ein Tool zur Zeiterfassung', 1, 200, '2022-07-04', '2023-03-29', 1),
        ('LeoTools', 'Online Equimentverleih', 'Leichtes und fehlerfreier Verleih von Geräte', 1, 10, '2023-07-27', '2023-01-01', 1);
+
 insert into Einsaetze (personen_id_personen_id, projekte_id_projekt_id, rollen_id_rollen_id, arbeitsstunden)
 values (3, 1, 3, 38.5),
        (4, 1, 3, 38.5),
@@ -106,16 +105,15 @@ insert into Meilenstein_Histories (meilenstein_id_meilensteine_id, aenderung, al
 values (2, 'End-Datum geändert.', 1, '2022-07-04', '2022-07-15'),
        (2, 'End-Datum geändert.', 1, '2022-07-04', '2022-07-20');
 insert into PPK (datum)
-values ('2023-10-10'),
-       ('2023-8-10'),
-       ('2023-6-13');
-
+values ('2022-07-04'),
+       ('2022-07-11'),
+       ('2022-07-18'),
+       ('2022-07-25'),
+       ('2022-08-01');
 insert into Gaeste (ppk_id_ppk_id, name)
 values (1, 'Bikic'),
        (1, 'Cagitz'),
-       (2, 'Ursprung'),
-        (2, 'Maar'),
-       (2, 'Halilovic');
+       (2, 'Ursprung');
 insert into PPK_Projekte (ppk_id_ppk_id, projekte_id_projekt_id)
 values (1, 1),
        (1, 2),
@@ -132,14 +130,12 @@ values (1, 1, 3, 38.5),
        (1, 1, 5, 38.5),
        (1, 2, 3, 45);
 insert into Beschlussfolien (entscheidung, anmerkung, freitext, ppk_projekte_id_ppk_id_ppk_id, ppk_projekte_id_projekte_id_projekt_id)
-values (1, 'Das PPK empfiehlt die oben beschriebene Vorgehensweise.', 'Um die Inhalte aus dem sGruppen-Projekt Digitized Lending in der Spk OÖ bestmöglich verankern und umsetzen zu können soll es auch in der Sparkasse OÖ dazu ein inhouse-Projekt geben (Projektmanager Brandstetter/Fachkoordinatorin Sandra Wallner).
-        Aktuell befindet sich das Projekt in der „Pipeline“ und damit die Arbeit beginnen kann sollte das „Go“ für das Projekt erfolgen.
-        Aufgrund einer Erkrankung könnten noch nicht alle Details/Inhalte fixiert werden.
-        ', 1, 4),
-       (0, 'Anmerkung', 'Freitext', 1, 2);
+values (1, '', 'Das Projekt wurde inhaltlich, budgetär und zeitlich wie geplant umgesetzt, eine detaillierte Dokumentation ist im Projektabschlussbericht ersichtlich. Auch die an die Linie übergebenen Aufgaben sind im Projektabschluss festgehalten.', 1, 1),
+       (3, '', 'Das Projekt wurde inhaltlich, budgetär und zeitlich wie geplant umgesetzt, eine detaillierte Dokumentation ist im Projektabschlussbericht ersichtlich. Auch die an die Linie übergebenen Aufgaben sind im Projektabschluss festgehalten.', 1, 2);
 insert into FreieFolien (beschreibung, freitext, upload, ppk_projekte_id_ppk_id_ppk_id, ppk_projekte_id_projekte_id_projekt_id)
-values ('Beschreibung', 'Freitext', null, 1, 1),
-       ('Beschreibung', 'Freitext', null, 1, 2);
+values ('Beschreibung', 'Um die Inhalte aus dem sGruppen-Projekt Digitized Lending in der Spk OÖ bestmöglich verankern und umsetzen zu können soll es auch in der Sparkasse OÖ dazu ein inhouse-Projekt geben (Projektmanager Brandstetter/Fachkoordinatorin Sandra Wallner).', null, 1, 1),
+       ('Beschreibung', 'Aktuell befindet sich das Projekt in der „Pipeline“ und damit die Arbeit beginnen kann sollte das „Go“ für das Projekt erfolgen.
+Aufgrund einer Erkrankung könnten noch nicht alle Details/Inhalte fixiert werden.', null, 1, 2);
 insert into PPKategorie (name)
 values ('Vorstand'),
        ('Abteilungsleiter');
@@ -199,35 +195,31 @@ values ('Anforderungserhebung'),
        ('ISD erstellen'),
        ('Software implementieren');
 insert into Softwareanforderungen (status, beschreibung, anforderungsprozess, projekte_id_projekt_id)
-values (1, 'The Projector', 'Text', 1),
-       (1, 'Aurora', 'Text', 2),
-       (1, 'Einkaufssoftware', 'Text', 3),
-       (1, 'Die Software dient zur digitalen Übermittlung von Vorstandsanträge. Die Vorstandsanträge sollen weiters in einer digitalen Form durch den Vorstand bearbeitet werden können.', 'Umsetzung via PowerApps / PowerAutomate wurde durchgeführt. Interne Tests des Entwurfs wurden durchgeführt und dabei aufgetretene Fehler behoben.
-        Aufgrund der Reevaluierung der Vertraulichkeitsstufen der Datenklassifikation muss die Datenablage gesondert betrachtet werden.', 4),
-       (1, 'Es wurde eine Software zur Unterstützung bei der internen Kundenfinden angefordert, welche mittels Gamification die entsprechenden Mitarbeiter motivieren soll.
-        ', 'Weiterentwicklung des erstellten Anforderungskatalogs mittels einer Workshopreihe.', 5);
+values (1, 'Die Software dient zur digitalen Übermittlung von Vorstandsanträge. Die Vorstandsanträge sollen weiters in einer digitalen Form durch den Vorstand bearbeitet werden können.', 'Umsetzung via PowerApps / PowerAutomate wurde durchgeführt. Interne Tests des Entwurfs wurden durchgeführt und dabei aufgetretene Fehler behoben.', 1),
+       (1, 'Es wurde eine Software zur Unterstützung bei der internen Kundenfinden angefordert, welche mittels Gamification die entsprechenden Mitarbeiter motivieren soll.', 'Weiterentwicklung des erstellten Anforderungskatalogs mittels einer Workshopreihe', 2),
+       (1, 'Für die Mobilisierung der Mitarbeiter zur CO2-Einsparung soll eine Smartphone-APP gefunden werden und an alle Mitarbeiter ausgerollt werden.', 'Der ISD wurde erstellt. Die Abnahme des ISDs Seitens der Gruppe ist noch offen.', 3);
 insert into Phasen_Projekt (status, phasen_id_phasen_id, softwareanforderungen_id_softwareanforderungen_id)
 values (0, 1, 1),
        (0, 2, 1),
-       (1, 3, 1),
-       (2, 4, 1),
-       (0, 5, 1),
+       (0, 3, 1),
+       (1, 4, 1),
+       (2, 5, 1),
        (0, 6, 1),
        (0, 7, 1),
        (0, 1, 2),
-       (1, 2, 2),
-       (2, 3, 2),
-       (0, 4, 2),
+       (0, 2, 2),
+       (1, 3, 2),
+       (2, 4, 2),
        (0, 5, 2),
        (0, 6, 2),
        (0, 7, 2),
        (0, 1, 3),
-       (1, 2, 3),
+       (0, 2, 3),
        (0, 3, 3),
        (0, 4, 3),
-       (1, 5, 3),
+       (0, 5, 3),
        (2, 6, 3),
-       (0, 7, 3);
+       (1, 7, 3);
 insert into Arbeitszeiten (arbeitszeit, date, EINSAETZE_ID_PERSONEN_ID_PERSONEN_ID, EINSAETZE_ID_PROJEKTE_ID_PROJEKT_ID, EINSAETZE_ID_ROLLEN_ID_ROLLEN_ID)
 values (10, '2023-03-10', 1, 1, 1),
        (10, '2023-03-11', 1, 1, 2),
