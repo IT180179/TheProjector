@@ -50,7 +50,7 @@ gast:any
       }
       console.log(this.gast)
 
-      this.http.post('http://localhost:8080/gaeste/add', this.gast)
+      this.service.postGaeste(this.gast)
         .subscribe({
           next: value => {
             // console.log(value)

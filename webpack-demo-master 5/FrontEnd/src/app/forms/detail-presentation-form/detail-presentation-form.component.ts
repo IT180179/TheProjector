@@ -71,7 +71,6 @@ export class DetailPresentationFormComponent implements OnInit {
 
       this.service.getDetailPowerpoint().subscribe({
         next: blob => {
-          console.log("Detail-Präsentation wird generiert")
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
         link.download = 'Detail-Präsentation.pptx';

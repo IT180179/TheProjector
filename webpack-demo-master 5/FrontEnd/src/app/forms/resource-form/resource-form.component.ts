@@ -87,7 +87,7 @@ export class ResourceFormComponent implements OnInit {
     };
 
     console.log(this.newdata)
-    this.http.post<any>('http://localhost:8080/arbeitszeiten/add', this.newdata)
+  this.service.postArbeitszeiten(this.newdata)
       .subscribe({
         next: value => {
           this.snackBar.open(`Daten wurden gespeichert!`, undefined, {

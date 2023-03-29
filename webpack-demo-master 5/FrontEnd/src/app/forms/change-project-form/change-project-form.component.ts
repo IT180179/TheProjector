@@ -108,7 +108,7 @@ export class ChangeProjectFormComponent implements OnInit {
       }
     }
     //UPDATE DES PROJEKTS
-    this.http.put('http://localhost:8080/projekte/update', this.newdata)
+    this.service.putProject(this.newdata)
       .subscribe({
         next: value => {
           this.snackBar.open(`Daten wurden GESPEICHERT`, undefined, {duration: 3000, panelClass: 'snackbar-dark'});

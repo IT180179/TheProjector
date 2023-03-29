@@ -83,7 +83,7 @@ export class ChangeMilestoneFormComponent implements OnInit {
     }
 
     //POST-Meilenstein Historie
-    this.http.post('http://localhost:8080/meilenstein_histories/add', this.newhistorie)
+    this.service.postMeilensteinHistorie(this.newhistorie)
       .subscribe({
         next: value => {
           // console.log(value)
@@ -105,7 +105,7 @@ export class ChangeMilestoneFormComponent implements OnInit {
       }
     }
     //UPDATE des Meilensteins
-    this.http.put('http://localhost:8080/meilensteine/update', this.newdata)
+   this.service.putMeilenstein(this.newdata)
       .subscribe({
         next: value => {
           // console.log(value)

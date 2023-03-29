@@ -89,7 +89,7 @@ export class CreateEmployeeFormComponent implements OnInit {
     };
 
     //POST-Person
-    this.http.post<Person>('http://localhost:8080/personen/add', this.newdata)
+   this.service.postPerson(this.newdata)
       .subscribe({
         next: value => {
           // console.log(value)

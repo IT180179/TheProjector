@@ -180,7 +180,7 @@ export class PPKPresentationFormComponent implements OnInit {
           });
     }
     if(this.beschlussData) {
-      this.service.http.post('http://localhost:8080/beschlussfolien/add', this.beschlussData)
+      this.service.postBeschlussFolie(this.beschlussData)
           .subscribe({
             next: value => {
               // console.log(value)
@@ -195,7 +195,7 @@ export class PPKPresentationFormComponent implements OnInit {
           });
     }
     if(this.requestData) {
-      this.service.http.post("http://localhost:8080/softwareanforderungen/add/" + this.requestData.auswahl[1] + "/" + this.requestData.auswahl[2] + "/" + this.requestData.auswahl[3] + "/" + this.requestData.auswahl[4] + "/" +
+      this.service.postSoftwareAnforderungen("softwareanforderungen/add/" + this.requestData.auswahl[1] + "/" + this.requestData.auswahl[2] + "/" + this.requestData.auswahl[3] + "/" + this.requestData.auswahl[4] + "/" +
           this.requestData.auswahl[5] + "/" + this.requestData.auswahl[6] + "/" + this.requestData.auswahl[7], this.requestData)
           .subscribe({
             next: value => {

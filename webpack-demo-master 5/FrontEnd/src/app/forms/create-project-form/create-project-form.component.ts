@@ -65,7 +65,7 @@ export class CreateProjectFormComponent implements OnInit {
           kategorien_id: Number(data.kategorie_id)
         }
       };
-      this.http.post('http://localhost:8080/projekte/add', this.newdata)
+      this.service.postProjekte(this.newdata)
         .subscribe({
           next: value => {
             // console.log(value)

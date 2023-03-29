@@ -70,12 +70,9 @@ export class ProjectsOverviewComponent implements OnInit {
     }else {
    this.service.search(this.text).subscribe( {
       next: value => {
-        //console.log("Wurde überschrieben!")
         // @ts-ignore
         this.foundprojects = value;
-       // console.log(this.foundprojects)
       },error: err => {
-        //console.log("Projekt '" + this.text + "' wurde nicht gefunden!")
        this.snackBar.open(`Projekt laden ist fehlgeschlagen: ${err.message}`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
       }
     })

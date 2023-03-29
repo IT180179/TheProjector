@@ -136,12 +136,6 @@ export class FreieFolieFormComponent implements OnInit {
       this.base64 = reader.result as string;
       console.log(this.base64)
     }
-
-    //this.blob = this.convertToBlob(this.base64);
-    //console.log(this.blob)
-
-    //const resizedBlob = this.resizeBlob(this.blob, 300, 300);
-    //console.log(resizedBlob)
   }
 
   convertToBlob(imageData: any): Blob {

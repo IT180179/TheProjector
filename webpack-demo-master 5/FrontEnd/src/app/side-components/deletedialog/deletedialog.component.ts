@@ -32,7 +32,7 @@ export class DeletedialogComponent implements OnInit {
   }
   onDelete() {
     // DELETE - Meilensteinhistorie, da sonst Meilenstein nicht gelöscht werden kann
-    this.http.delete("http://localhost:8080/meilenstein_histories/deletePerMeilensteinId/" + this.data.id).subscribe({
+    this.service.setMeilensteinHistorie(this.data.id).subscribe({
       next: value => {
         // console.log(value)
         this.snackBar.open(`Daten konnten gel werden`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
@@ -45,7 +45,7 @@ export class DeletedialogComponent implements OnInit {
       }
     });
     // DELETE - Meilenstein
-    this.http.delete("http://localhost:8080/meilensteine/delete/" + this.data.id).subscribe({
+    this.service.deleteMeilenstein(this.data.id).subscribe({
       next: value => {
         //  console.log(value)
         this.snackBar.open(`Meilenstein wurde gelöscht`, undefined, {

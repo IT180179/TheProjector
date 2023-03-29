@@ -5,6 +5,7 @@ import {Projekte} from "../model/Projekte";
 import {DialogData} from "../side-components/projects-overview/projects-overview.component";
 import {Person} from "../model/Person";
 import {environment} from "../../environments/environment";
+import {Ppk} from "../model/Ppk";
 
 @Injectable({
   providedIn: 'root'
@@ -284,15 +285,6 @@ export class HttpService {
     return this.http.post<Person>(url, person);
   }
 
-
-
-
-  public postFreieFolie(newdata: any): Observable<any> {
-
-    const url = this.API_URL + 'freiefolien/add';
-    return this.http.post(url, newdata);
-  }
-
   countFachkoordinator(id: Person): Observable<any> {
 
     const url: string = this.API_URL + "einsaetze/countFachkoordinator/" + id;
@@ -393,9 +385,80 @@ export class HttpService {
   getCategorieByID(id: number): Observable<any> {
 
     const url: string = this.API_URL + "kategorien/getByID/" + id;
-
-    //console.log(this.httpClient.get<any>(url));
     return this.http.get<any>(url);
 
+  }
+
+  deleteMeilenstein(id: any){
+    return this.http.delete(this.API_URL + "meilensteine/delete/" + id)
+  }
+  setMeilensteinHistorie(id: any){
+    return this.http.delete(this.API_URL + "meilenstein_histories/deletePerMeilensteinId/" + id)
+  }
+
+  public postEinsaetze(newdata: any): Observable<any> {
+
+    return this.http.post(this.API_URL + 'einsaetze/add', newdata)
+  }
+
+
+  public postMeilenstein(newdata: any): Observable<any> {
+    return this.http.post(this.API_URL + 'meilensteine/add', newdata)
+  }
+
+  public postMeilensteinHistorie(newdata: any): Observable<any> {
+    return this.http.post(this.API_URL + 'meilenstein_histories/add', newdata)
+  }
+
+  public putMeilenstein(newdata: any): Observable<any> {
+    return  this.http.put(this.API_URL + 'meilensteine/update', newdata)
+  }
+
+  public putProject(newdata: any): Observable<any> {
+    return  this.http.put(this.API_URL + 'projekte/update', newdata)
+  }
+
+  public postPerson(newdata: any): Observable<any> {
+    return  this.http.post(this.API_URL + 'personen/add', newdata)
+  }
+
+  public postPPK(newdata: any): Observable<any> {
+    return  this.http.post(this.API_URL + 'ppk/add', newdata)
+  }
+
+  public postPPKProjekte(newdata: any): Observable<any> {
+    return  this.http.post(this.API_URL + 'ppk_projekte/add', newdata)
+  }
+
+  public postProjekte(newdata: any): Observable<any> {
+    return  this.http.post(this.API_URL + 'projekte/add', newdata)
+  }
+
+  public putPPK(newdata: any): Observable<any> {
+    return  this.http.put(this.API_URL + 'ppk/update', newdata)
+  }
+
+  public postFreieFolie(newdata: any): Observable<any> {
+    return  this.http.post(this.API_URL + 'freiefolien/add', newdata)
+  }
+
+  public postBeschlussFolie(newdata: any): Observable<any> {
+    return  this.http.post(this.API_URL + 'beschlussfolien/add', newdata)
+  }
+
+  public postSoftwareAnforderungen(url:any , newdata: any): Observable<any> {
+    return  this.http.post(this.API_URL + url, newdata)
+  }
+
+  public postArbeitszeiten(newdata: any): Observable<any> {
+    return this.http.post(this.API_URL + "arbeitszeiten/add", newdata)
+  }
+
+  public postGaeste(newdata: any): Observable<any> {
+    return this.http.post(this.API_URL + "gaeste/add", newdata)
+  }
+
+  public getPPKwithGaeste() {
+    return this.http.get(this.API_URL + "ppk/getNextPPKWithProjektAndGaeste")
   }
 }

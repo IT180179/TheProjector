@@ -9,6 +9,7 @@ import {SummaryComponent} from "../../side-components/summary/summary.component"
 import {Route, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {AuthService} from "../../services/auth.service";
+import {HttpService} from "../../services/http.service";
 
 @Component({
   selector: 'app-add-milestone-form',
@@ -31,7 +32,7 @@ export class AddMilestoneFormComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthService, private snackBar: MatSnackBar,
               private _router: Router, public dialog: MatDialog, public datePipe: DatePipe, private http: HttpClient,
-              private fb: FormBuilder, public dataService: DataService) {}
+              private fb: FormBuilder, public dataService: DataService, public service: HttpService) {}
 
   ngOnInit(): void {
     // Überprüfen ob User eingeloggt ist
@@ -59,8 +60,7 @@ export class AddMilestoneFormComponent implements OnInit {
     }
     console.log(data)
     //POST-Neues Meilensteins
-    this.http.post('http://localhost:8080/meilensteine/add', this.newData)
-      .subscribe({
+    this.service.postMeilenstein(this.newData).subscribe({
         next: value => {
           this.snackBar.open(`Meilenstein wurde hinzugefügt`, undefined, {duration: 300, panelClass: 'snackbar-dark'});
           // console.log(value)

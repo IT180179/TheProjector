@@ -63,7 +63,7 @@ export class CreatePPKFormComponent implements OnInit {
     this.ppk = {
       datum: data.datum
     }
-    this.http.post<Ppk>('http://localhost:8080/ppk/add', this.ppk)
+    this.service.postPPK(this.ppk)
       .subscribe({
         next: (value: any) => {
          // console.log(value)
@@ -87,7 +87,6 @@ export class CreatePPKFormComponent implements OnInit {
     this.getCheckboxValue()
     this.openSummary();
     this.disable = false
-
   }
   setProjects() {
     for (var i = 0; i < this.auswahl.length; i++) {
@@ -105,7 +104,7 @@ export class CreatePPKFormComponent implements OnInit {
       }
 
       //POST der PPK-Projekte
-      this.http.post('http://localhost:8080/ppk_projekte/add', ppkProjekte)
+      this.service.postPPKProjekte(ppkProjekte)
         .subscribe({
           next: value => {
           //  console.log(value)
@@ -136,8 +135,6 @@ export class CreatePPKFormComponent implements OnInit {
   }
 
   openDialog() {
-    console.log("gast")
-    console.log(this.ppk_id + " " + this.ppk_date)
     try {
     if (this.ppk_id != null && this.ppk_date != null) {
       const dialogRef = this.dialog.open(GaesteListComponent, {
@@ -149,10 +146,8 @@ export class CreatePPKFormComponent implements OnInit {
       });
     }
     } catch (error) {
-
     }
   }
-
   openSummary() {
     const dialogRef = this.dialog.open(PPKSummaryComponent, {
       width: '500px',

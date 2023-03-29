@@ -86,7 +86,7 @@ export class PpkUpdateComponent implements OnInit {
       ppk_id: this.ppk_id,
       datum: data.datum
     }
-    this.http.put('http://localhost:8080/ppk/update', this.ppk)
+    this.service.putPPK(this.ppk)
         .subscribe({
           next: (value: any) => {
             console.log(value)

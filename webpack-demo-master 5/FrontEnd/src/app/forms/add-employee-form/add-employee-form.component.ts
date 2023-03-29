@@ -83,8 +83,7 @@ export class AddEmployeeFormComponent implements OnInit {
       arbeitsstunden: Number(data.arbeitsstunden)
     };
     //POST des neuen Mitarbeiters
-    this.http.post('http://localhost:8080/einsaetze/add', this.newdata)
-      .subscribe({
+    this.service.postEinsaetze(this.newdata).subscribe({
         next: () => {
           this.snackbar.open("Person wurde erfolgreich hinzugefügt", undefined, {duration: 300});
           this.onSelectedProject(data.projekt_id);
