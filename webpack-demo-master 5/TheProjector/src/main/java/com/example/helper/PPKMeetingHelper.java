@@ -37,16 +37,26 @@ public class PPKMeetingHelper {
     public static ByteArrayInputStream generatePPKPresentation()
             throws FileNotFoundException, IOException, InvalidFormatException {
 
-        //Repos einbinden
+        //<editor-fold desc="REPOS">
+        //ProjekteRepo
         final ProjekteRepo projekteRepo = new ProjekteRepo();
+        //SoftwareanforderungsRepo
         final SoftwareanforderungenRepo softwareanforderungenRepo = new SoftwareanforderungenRepo();
+        //BeschlussRepo
         final BeschlussFolienRepo beschlussFolienRepo = new BeschlussFolienRepo();
+        //MeilensteinRepo
         final MeilensteineRepo meilensteineRepo = new MeilensteineRepo();
+        //PPKRepo
         final PPKRepo ppk = new PPKRepo();
+        //FreieFolieRepo
         final FreieFolienRepo freieFolienRepo = new FreieFolienRepo();
+        //PhasenRepo
         final Phasen_ProjektRepo phasen_projektRepo = new Phasen_ProjektRepo(softwareanforderungenRepo);
+        //GästreRepo
         final GaesteRepo gaesteRepo = new GaesteRepo();
+        //</editor-fold>
 
+        //<editor-fold desc="REPO-Aufruf">
         //GET --> alle Projekte
         List<Projekte> allProjects = new ArrayList<>();
         allProjects = projekteRepo.listAll();
@@ -89,23 +99,23 @@ public class PPKMeetingHelper {
         String date_PPK = nextPPK.format(formatters);
         LocalDate parsedPPK = LocalDate.parse(date_PPK, formatters);
 
-        //Circle für Datum
-
-        //Ändern des Datumformats beim Enddatum
-
+        //Meilensteinanzahl
         var count = meilensteineRepo.count();
+        //Projektanzahl
         Long projekteanzahl = projekteRepo.getProjekteAnzahl();
+        //</editor-fold>
 
 
         try(XMLSlideShow generiertePowerPointPraesentation = new XMLSlideShow()) {
 
-            //<editor-fold desc="Folien mit einzelnen Layout">
+            //<editor-fold desc="LAYOUT">
             //Layout der Folien
             XSLFSlideMaster defaultMaster = generiertePowerPointPraesentation.getSlideMasters().get(0);
             XSLFSlideLayout title_content = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
             XSLFSlideLayout title = defaultMaster.getLayout(SlideLayout.TITLE);
             XSLFSlideLayout blank = defaultMaster.getLayout(SlideLayout.BLANK);
             XSLFSlideLayout title_only = defaultMaster.getLayout(SlideLayout.TITLE_ONLY);
+            //</editor-fold>
 
             //<editor-fold desc="LOGO">
             //Logo erstellen
@@ -125,7 +135,7 @@ public class PPKMeetingHelper {
             balken.setFillColor(new Color(195,227,248));
             balken.setAnchor(new Rectangle(0,460,720,80));
 
-            //----Logo anlegen
+            //Logo anlegen
             XSLFPictureShape logo = einleitungsFolie.createPicture(pd);
             logo.setAnchor(new Rectangle(30, 480, 150, 35));
 
@@ -225,10 +235,9 @@ public class PPKMeetingHelper {
                 gaeste1_r.setFontSize(16.0);
                 gaeste1.setAnchor(new Rectangle(360, 300+20*i, 320, 50));
             }
-
             //</editor-fold>
 
-            //<editor-fold desc="Erste Folie --> STARTBILD">
+            //<editor-fold desc="STARTBILD">
             XSLFSlide ersteFolie = generiertePowerPointPraesentation.createSlide(blank);
             byte[] ersteSeite = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/firstPicture.png"));
             XSLFPictureData ersteSeite_pd = generiertePowerPointPraesentation.addPicture(ersteSeite, PictureData.PictureType.PNG);
@@ -253,21 +262,21 @@ public class PPKMeetingHelper {
             nextPPKMeeting.setAnchor(new Rectangle(450, 10, 720, 50));
             //</editor-fold>
 
-            //<editor-fold desc="Zweite Folie --> PROJEKT-PORTFOLIO">
+            //<editor-fold desc="PROJEKT-PORTFOLIO">
             XSLFSlide projektportfolioFolie = generiertePowerPointPraesentation.createSlide(title_content);
-            //----Logo anlegen
+            //Logo anlegen
             XSLFPictureShape pic_projektportfolioFolie = projektportfolioFolie.createPicture(pd);
             pic_projektportfolioFolie.setAnchor(new Rectangle(560, 32, 130, 20));
 
             //Titel erstellen
             XSLFTextShape title_projektportfolio = projektportfolioFolie.getPlaceholder(0);
             title_projektportfolio.clearText();
-            //----Text anlegen
+            //Text anlegen
             XSLFTextParagraph pTitle_projektportfolio = title_projektportfolio.addNewTextParagraph();
             XSLFTextRun rTitle_projektportfolio = pTitle_projektportfolio.addNewTextRun();
             title_projektportfolio.setVerticalAlignment(VerticalAlignment.MIDDLE);
             rTitle_projektportfolio.setText("Projektportfolio");
-            //----Text stylen
+            //Text stylen
             rTitle_projektportfolio.setFontColor(new Color(0, 82, 129));
             rTitle_projektportfolio.setFontSize(24.0);
             rTitle_projektportfolio.setBold(true);
@@ -280,7 +289,7 @@ public class PPKMeetingHelper {
             //Tabelle anlegen
             XSLFTable table_projektportfolio = body_projektportfolio.getSheet().createTable();
             table_projektportfolio.setAnchor(new Rectangle(10, 80, 0, 0));
-            //----Header für die Tabelle
+            //Header für die Tabelle
             int numColumns_projektportfolio = 6;
             XSLFTableRow headerRow_projektportfolio = table_projektportfolio.addRow();
 
@@ -288,6 +297,7 @@ public class PPKMeetingHelper {
                 XSLFTableCell th_projektportfolio = headerRow_projektportfolio.addCell();
                 XSLFTextParagraph p_th_projektportfolio = th_projektportfolio.addNewTextParagraph();
                 p_th_projektportfolio.setTextAlign(TextParagraph.TextAlign.LEFT);
+
                 if(i==0) {
                     XSLFTextRun r_th_projektportfolio = p_th_projektportfolio.addNewTextRun();
                     r_th_projektportfolio.setText("Projekt");
@@ -301,6 +311,7 @@ public class PPKMeetingHelper {
 
                     r_th_projektportfolio.setFontSize(10.0);
                     r_th_projektportfolio.setFontColor(new Color(160,160,160));
+
                 }if(i == 1){
                     XSLFTextRun r_th_projektportfolio = p_th_projektportfolio.addNewTextRun();
                     r_th_projektportfolio.setText("Status");
@@ -326,6 +337,7 @@ public class PPKMeetingHelper {
 
                     r_th_projektportfolio.setFontSize(10.0);
                     r_th_projektportfolio.setFontColor(new Color(160,160,160));
+
                 }if(i==3){
                     XSLFTextRun r_th_projektportfolio = p_th_projektportfolio.addNewTextRun();
                     r_th_projektportfolio.setText("Fachkoordinator:in");
@@ -339,6 +351,7 @@ public class PPKMeetingHelper {
                     r_th_projektportfolio.setFontSize(10.0);
                     r_th_projektportfolio.setFontColor(new Color(160,160,160));
                 }
+
                 if(i==4){
                     XSLFTextRun r_th_projektportfolio = p_th_projektportfolio.addNewTextRun();
                     r_th_projektportfolio.setText("Startdatum");
@@ -351,6 +364,7 @@ public class PPKMeetingHelper {
 
                     r_th_projektportfolio.setFontSize(10.0);
                     r_th_projektportfolio.setFontColor(new Color(160,160,160));
+
                 }if(i==5){
                     XSLFTextRun r_th_projektportfolio = p_th_projektportfolio.addNewTextRun();
                     r_th_projektportfolio.setText("Planfertigstellung");
@@ -524,7 +538,7 @@ public class PPKMeetingHelper {
             projektportfolio_footer.setAnchor(new Rectangle(440, 500, 270, 50));
             //</editor-fold>
 
-            //<editor-fold desc="Dritte Folie --> SOFTWAREANFORDERUNGEN">
+            //<editor-fold desc="SOFTWAREANFORDERUNGEN">
             byte[] raute_start = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/raute1.png"));
             XSLFPictureData raute_start_pd = generiertePowerPointPraesentation.addPicture(raute_start, PictureData.PictureType.PNG);
 
@@ -536,7 +550,7 @@ public class PPKMeetingHelper {
 
             for(int i = 0; i < allSoftwareanforderungen.size() ; i++) {
                 XSLFSlide softwareanforderungsFolie = generiertePowerPointPraesentation.createSlide(title);
-                //----Logo anlegen
+                //Logo anlegen
                 XSLFPictureShape pic_softwareanforderungsFolie = softwareanforderungsFolie.createPicture(pd);
                 pic_softwareanforderungsFolie.setAnchor(new Rectangle(560, 32, 130, 20));
 
@@ -592,7 +606,6 @@ public class PPKMeetingHelper {
                 geplanter_Einsatzpunkt.setAnchor(new Rectangle(65, 120, 245, 59));
 
                 //Textbox --> Einsatzpunkt = ändert sich durch Abfrage auf die Datenbank
-
                 LocalDate einsatzPunkt = allProjects.get(i).getEnd_datum();
 
                 XSLFTextBox einsatzpunkt = softwareanforderungsFolie.createTextBox();
@@ -710,12 +723,12 @@ public class PPKMeetingHelper {
             }
             //</editor-fold>
 
-            //<editor-fold desc="Vierte Folie --> ENTSCHEIDUNGSFOLIE">
+            //<editor-fold desc="ENTSCHEIDUNGSFOLIE">
 
             for(int i = 0; i < allBeschluss.size(); i++) {
 
                     XSLFSlide entscheidungsFolie = generiertePowerPointPraesentation.createSlide(title);
-                    //----Logo anlegen
+                    //Logo anlegen
                     XSLFPictureShape pic_entscheidungsFolie = entscheidungsFolie.createPicture(pd);
                     pic_entscheidungsFolie.setAnchor(new Rectangle(560, 32, 130, 20));
 
@@ -841,7 +854,7 @@ public class PPKMeetingHelper {
                 }
             //</editor-fold>
 
-            //<editor-fold desc="Fünfte Folie --> MEILENSTEIN">
+            //<editor-fold desc="MEILENSTEIN">
             for(int c = 0; c <projekteanzahl; c++){
             XSLFSlide meilensteinFolie = generiertePowerPointPraesentation.createSlide(title);
             //----Logo anlegen
@@ -891,7 +904,6 @@ public class PPKMeetingHelper {
 
                     LocalDate endDatum= aktuellerMeilenstein.getEnd_datum();
 
-                    //----------------------------------------------------------------------------------------------------------ERSTER MEILENSTEIN
                     if(aktuellerMeilenstein.getStatus() == 1) {
                         byte[] abgenommen_pic = IOUtils.toByteArray(new FileInputStream("src/main/resources/images/abgenommen.png"));
                         XSLFPictureData abgenommen_pic_pd = generiertePowerPointPraesentation.addPicture(abgenommen_pic, PictureData.PictureType.PNG);
@@ -969,7 +981,7 @@ public class PPKMeetingHelper {
 
                 ersterMeilenstein_nichtAbgenommen.setAnchor(new Rectangle(60,475,100,10));
 
-                //FOOTER
+                //----------------------------------------------------------------------------------------------------------FOOTER
                 XSLFTextBox projektuebersichtsfolie_footer = meilensteinFolie.createTextBox();
                 XSLFTextParagraph projektuebersichtsfolie_footer_p = projektuebersichtsfolie_footer.addNewTextParagraph();
                 XSLFTextRun projektuebersichtsfolie_footer_r = projektuebersichtsfolie_footer_p.addNewTextRun();
@@ -985,8 +997,6 @@ public class PPKMeetingHelper {
 
             //FOLIE ERSTELLEN
             XSLFSlide projektuebersichtsFolie = generiertePowerPointPraesentation.createSlide(title_content);
-
-            //Status Circle
 
             //LOGO
             XSLFPictureShape pic_projektuebersichtsFolie = projektuebersichtsFolie.createPicture(pd);
@@ -1021,6 +1031,7 @@ public class PPKMeetingHelper {
                 XSLFTextParagraph p = th.addNewTextParagraph();
                 p.setTextAlign(TextParagraph.TextAlign.CENTER);
                 XSLFTextRun r = p.addNewTextRun();
+
                 if (i == 0) {
                     r.setText("Nenning/\n" + projekmanager.getNachname());
                     tbl.setColumnWidth(i, 110);
@@ -1034,6 +1045,7 @@ public class PPKMeetingHelper {
 
                     r.setFontSize(12.0);
                     r.setFontColor(Color.white);
+
                 } else if (i == 1) {
                     r.setText("Status");
                     tbl.setColumnWidth(i, 110);
@@ -1048,6 +1060,7 @@ public class PPKMeetingHelper {
                     r.setFontSize(13.0);
                     r.setFontColor(Color.white);
                     r.setBold(true);
+
                 } else {
                     r.setText("Kommentar");
                     tbl.setColumnWidth(i, 480);
@@ -1089,12 +1102,8 @@ public class PPKMeetingHelper {
 
             //----------------------------------------------INHALT --> STATUS
             XSLFTableCell cell_inhalt_status = tr_inhalt.addCell();
-            //XSLFTextParagraph cell_inhalt_status_p = cell_inhalt_status.addNewTextParagraph();
-            //XSLFTextRun cell_inhalt_status_r = cell_inhalt_status_p.addNewTextRun();
-
             cell_inhalt_status.setFillColor(new Color(195,227,248));
             cell_inhalt_status.setVerticalAlignment(org.apache.poi.sl.usermodel.VerticalAlignment.MIDDLE);
-
 
             cell_inhalt_status.setBorderColor(TableCell.BorderEdge.bottom,Color.white);
             cell_inhalt_status.setBorderColor(TableCell.BorderEdge.right,Color.white);
@@ -1202,9 +1211,6 @@ public class PPKMeetingHelper {
 
             //----------------------------------------------BUDGET --> STATUS
             XSLFTableCell cell_budget_status = tr_budget.addCell();
-            //XSLFTextParagraph cell_budget_status_p = cell_budget_status.addNewTextParagraph();
-            //XSLFTextRun cell_budget_status_r = cell_budget_status_p.addNewTextRun();
-
             cell_budget_status.setFillColor(new Color(226,242,252));
             cell_budget_status.setVerticalAlignment(org.apache.poi.sl.usermodel.VerticalAlignment.MIDDLE);
 
@@ -1315,10 +1321,6 @@ public class PPKMeetingHelper {
 
             //----------------------------------------------TERMIN --> STATUS
             XSLFTableCell cell_termine_status = tr_termine.addCell();
-            //XSLFTextParagraph cell_termine_status_p = cell_termine_status.addNewTextParagraph();
-                // XSLFTextRun cell_termine_status_r = cell_termine_status_p.addNewTextRun();
-
-
             cell_termine_status.setFillColor(new Color(195,227,248));
             cell_termine_status.setVerticalAlignment(org.apache.poi.sl.usermodel.VerticalAlignment.MIDDLE);
 
@@ -1394,9 +1396,6 @@ public class PPKMeetingHelper {
 
                 //----------------------------------------------TERMIN --> KOMMENTAR
                 XSLFTableCell cell_termine_kommentar = tr_termine.addCell();
-                //XSLFTextParagraph cell_termine_kommentar_p = cell_termine_kommentar.addNewTextParagraph();
-                //XSLFTextRun cell_termine_kommentar_r = cell_termine_kommentar_p.addNewTextRun();
-
                 cell_termine_kommentar.setFillColor(new Color(195,227,248));
                 cell_termine_kommentar.setVerticalAlignment(org.apache.poi.sl.usermodel.VerticalAlignment.MIDDLE);
 
@@ -1408,7 +1407,7 @@ public class PPKMeetingHelper {
                 cell_termine_kommentar.setText(""+startDatum.format(formatters)+", "+endDatum.format(formatters));
 
 
-                //FOOTER
+                //----------------------------------------------------------------------------------------------------------FOOTER
                 XSLFTextBox projektuebersichtsfolie_footer = projektuebersichtsFolie.createTextBox();
                 XSLFTextParagraph projektuebersichtsfolie_footer_p = projektuebersichtsfolie_footer.addNewTextParagraph();
                 XSLFTextRun projektuebersichtsfolie_footer_r = projektuebersichtsfolie_footer_p.addNewTextRun();
@@ -1452,7 +1451,6 @@ public class PPKMeetingHelper {
             freierTextRun.setFontSize(14.0);
 
             //Bild
-
                 if(freieFoliens.get(i).getUpload() != null){
 
                     String data = freieFoliens.get(i).getUpload();
@@ -1474,7 +1472,7 @@ public class PPKMeetingHelper {
                 }
 
 
-            //FOOTER
+            ////----------------------------------------------------------------------------------------------------------FOOTER
             XSLFTextBox projektuebersichtsfolie_footer = freieFolie.createTextBox();
             XSLFTextParagraph projektuebersichtsfolie_footer_p = projektuebersichtsfolie_footer.addNewTextParagraph();
             XSLFTextRun projektuebersichtsfolie_footer_r = projektuebersichtsfolie_footer_p.addNewTextRun();
