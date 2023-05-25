@@ -89,7 +89,7 @@ public class PersonenRepo implements PanacheRepository<Personen> {
     public List<PersonenAufwandDTO> getPersonAndArbeitszeit() {
         TypedQuery<PersonenAufwandDTO> query = this.getEntityManager().createQuery("select distinct new com.example.model.PersonenAufwandDTO(p.personen_id, p.vorname, p.nachname, p.username, p.passwort, p.rechte, sum(az.arbeitszeit), a, r) from Personen p " +
                 "join Einsaetze e on p.personen_id = e.einsaetze_id.personen_id.personen_id join Abteilungen a on p.abteilungs_id.abteilungs_id = a.abteilungs_id join Rollen r on e.einsaetze_id.rollen_id.rollen_id = r.rollen_id " +
-                "join Arbeitszeiten az on p.personen_id = az.personen_id.personen_id group by p,a,r", PersonenAufwandDTO.class);
+                "join Arbeitszeiten az on p.personen_id = az.einsaetze_id.einsaetze_id.personen_id.id group by p,a,r", PersonenAufwandDTO.class);
         return query.getResultList();
     }
 
@@ -104,7 +104,7 @@ public class PersonenRepo implements PanacheRepository<Personen> {
     public List<PersonenAufwandDTO> getPersonAndArbeitszeitPerProjekt(Long projekt_id) {
         TypedQuery<PersonenAufwandDTO> query = this.getEntityManager().createQuery("select distinct new com.example.model.PersonenAufwandDTO(p.personen_id, p.vorname, p.nachname, p.username, p.passwort, p.rechte, sum(az.arbeitszeit), a, r) from Personen p " +
                         "join Einsaetze e on p.personen_id = e.einsaetze_id.personen_id.personen_id join Abteilungen a on p.abteilungs_id.abteilungs_id = a.abteilungs_id join Rollen r on e.einsaetze_id.rollen_id.rollen_id = r.rollen_id " +
-                        "join Arbeitszeiten az on p.personen_id = az.personen_id.personen_id where az.projekte_id.projekt_id = :projekt_id group by p,a,r", PersonenAufwandDTO.class)
+                        "join Arbeitszeiten az on p.personen_id = az.einsaetze_id.einsaetze_id.personen_id.id where az.einsaetze_id.einsaetze_id.projekte_id.id = :projekt_id group by p,a,r", PersonenAufwandDTO.class)
                 .setParameter("projekt_id", projekt_id);
         return query.getResultList();
     }
